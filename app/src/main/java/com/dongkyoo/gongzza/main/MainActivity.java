@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.alarm.AlarmFragment;
+import com.dongkyoo.gongzza.alarm.AlarmPreferenceFragment;
 import com.dongkyoo.gongzza.breaktime.BreakTimeFragment;
 import com.dongkyoo.gongzza.home.HomeFragment;
 import com.google.android.material.tabs.TabLayout;

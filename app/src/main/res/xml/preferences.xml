@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:iconSpaceReserved="false">
+
+    <PreferenceCategory
+        android:title="@string/alarm_preference_title">
+
+        <EditTextPreference
+            android:key="key_alarm_preference_time"
+            android:title="알람 시간"
+            android:summary="설정한 시간만큼 첫 수업 전에 알람이 울립니다"
+            android:dialogTitle="알람 시간"
+            android:dialogLayout="@layout/dialog_alarm_time"/>
+
+        <SwitchPreference
+            android:key="key_alarm_preference_alarm"
+            android:defaultValue="true"
+            android:title="알람 설정"
+            android:summary="알람을 켜고 끌 수 있습니다."/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
