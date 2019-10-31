@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ChatView">
+        <attr name="type" format="enum">
+            <enum name="me" value="0"/>
+            <enum name="you" value="1"/>
+        </attr>
+        <attr name="text" format="string"/>
+    </declare-styleable>
+</resources>

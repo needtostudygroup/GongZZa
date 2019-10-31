@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/speech_balloon_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/speech_balloon"
+        android:padding="@dimen/margin2">
+
+        <TextView
+            android:id="@+id/speech_balloon_contentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="300dp"
+            android:text="나도 안농"
+            android:textColor="#FFF"/>
+
+    </FrameLayout>
+
+    <ImageView
+        android:layout_width="6dp"
+        android:layout_height="8dp"
+        android:src="@drawable/triangle"
+        android:tint="@color/colorPrimary"
+        android:layout_toRightOf="@id/speech_balloon_layout"
+        android:layout_centerVertical="true"
+        android:scaleType="fitXY"/>
+
+</RelativeLayout>
