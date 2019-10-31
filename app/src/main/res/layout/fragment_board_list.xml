@@ -68,8 +68,8 @@
                     android:layout_alignParentLeft="true">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/image_width"
+                        android:layout_height="@dimen/image_height"
                         android:src="@mipmap/ic_launcher"/>
 
                 </androidx.cardview.widget.CardView>
@@ -79,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="카페가실분 구해여"
-                    android:textSize="24sp"
+                    android:textSize="20sp"
                     android:layout_toRightOf="@id/titleImageView"
                     android:layout_alignTop="@id/titleImageView"
                     android:textColor="#333"
