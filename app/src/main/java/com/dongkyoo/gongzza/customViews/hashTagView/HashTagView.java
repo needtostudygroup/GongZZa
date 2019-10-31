@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ import java.util.List;
 
 /**
  * 작성자 : 이동규
- * 해쉬태그를 보여주는 뷰입니다.
+ * 해쉬태그를 보여주는 뷰
  */
 public class HashTagView extends MaterialCardView {
 

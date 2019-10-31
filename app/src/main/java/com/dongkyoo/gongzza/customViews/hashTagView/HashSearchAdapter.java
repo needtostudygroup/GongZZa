@@ -12,11 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.dongkyoo.gongzza.R;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 작성자 : 이동규
+ * 해시태그뷰에서 자동완성 리스트를 보여주기위한 어댑터
+ */
 public class HashSearchAdapter extends ArrayAdapter<String> implements Filterable {
 
     private Context context;
