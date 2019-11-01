@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">GongZZa</string>
+    <string name="app_name">공짜</string>
     <string name="alarm_preference_title">알람</string>
+    <string name="board_title">게시판</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">close</string>
+    <string name="participants_list">참여자목록</string>
 
 </resources>

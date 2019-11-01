@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="tab_name_list">
+        <item>홈</item>
+        <item>게시판</item>
+        <item>채팅</item>
+        <item>전체</item>
+    </string-array>
+    
+</resources>

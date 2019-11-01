@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin1"
+        android:paddingRight="@dimen/margin1"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+                android:id="@+id/view_hash_tag_autoCompleteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="16sp"
+                android:inputType="text"
+                android:minWidth="40dp"/>
+
+            <TextView
+                android:id="@+id/view_hash_tag_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/margin2"
+                android:textSize="16sp"
+                android:minWidth="40dp"
+                android:textColor="#FFF"/>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/view_hash_tag_cancel_imageView"
+            android:layout_width="@dimen/small_icon"
+            android:layout_height="@dimen/small_icon"
+            android:padding="@dimen/margin1"
+            android:src="@android:drawable/ic_delete"
+            android:tint="#FFAAAAAA"
+            android:layout_marginLeft="@dimen/margin1"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</LinearLayout>
