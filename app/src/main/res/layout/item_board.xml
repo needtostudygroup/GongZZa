@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="post"
+            type="com.dongkyoo.gongzza.vos.Post" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin2"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin3">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/titleImageCardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="30dp"
+                android:layout_marginRight="@dimen/margin2"
+                android:layout_alignParentLeft="true">
+
+                <ImageView
+                    android:id="@+id/titleImageView"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
+                    android:src="@mipmap/ic_launcher"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{post.title}"
+                android:textSize="20sp"
+                android:layout_toRightOf="@id/titleImageCardView"
+                android:layout_alignTop="@id/titleImageCardView"
+                android:textColor="#333"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/contentTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{post.content}"
+                android:textSize="16sp"
+                android:layout_toRightOf="@id/titleImageCardView"
+                android:layout_below="@id/titleTextView"
+                android:textColor="#AAA"
+                android:layout_marginBottom="@dimen/margin2"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hashTagRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_below="@id/contentTextView"
+                android:layout_toRightOf="@id/titleImageCardView"/>
+
+            <TextView
+                android:id="@+id/dateTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:post_startAt="@{post}"
+                android:textSize="16sp"
+                android:layout_toRightOf="@id/titleTextView"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/titleTextView"
+                android:gravity="right"
+                android:textColor="#AAA"/>
+
+            <TextView
+                android:id="@+id/numOfParticipantsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                app:post_num_of_participants="@{post}"
+                android:layout_toRightOf="@id/contentTextView"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/dateTimeTextView"
+                android:gravity="right"
+                android:textColor="#AAA"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

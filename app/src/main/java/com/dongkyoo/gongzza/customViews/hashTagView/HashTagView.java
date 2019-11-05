@@ -1,6 +1,7 @@
 package com.dongkyoo.gongzza.customViews.hashTagView;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -107,7 +108,20 @@ public class HashTagView extends MaterialCardView {
         });
     }
 
-    private void setEditMode(boolean flag) {
+    public void setText(String text) {
+        autoCompleteTextView.setText(text);
+        textView.setText(text);
+    }
+
+    public void setColor(String color) {
+        setCardBackgroundColor(Color.parseColor(color));
+    }
+
+    /**
+     * 수정모드 변경
+     * @param flag true: 수정 가능, false: 수정 불가
+     */
+    public void setEditMode(boolean flag) {
         if (autoCompleteTextView.getText().length() == 0) {
             setVisibility(GONE);
             return;
@@ -116,16 +130,20 @@ public class HashTagView extends MaterialCardView {
         if (flag) {
             autoCompleteTextView.setVisibility(VISIBLE);
             textView.setVisibility(GONE);
-            cancelImageView.setVisibility(GONE);
+            cancelImageView.setVisibility(VISIBLE);
         } else {
             textView.setText(autoCompleteTextView.getText());
 
             autoCompleteTextView.setVisibility(GONE);
             textView.setVisibility(VISIBLE);
-            cancelImageView.setVisibility(VISIBLE);
+            cancelImageView.setVisibility(GONE);
         }
     }
 
+    /**
+     * 해시태그 작성 시 내용에 들어 갈 수 있는 목록을 설정하는 메소드
+     * @param contentList 자동완성 목록에 뜰 컨텐츠 리스트
+     */
     public void setContentList(List<String> contentList) {
         HashSearchAdapter adapter = new HashSearchAdapter(context, android.R.layout.simple_dropdown_item_1line, contentList);
         autoCompleteTextView.setAdapter(adapter);
