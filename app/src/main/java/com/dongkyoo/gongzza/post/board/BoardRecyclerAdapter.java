@@ -1,4 +1,4 @@
-package com.dongkyoo.gongzza.board;
+package com.dongkyoo.gongzza.post.board;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +59,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
             super(itemView);
 
             this.itemView = itemView;
-            hashTagRecyclerView = itemView.findViewById(R.id.hashTagRecyclerView);
+            hashTagRecyclerView = itemView.findViewById(R.id.hash_tag_recyclerView);
             hashTagRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),
                     RecyclerView.HORIZONTAL, false));
             hashTagRecyclerView.addItemDecoration(new ItemMargin(16));

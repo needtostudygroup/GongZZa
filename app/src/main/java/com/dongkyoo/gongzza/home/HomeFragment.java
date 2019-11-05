@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context = container.getContext();
 
-        customDialogBtn = view.findViewById(R.id.Lord_Button);
+        customDialogBtn = view.findViewById(R.id.load_button);
         customDialogBtn.setOnClickListener(this);
         return view;
     }

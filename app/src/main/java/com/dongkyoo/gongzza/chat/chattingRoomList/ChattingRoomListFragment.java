@@ -1,4 +1,4 @@
-package com.dongkyoo.gongzza.chattingRoomList;
+package com.dongkyoo.gongzza.chat.chattingRoomList;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import androidx.fragment.app.Fragment;
 
 import com.dongkyoo.gongzza.R;
-import com.dongkyoo.gongzza.chattingRoom.ChatActivity;
+import com.dongkyoo.gongzza.chat.chattingRoom.ChatActivity;
 
 /**
  * 작성자: 이동규
@@ -33,7 +33,7 @@ public class ChattingRoomListFragment extends Fragment {
     }
 
     private void initView(View view) {
-        RelativeLayout chattingList = view.findViewById(R.id.chattingRoom);
+        RelativeLayout chattingList = view.findViewById(R.id.chatting_room_layout);
         chattingList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

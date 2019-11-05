@@ -1,10 +1,9 @@
-package com.dongkyoo.gongzza.board;
+package com.dongkyoo.gongzza.post.board;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -14,7 +13,6 @@ import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.databinding.ItemHashtagListBinding;
 import com.dongkyoo.gongzza.vos.HashTag;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HashTagListAdapter extends RecyclerView.Adapter<HashTagListAdapter.ViewHolder> {

@@ -496,7 +496,7 @@
         android:gravity="right">
 
         <Button
-            android:id="@+id/Lord_Button"
+            android:id="@+id/load_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#AAAAFF"
@@ -507,7 +507,7 @@
             android:id="@+id/Add_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/Lord_Button"
+            android:layout_toRightOf="@+id/load_button"
             android:background="#AAAAFF"
             android:text="추가"
             android:textColor="#000" />

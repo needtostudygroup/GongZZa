@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.dongkyoo.gongzza.R;
-import com.dongkyoo.gongzza.board.BoardFragment;
-import com.dongkyoo.gongzza.chattingRoomList.ChattingRoomListFragment;
+import com.dongkyoo.gongzza.post.board.BoardFragment;
+import com.dongkyoo.gongzza.chat.chattingRoomList.ChattingRoomListFragment;
 import com.dongkyoo.gongzza.home.HomeFragment;
 import com.dongkyoo.gongzza.all.AllFragment;
 import com.google.android.material.tabs.TabLayout;

@@ -1,12 +1,10 @@
-package com.dongkyoo.gongzza.board;
+package com.dongkyoo.gongzza.post.board;
 
 import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
 import com.dongkyoo.gongzza.R;
-import com.dongkyoo.gongzza.customViews.hashTagView.HashTagView;
-import com.dongkyoo.gongzza.vos.HashTag;
 import com.dongkyoo.gongzza.vos.Post;
 
 import java.util.Calendar;

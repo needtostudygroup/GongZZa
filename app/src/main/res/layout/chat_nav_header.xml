@@ -12,7 +12,7 @@
         android:scaleType="centerCrop"/>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/header_imageCardView"
+        android:id="@+id/header_image_cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="30dp"
@@ -35,7 +35,7 @@
         android:textColor="#FFF"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_below="@id/header_imageCardView"
+        android:layout_below="@id/header_image_cardView"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

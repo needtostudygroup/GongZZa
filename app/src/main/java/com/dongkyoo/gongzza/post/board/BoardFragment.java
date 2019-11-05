@@ -1,6 +1,5 @@
-package com.dongkyoo.gongzza.board;
+package com.dongkyoo.gongzza.post.board;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
-import com.google.android.material.card.MaterialCardView;
 
 /**
  * 작성자: 이동규

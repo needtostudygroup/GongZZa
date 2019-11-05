@@ -1,4 +1,4 @@
-package com.dongkyoo.gongzza.board;
+package com.dongkyoo.gongzza.post.board;
 
 import android.graphics.Rect;
 import android.view.View;

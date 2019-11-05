@@ -13,7 +13,7 @@
         android:padding="@dimen/margin2">
 
         <TextView
-            android:id="@+id/speech_balloon_contentTextView"
+            android:id="@+id/speech_balloon_content_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="300dp"
