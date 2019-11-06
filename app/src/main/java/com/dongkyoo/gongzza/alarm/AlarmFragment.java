@@ -20,10 +20,10 @@ public class AlarmFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, new AlarmPreferenceFragment())
-                .addToBackStack(null)
-                .commit();
+//        getFragmentManager().beginTransaction()
+//                .replace(R.id.container, new AlarmPreferenceFragment())
+//                .addToBackStack(null)
+//                .commit();
 
         return inflater.inflate(R.layout.fragment_alarm, container, false);
     }

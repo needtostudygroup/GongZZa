@@ -36,6 +36,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         customDialogBtn = view.findViewById(R.id.Lord_Button);
         customDialogBtn.setOnClickListener(this);
+
+        Button addButton = view.findViewById(R.id.Add_Button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view == addButton) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View customDialogView = inflater.inflate(R.layout.add_class, null);
+                    builder.setView(customDialogView);
+                    customDialog = builder.create();
+                    customDialog.show();
+                }
+            }
+        });
+
         return view;
     }
     private  void showToast(String message) {
