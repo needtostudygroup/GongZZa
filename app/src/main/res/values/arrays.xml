@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string-array name="tab_name_list">
+        <item>홈</item>
+        <item>게시판</item>
+        <item>채팅</item>
+        <item>전체</item>
+    </string-array>
+
+    <string-array name="day_list">
+        <item>월요일</item>
+        <item>화요일</item>
+        <item>수요일</item>
+        <item>목요일</item>
+        <item>금요일</item>
+        <item>토요일</item>
+        <item>일요일</item>
+    </string-array>
+    
+</resources>

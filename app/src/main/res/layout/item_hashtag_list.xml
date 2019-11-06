@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="hashTag"
+            type="com.dongkyoo.gongzza.vos.HashTag" />
+    </data>
+
+    <com.dongkyoo.gongzza.customViews.hashTagView.HashTagView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:hashTag="@{hashTag}"/>
+
+</layout>

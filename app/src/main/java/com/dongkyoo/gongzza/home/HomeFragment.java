@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context = container.getContext();
 
-        customDialogBtn = view.findViewById(R.id.Lord_Button);
+        customDialogBtn = view.findViewById(R.id.load_button);
         customDialogBtn.setOnClickListener(this);
 
         Button addButton = view.findViewById(R.id.Add_Button);
@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             //custom dialog를 위한 layout xml 초기화
             LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View customDialogView = inflater.inflate(R.layout.time_add_dialog,null);
+            View customDialogView = inflater.inflate(R.layout.dialog_time_add,null);
             builder.setView(customDialogView);
 
             builder.setTitle("URL 입력");
