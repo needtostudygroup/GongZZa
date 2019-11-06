@@ -509,7 +509,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/Lord_Button"
             android:background="#AAAAFF"
-            android:text="추가"
+            android:text="수업 추가"
             android:textColor="#000" />
     </RelativeLayout>
 
