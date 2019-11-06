@@ -77,6 +77,6 @@ public class SpeechBalloonView extends RelativeLayout {
     }
 
     private void setupView() {
-        contentTextView = findViewById(R.id.speech_balloon_contentTextView);
+        contentTextView = findViewById(R.id.speech_balloon_content_textView);
     }
 }

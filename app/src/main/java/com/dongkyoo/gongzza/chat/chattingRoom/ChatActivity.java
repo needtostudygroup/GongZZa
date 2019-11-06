@@ -1,6 +1,5 @@
-package com.dongkyoo.gongzza.chattingRoom;
+package com.dongkyoo.gongzza.chat.chattingRoom;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -51,7 +50,7 @@ public class ChatActivity extends AppCompatActivity {
                 R.string.drawer_close
         );
         drawerLayout.addDrawerListener(drawerToggle);
-        ImageView imageView = navigationView.findViewById(R.id.navigation_quitImageView);
+        ImageView imageView = navigationView.findViewById(R.id.navigation_quit_imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
