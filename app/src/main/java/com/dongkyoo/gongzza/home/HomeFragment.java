@@ -34,7 +34,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context = container.getContext();
 
-        customDialogBtn = view.findViewById(R.id.Lord_Button);
+        customDialogBtn = view.findViewById(R.id.load_button);
         customDialogBtn.setOnClickListener(this);
         return view;
     }
@@ -57,7 +57,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         if(view == customDialogBtn){
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
             View customDialogView = inflater.inflate(R.layout.dialog_home_addtable,null);
+
             builder.setView(customDialogView);
 
             builder.setTitle("URL 입력");
