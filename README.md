@@ -12,7 +12,8 @@
         - 예) 
     - 뷰 이름 부분의 경우 뷰의 역할(이름)과 뷰의 클래스명을 적어줌
         - 좋은 예
-            - menu_chat_submitButton
+            - menu_chat_submit_button
+            - menu_chat_submit_imageButton
         - 나쁜 예
             - menu_chat_submit
             - menu_chat_button
