@@ -5,24 +5,26 @@
     android:layout_height="fill_parent"
     android:layout_width="fill_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/sign_up_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:title="회원가입">
-
-    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFF">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/signup_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:title="회원가입">
+
+        </androidx.appcompat.widget.Toolbar>
+
         <TextView
             android:id="@+id/textName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/signup_toolbar"
             android:layout_alignLeft="@+id/inputName"
             android:layout_marginTop="30dp"
             android:text="이름"
