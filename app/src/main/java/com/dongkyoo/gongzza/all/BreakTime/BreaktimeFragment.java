@@ -1,4 +1,4 @@
 package com.dongkyoo.gongzza.all.BreakTime;
 
-public class AlarmFragment {
+public class BreaktimeFragment {
 }
