@@ -5,11 +5,13 @@ import com.dongkyoo.gongzza.network.UserApi;
 import com.dongkyoo.gongzza.vos.User;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class UserApiUnitTest {
 
@@ -18,10 +20,25 @@ public class UserApiUnitTest {
         UserApi userApi = Networks.retrofit.create(UserApi.class);
         Call<User> call = userApi.signUp(MockData.getMockUser());
         Response<User> response = call.execute();
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
         assertEquals(200, response.code());
         assertNotNull(response.body());
     }
 
+    /**
+     * 로그인 성공
+     * @throws Exception
+     */
     @Test
     public void getUserByIdPwTest() throws Exception {
         UserApi userApi = Networks.retrofit.create(UserApi.class);
@@ -29,5 +46,13 @@ public class UserApiUnitTest {
         Response<User> response = call.execute();
         assertEquals(200, response.code());
         assertNotNull(response.body());
+    }
+
+    @Test
+    public void getUserByIdPwFailure() throws Exception {
+        UserApi userApi = Networks.retrofit.create(UserApi.class);
+        Call<User> call = userApi.getUserByIdPw("testId", "testPasswordasdfasdf");
+        Response<User> response = call.execute();
+        assertEquals(500, response.code());
     }
 }
