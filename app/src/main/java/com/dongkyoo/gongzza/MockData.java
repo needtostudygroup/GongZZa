@@ -2,10 +2,12 @@ package com.dongkyoo.gongzza;
 
 import com.dongkyoo.gongzza.vos.HashTag;
 import com.dongkyoo.gongzza.vos.Post;
+import com.dongkyoo.gongzza.vos.User;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 작성자: 이동규
@@ -15,6 +17,10 @@ public class MockData {
 
     public static List<String> getMockHashTagList() {
         return Arrays.asList("운동", "게임", "노래방", "밥", "abc", "def", "ghi");
+    }
+
+    public static User getMockUser() {
+        return new User("testId" + System.currentTimeMillis(), "testName", "testPassword", new Date(System.currentTimeMillis()), 1);
     }
 
     public static List<Post> getMockPostList() {
