@@ -48,11 +48,20 @@ public class UserApiUnitTest {
         assertNotNull(response.body());
     }
 
+    /**
+     * 로그인 실패
+     * @throws Exception
+     */
     @Test
     public void getUserByIdPwFailure() throws Exception {
         UserApi userApi = Networks.retrofit.create(UserApi.class);
         Call<User> call = userApi.getUserByIdPw("testId", "testPasswordasdfasdf");
         Response<User> response = call.execute();
         assertEquals(500, response.code());
+    }
+
+    @Test
+    public void findId() throws Exception {
+
     }
 }
