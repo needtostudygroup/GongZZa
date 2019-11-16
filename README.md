@@ -109,7 +109,7 @@
         - 회원가입 할 때 사용하는 메소드
         - User 객체 내 모든 field 를 채워 넘겨야 함
         - 회원가입 성공 시 회원가입된 User 객체를 리턴
-        
+
     - Call<String> findId(String name, Date birthday);
         - 아이디 찾기
         - @param name      회원가입 시 사용했던 유저 이름
@@ -138,4 +138,4 @@
         - 인증 메일을 보냄
         - @param userId    인증할 아이디
         - @param email     인증할 메일
-        - @return AuthMail 이 null 이 아닌 경우만 인증메일 전송에 성공        
+        - @return AuthMail 이 null 이 아닌 경우만 인증메일 전송에 성공 

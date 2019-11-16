@@ -8,6 +8,7 @@ import com.dongkyoo.gongzza.vos.User;
 import org.junit.Test;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 import static org.junit.Assert.assertEquals;
@@ -35,7 +36,7 @@ public class UserApiUnitTest {
         assertNotNull(response.body());
         assertTrue(response.body());
     }
-
+  
     @Test
     public void signUpTest() throws Exception {
         UserApi userApi = Networks.retrofit.create(UserApi.class);
