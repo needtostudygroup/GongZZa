@@ -2,7 +2,14 @@ package com.dongkyoo.gongzza.vos;
 
 import java.util.Objects;
 
+/**
+ * 작성자 : 이동규
+ * 수업의 상세 정보를 담기위한 객체
+ *
+ * You must see also {@link Course}
+ */
 public class CourseInfo {
+
     private int id;
     private int courseId;
     private String startTime;

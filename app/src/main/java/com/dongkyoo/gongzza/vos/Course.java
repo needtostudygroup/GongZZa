@@ -1,8 +1,18 @@
 package com.dongkyoo.gongzza.vos;
 
-import java.util.List;
 import java.util.Objects;
 
+/**
+ * 작성자 : 이동규
+ * 시간표 내의 수업 하나를 의미함
+ * {@link CourseInfo} 보다 상위 개념의 수업임
+ *
+ * see also {@link com.dongkyoo.gongzza.dtos.CourseDto}
+ *
+ * Course : 객체지향 - 최지웅
+ *  * CourseInfo 1 : 수요일 1시 30분 ~ 2시 45분
+ *  * CourseInfo 2 : 금요일 1시 30분 ~ 2시 45분
+ */
 public class Course {
 
     private int id;
