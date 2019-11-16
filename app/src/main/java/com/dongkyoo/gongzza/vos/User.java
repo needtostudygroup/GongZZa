@@ -1,6 +1,5 @@
 package com.dongkyoo.gongzza.vos;
 
-import java.io.Serializable;
 import java.util.Date;
 
 public class User {
@@ -10,16 +9,26 @@ public class User {
     private Date birthday;
     private Date signedInAt;
     private int schoolId;
+    private String email;
 
     public User() {
     }
 
-    public User(String id, String name, String password, Date birthday, int schoolId) {
+    public User(String id, String name, String password, Date birthday, int schoolId, String email) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.birthday = birthday;
         this.schoolId = schoolId;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getId() {

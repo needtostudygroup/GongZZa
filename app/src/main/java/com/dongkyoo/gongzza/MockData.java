@@ -20,7 +20,7 @@ public class MockData {
     }
 
     public static User getMockUser() {
-        return new User("testId" + System.currentTimeMillis(), "testName", "testPassword", new Date(System.currentTimeMillis()), 1);
+        return new User("testId", "testName", "testPassword", new Date(System.currentTimeMillis()), 1, "wind.dong.dream@gmail.com");
     }
 
     public static List<Post> getMockPostList() {
