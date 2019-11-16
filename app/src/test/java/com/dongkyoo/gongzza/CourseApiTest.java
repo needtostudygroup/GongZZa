@@ -12,18 +12,13 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 
-import org.junit.Test;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class CourseApiTest {
 
-    public CourseDto insertCourse() throws Exception {
+    public static CourseDto insertCourse() throws Exception {
         CourseApi courseApi = Networks.retrofit.create(CourseApi.class);
         Call<CourseDto> call = courseApi.insertCourse(MockData.getMockCourseDto());
         Response<CourseDto> response = call.execute();
