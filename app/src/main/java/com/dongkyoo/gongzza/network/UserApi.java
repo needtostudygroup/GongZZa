@@ -1,14 +1,19 @@
 package com.dongkyoo.gongzza.network;
 
+import com.dongkyoo.gongzza.vos.AuthMail;
 import com.dongkyoo.gongzza.vos.User;
 
 import java.util.Date;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserApi {
@@ -65,4 +70,18 @@ public interface UserApi {
     @PUT("/users/find/password")
     Call<Integer> findPassword(@Query("id") String id, @Query("password") String password,
                                @Query("authorityCode") int authorityCode);
+
+    /**
+     * 인증 메일을 보냄
+     *
+     * @param userId    인증할 아이디
+     * @param email     인증할 메일
+     * @return AuthMail 이 null 이 아닌 경우만 인증메일 전송에 성공
+     */
+    @POST("/authMails")
+    Call<AuthMail> sendAuthenticateEmail(@Query("userId") String userId, @Query("email") String email);
+
+    // For 테스트
+    @GET("/authMails/code/{code}")
+    Call<Boolean> authMail(@Path("code") String code, @Query("userId") String userId, @Query("email") String email);
 }

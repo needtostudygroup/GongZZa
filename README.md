@@ -133,3 +133,9 @@
         - 이외의 수는 불가능
         - @return              비밀번호 변경 성공 시 200
         - 실패 시 0
+       
+    - Call<AuthMail> sendAuthenticateEmail(String userId, String email)
+        - 인증 메일을 보냄
+        - @param userId    인증할 아이디
+        - @param email     인증할 메일
+        - @return AuthMail 이 null 이 아닌 경우만 인증메일 전송에 성공        

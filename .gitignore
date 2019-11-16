@@ -200,8 +200,6 @@ $RECYCLE.BIN/
 *.lnk
 
 ### Gradle ###
-.gradle
-
 # Ignore Gradle GUI config
 gradle-app.setting
 
