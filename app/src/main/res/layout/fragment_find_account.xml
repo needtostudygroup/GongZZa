@@ -42,12 +42,14 @@
         android:text="생년월일"
         android:textSize="15dp" />
 
-    <EditText
+    <DatePicker
         android:id="@+id/inputBirth"
         android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_below="@+id/textBirth"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/textBirth"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner"/>
 
     <Button
         android:layout_width="wrap_content"

@@ -35,6 +35,7 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_below="@+id/textName"
+            android:inputType="textPersonName"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -53,6 +54,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/textEmail"
             android:layout_centerHorizontal="true"
+            android:inputType="textEmailAddress"
             android:hint="자신의 학교 이메일로 가입하시오." />
 
         <TextView
@@ -72,6 +74,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/textEmailCheck"
             android:layout_alignLeft="@+id/textEmailCheck"
+            android:inputType="textEmailAddress"
             android:layout_centerHorizontal="true" />
 
         <Button
@@ -96,6 +99,7 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_below="@+id/textPassword"
+            android:inputType="textPassword"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -113,6 +117,7 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:layout_below="@+id/textPasswordConfirm"
+            android:inputType="textPassword"
             android:layout_centerHorizontal="true" />
 
         <TextView
@@ -125,14 +130,17 @@
             android:text="생년월일"
             android:textSize="15dp" />
 
-        <EditText
+        <DatePicker
             android:id="@+id/inputBirth"
             android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:layout_below="@+id/textBirth"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignLeft="@+id/textBirth"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"/>
 
         <Button
+            android:id="@+id/signupedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/inputBirth"
