@@ -35,7 +35,7 @@ public interface UserApi {
      */
     @POST("/users")
     Call<User> signUp(@Body User user);
-
+  
     /**
      * 아이디 찾기
      * @param name      회원가입 시 사용했던 유저 이름
