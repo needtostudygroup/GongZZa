@@ -17,7 +17,7 @@ public class PostBindingAdapter {
         Calendar c = Calendar.getInstance();
         c.setTime(post.getStartAt());
 
-        sb.append(dayList[c.get(Calendar.DAY_OF_WEEK)]).append(" ")
+        sb.append(dayList[c.get(Calendar.DAY_OF_WEEK) - 1]).append(" ")
                 .append(c.get(Calendar.HOUR))
                 .append("시");
         textView.setText(sb.toString());
