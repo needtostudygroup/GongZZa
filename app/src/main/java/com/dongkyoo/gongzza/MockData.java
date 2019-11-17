@@ -51,6 +51,10 @@ public class MockData {
         );
     }
 
+    public static Participant getMockParticipant() {
+        return new Participant(MockData.getMockPostDto().getId(), MockData.getMockUser());
+    }
+
     public static CourseDto getMockCourseDto() {
         Course course = getMockCourse();
         List<CourseInfo> courseInfoList = new ArrayList<>();
