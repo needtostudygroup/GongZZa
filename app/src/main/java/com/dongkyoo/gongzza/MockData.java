@@ -7,6 +7,7 @@ import com.dongkyoo.gongzza.vos.CourseInfo;
 import com.dongkyoo.gongzza.vos.HashTag;
 import com.dongkyoo.gongzza.vos.Participant;
 import com.dongkyoo.gongzza.vos.Post;
+import com.dongkyoo.gongzza.vos.Token;
 import com.dongkyoo.gongzza.vos.User;
 
 import java.util.ArrayList;
@@ -78,5 +79,9 @@ public class MockData {
     public static CourseInfo getMockCourseInfo() {
         Course course = getMockCourse();
         return new CourseInfo(0, course.getId(), "12:00", "13:50", 1);
+    }
+
+    public static Token getMockToken() {
+        return new Token(getMockUser().getId(), "ldfajsdklj", new Date());
     }
 }
