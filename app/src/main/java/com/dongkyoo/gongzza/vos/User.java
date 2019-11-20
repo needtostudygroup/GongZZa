@@ -1,8 +1,12 @@
 package com.dongkyoo.gongzza.vos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class User {
+public class User implements Parcelable {
+
     private String id;
     private String name;
     private String password;
@@ -21,6 +25,17 @@ public class User {
         this.birthday = birthday;
         this.schoolId = schoolId;
         this.email = email;
+    }
+
+    public User(Parcel parcel) {
+        this.id = parcel.readString();
+        this.name = parcel.readString();
+        this.password = parcel.readString();
+        this.birthday = (Date) parcel.readSerializable();
+        this.signedInAt = (Date) parcel.readSerializable();
+        this.schoolId = parcel.readInt();
+        this.email = parcel.readString();
+
     }
 
     public String getEmail() {
@@ -78,4 +93,32 @@ public class User {
     public void setSchoolId(int schoolId) {
         this.schoolId = schoolId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeString(password);
+        dest.writeSerializable(birthday);
+        dest.writeSerializable(signedInAt);
+        dest.writeInt(schoolId);
+        dest.writeString(email);
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

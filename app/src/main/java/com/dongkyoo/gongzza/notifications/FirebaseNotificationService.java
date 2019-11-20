@@ -58,6 +58,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
                 @Override
                 public void onResponse(Call<Token> call, Response<Token> response) {
                     if (response.code() == 200) {
+                        Log.i(TAG, "토큰 등록 성공!");
                         editor.putBoolean(Config.HAS_SENT, true);
                         editor.apply();
                     } else {
@@ -77,6 +78,6 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        
+
     }
 }

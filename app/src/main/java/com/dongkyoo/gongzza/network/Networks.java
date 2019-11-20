@@ -33,4 +33,21 @@ public class Networks {
             e.printStackTrace();
         }
     }
+
+    public static Retrofit createRetrofit(Context context) {
+        try {
+            InputStream is = context.getAssets().open("server.properties");
+            Properties properties = new Properties();
+            properties.load(is);
+            SERVER_URL = properties.getProperty("serverUrl");
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(SERVER_URL)
+                    .addConverterFactory(JacksonConverterFactory.create())
+                    .build();
+            return retrofit;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
