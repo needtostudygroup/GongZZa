@@ -82,6 +82,6 @@ public class MockData {
     }
 
     public static Token getMockToken() {
-        return new Token(getMockUser().getId(), "ldfajsdklj", new Date());
+        return new Token(getMockUser().getId(), "ldfajsdklj2", new Date());
     }
 }

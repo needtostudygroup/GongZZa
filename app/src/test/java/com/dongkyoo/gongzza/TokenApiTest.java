@@ -2,8 +2,6 @@ package com.dongkyoo.gongzza;
 
 import android.content.Context;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.TokenApi;
@@ -18,13 +16,11 @@ import retrofit2.Response;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-@RunWith(AndroidJUnit4.class)
 public class TokenApiTest {
 
     @Test
     public void registerToken() throws Exception {
-        Networks.createRetrofit(InstrumentationRegistry.getInstrumentation().getTargetContext());
-        TokenApi tokenApi = Networks.getRetrofit().create(TokenApi.class);
+        TokenApi tokenApi = Networks.retrofit.create(TokenApi.class);
         Call<Token> call = tokenApi.registerToken(MockData.getMockToken());
         Response<Token> response = call.execute();
         assertEquals(200, response.code());
