@@ -1,13 +1,11 @@
 package com.dongkyoo.gongzza.main;
 
 import android.content.SharedPreferences;
-import android.net.Network;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -15,7 +13,7 @@ import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.TokenApi;
-import com.dongkyoo.gongzza.post.board.BoardFragment;
+import com.dongkyoo.gongzza.board.BoardFragment;
 import com.dongkyoo.gongzza.chat.chattingRoomList.ChattingRoomListFragment;
 import com.dongkyoo.gongzza.home.HomeFragment;
 import com.dongkyoo.gongzza.all.AllFragment;
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private MainTabAdapter adapter;
-    private User user;
+    private User me;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Networks.createRetrofit(this);
-        user = getIntent().getParcelableExtra(Config.USER);
-        if (user == null) {
+        me = getIntent().getParcelableExtra(Config.USER);
+        if (me == null) {
             Log.e(TAG, "유저 정보 없음! 디버깅 모드임?");
-            user = MockData.getMockUser();
+            me = MockData.getMockUser();
         }
 
         registerToken();
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MainTabAdapter(getSupportFragmentManager(),
                 new Fragment[] {
                         new HomeFragment(),
-                        new BoardFragment(),
+                        BoardFragment.newInstance(me),
                         new ChattingRoomListFragment(),
                         new AllFragment()
                 },
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             String token = sharedPreferences.getString(Config.TOKEN, null);
             if (token != null) {
                 TokenApi tokenApi = Networks.retrofit.create(TokenApi.class);
-                Call<Token> call = tokenApi.registerToken(new Token(user.getId(), token, new Date()));
+                Call<Token> call = tokenApi.registerToken(new Token(me.getId(), token, new Date()));
                 call.enqueue(new Callback<Token>() {
                     @Override
                     public void onResponse(Call<Token> call, Response<Token> response) {

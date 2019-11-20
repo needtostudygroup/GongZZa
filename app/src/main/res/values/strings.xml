@@ -5,5 +5,11 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">close</string>
     <string name="participants_list">참여자목록</string>
+    <string name="enroll">참가</string>
+    <string name="leave">탈퇴</string>
+    <string name="enroll_confirm_title">참가하시겠습니까?</string>
+    <string name="leave_confirm_title">탈퇴하시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
 
 </resources>

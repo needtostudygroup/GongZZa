@@ -1,9 +1,12 @@
 package com.dongkyoo.gongzza.vos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 import java.util.Objects;
 
-public class Post {
+public class Post implements Parcelable {
 
     private int id;
     private String userId;
@@ -15,6 +18,17 @@ public class Post {
     private Date createdAt;
 
     public Post() {
+    }
+
+    public Post(Parcel parcel) {
+        id = parcel.readInt();
+        userId = parcel.readString();
+        title = parcel.readString();
+        content = parcel.readString();
+        titleImageUrl = parcel.readString();
+        totalNumParticipants = parcel.readInt();
+        meetDateTime = (Date) parcel.readSerializable();
+        createdAt = (Date) parcel.readSerializable();
     }
 
     public Post(int id, String userId, String title, String content, Date meetDateTime, Date createdAt, int totalNumParticipants, String titleImageUrl) {
@@ -125,4 +139,33 @@ public class Post {
                 ", titleImageUrl='" + titleImageUrl + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(userId);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(titleImageUrl);
+        dest.writeInt(totalNumParticipants);
+        dest.writeSerializable(meetDateTime);
+        dest.writeSerializable(createdAt);
+    }
+
+    public static final Creator<Post> CREATOR = new Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel source) {
+            return new Post(source);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
 }

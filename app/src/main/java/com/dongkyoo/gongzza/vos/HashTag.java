@@ -1,8 +1,11 @@
 package com.dongkyoo.gongzza.vos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Objects;
 
-public class HashTag {
+public class HashTag implements Parcelable {
 
     private int id;
     private int postId;
@@ -10,6 +13,13 @@ public class HashTag {
     private String title;
 
     public HashTag() {
+    }
+
+    public HashTag(Parcel parcel) {
+        id = parcel.readInt();
+        postId = parcel.readInt();
+        color = parcel.readString();
+        title = parcel.readString();
     }
 
     public HashTag(String color, String title) {
@@ -74,4 +84,29 @@ public class HashTag {
                 ", postId='" + postId + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(postId);
+        dest.writeString(color);
+        dest.writeString(title);
+    }
+
+    public static final Creator<HashTag> CREATOR = new Creator<HashTag>() {
+        @Override
+        public HashTag createFromParcel(Parcel source) {
+            return new HashTag(source);
+        }
+
+        @Override
+        public HashTag[] newArray(int size) {
+            return new HashTag[size];
+        }
+    };
 }

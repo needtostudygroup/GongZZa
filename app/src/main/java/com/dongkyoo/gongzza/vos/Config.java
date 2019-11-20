@@ -6,5 +6,6 @@ public class Config {
     public static final String HAS_SENT = "HAS_SENT";
     public static final String USER_ID = "USER_ID";
     public static final String USER = "USER";
+    public static final String POST = "POST";
 
 }

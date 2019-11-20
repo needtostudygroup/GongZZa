@@ -1,5 +1,7 @@
-package com.dongkyoo.gongzza.post.board;
+package com.dongkyoo.gongzza.board;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +21,15 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
 
     private static final int DEFAULT_VIEW_TYPE = 0;
     private List<PostDto> postList;
+    private OnClickPost onClickPostListener;
 
-    public BoardRecyclerAdapter(@NonNull List<PostDto> postList) {
+    interface OnClickPost {
+        void onClick(PostDto postDto);
+    }
+
+    public BoardRecyclerAdapter(@NonNull List<PostDto> postList, OnClickPost onClickPostListener) {
         this.postList = postList;
+        this.onClickPostListener = onClickPostListener;
     }
 
     @NonNull
@@ -54,6 +62,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
         private RecyclerView hashTagRecyclerView;
         private HashTagListAdapter adapter;
         private View itemView;
+        private PostDto postDto;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -65,9 +74,20 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
             hashTagRecyclerView.addItemDecoration(new ItemMargin(16));
             adapter = new HashTagListAdapter(itemView.getContext());
             hashTagRecyclerView.setAdapter(adapter);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (postDto != null) {
+                        onClickPostListener.onClick(postDto);
+                    }
+                }
+            });
         }
 
         void setPost(PostDto post) {
+            this.postDto = post;
+
             ItemBoardBinding binding = DataBindingUtil.bind(itemView);
             binding.setPost(post);
 

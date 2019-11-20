@@ -1,5 +1,6 @@
-package com.dongkyoo.gongzza.post.board;
+package com.dongkyoo.gongzza.board;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
+import com.dongkyoo.gongzza.dtos.PostDto;
+import com.dongkyoo.gongzza.post.PostActivity;
+import com.dongkyoo.gongzza.vos.Config;
+import com.dongkyoo.gongzza.vos.User;
 
 import java.util.Arrays;
 
@@ -19,10 +24,18 @@ import java.util.Arrays;
  * 작성자: 이동규
  * 게시판 목록을 보여주는 프래그먼트
  */
-public class BoardFragment extends Fragment {
+public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnClickPost {
 
-    public BoardFragment() {
+    private User me;
+
+    private BoardFragment() {
         // Required empty public constructor
+    }
+
+    public static BoardFragment newInstance(User me) {
+        BoardFragment boardFragment = new BoardFragment();
+        boardFragment.me = me;
+        return boardFragment;
     }
 
     @Override
@@ -68,8 +81,16 @@ public class BoardFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(new BoardRecyclerAdapter(
-                Arrays.asList(MockData.getMockPostDto())
+                Arrays.asList(MockData.getMockPostDto()),
+                this
         ));
     }
 
+    @Override
+    public void onClick(PostDto postDto) {
+        Intent intent = new Intent(getActivity(), PostActivity.class);
+        intent.putExtra(Config.USER, me);
+        intent.putExtra(Config.POST, postDto);
+        startActivity(intent);
+    }
 }

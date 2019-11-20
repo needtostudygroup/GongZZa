@@ -1,4 +1,4 @@
-package com.dongkyoo.gongzza.post.board;
+package com.dongkyoo.gongzza.board;
 
 import androidx.databinding.BindingAdapter;
 
