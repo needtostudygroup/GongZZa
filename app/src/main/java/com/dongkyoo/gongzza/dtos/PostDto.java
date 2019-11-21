@@ -21,6 +21,13 @@ public class PostDto extends Post implements Parcelable {
     public PostDto() {
     }
 
+    public PostDto(PostDto postDto) {
+        super(postDto);
+
+        this.participantList = postDto.participantList;
+        this.hashTagList = postDto.hashTagList;
+    }
+
     public PostDto(Parcel parcel) {
         super(parcel);
 

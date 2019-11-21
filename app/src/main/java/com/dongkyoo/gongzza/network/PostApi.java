@@ -43,6 +43,8 @@ public interface PostApi {
                                                 @Query("userId") String userId,
                                                 @Query("limit") int limit);
 
+    @GET("/posts/users")
+    Call<List<PostDto>> selectUserEnrolledPost(@Query("userId") String userId);
 
     /**
      * 게시글 수정

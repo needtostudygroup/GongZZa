@@ -4,12 +4,10 @@ import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
-import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.dtos.PostDto;
 import com.dongkyoo.gongzza.vos.Post;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class PostBindingAdapter {
     @BindingAdapter("post_startAt")

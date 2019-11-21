@@ -20,6 +20,17 @@ public class Post implements Parcelable {
     public Post() {
     }
 
+    public Post(Post post) {
+        this.id = post.id;
+        this.userId = post.userId;
+        this.titleImageUrl = post.titleImageUrl;
+        this.content = post.content;
+        this.titleImageUrl = post.titleImageUrl;
+        this.totalNumParticipants = post.totalNumParticipants;
+        this.meetDateTime = post.meetDateTime;
+        this.createdAt = post.createdAt;
+    }
+
     public Post(Parcel parcel) {
         id = parcel.readInt();
         userId = parcel.readString();

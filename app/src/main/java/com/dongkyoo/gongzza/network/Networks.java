@@ -1,11 +1,13 @@
 package com.dongkyoo.gongzza.network;
 
 import android.content.Context;
-import android.util.Log;
 
-import java.io.File;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Properties;
 
 import retrofit2.Retrofit;
@@ -16,7 +18,10 @@ public class Networks {
     public static String SERVER_URL = "http://114.206.137.114:8080";
     public static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVER_URL)
-            .addConverterFactory(JacksonConverterFactory.create())
+            .addConverterFactory(JacksonConverterFactory.create(
+                    new ObjectMapper().setDateFormat(
+                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS", Locale.KOREA)
+                    )))
             .build();
 
     static {
@@ -27,7 +32,9 @@ public class Networks {
             SERVER_URL = properties.getProperty("serverUrl");
             retrofit = new Retrofit.Builder()
                     .baseUrl(SERVER_URL)
-                    .addConverterFactory(JacksonConverterFactory.create())
+                    .addConverterFactory(JacksonConverterFactory.create(
+                            new ObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"))
+                    ))
                     .build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -42,7 +49,10 @@ public class Networks {
             SERVER_URL = properties.getProperty("serverUrl");
             retrofit = new Retrofit.Builder()
                     .baseUrl(SERVER_URL)
-                    .addConverterFactory(JacksonConverterFactory.create())
+                    .addConverterFactory(JacksonConverterFactory.create(
+                            new ObjectMapper().setDateFormat(
+                                    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS", Locale.KOREA)
+                            )))
                     .build();
             return retrofit;
         } catch (Exception e) {

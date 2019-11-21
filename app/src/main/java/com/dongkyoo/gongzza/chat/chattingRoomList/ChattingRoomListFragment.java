@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.chat.chattingRoom.ChatActivity;
+import com.dongkyoo.gongzza.dtos.PostChatDto;
 
 /**
  * 작성자: 이동규
@@ -27,7 +29,15 @@ public class ChattingRoomListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chatting_room_list, container, false);
+
         initView(view);
+        ChattingRoomListViewModel viewModel = new ChattingRoomListViewModel();
+        viewModel.postChat.observe(this, new Observer<PostChatDto>() {
+            @Override
+            public void onChanged(PostChatDto postChatDto) {
+
+            }
+        });
 
         return view;
     }
@@ -42,5 +52,4 @@ public class ChattingRoomListFragment extends Fragment {
             }
         });
     }
-
 }
