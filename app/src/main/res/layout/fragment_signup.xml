@@ -39,32 +39,13 @@
             android:layout_centerHorizontal="true" />
 
         <TextView
-            android:id="@+id/textEmail"
+            android:id="@+id/textEmailCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/inputName"
             android:layout_alignLeft="@+id/inputName"
             android:layout_marginTop="30dp"
             android:text="Email"
-            android:textSize="15dp" />
-
-        <EditText
-            android:id="@+id/inputEmail"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/textEmail"
-            android:layout_centerHorizontal="true"
-            android:inputType="textEmailAddress"
-            android:hint="자신의 학교 이메일로 가입하시오." />
-
-        <TextView
-            android:id="@+id/textEmailCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/inputEmail"
-            android:layout_alignLeft="@+id/inputEmail"
-            android:layout_marginTop="30dp"
-            android:text="Email 인증"
             android:textSize="15dp" />
 
 
@@ -74,15 +55,17 @@
             android:layout_height="50dp"
             android:layout_below="@+id/textEmailCheck"
             android:layout_alignLeft="@+id/textEmailCheck"
+            android:hint="학교 이메일로 가입하시오"
             android:inputType="textEmailAddress"
             android:layout_centerHorizontal="true" />
 
         <Button
+            android:id="@+id/comfirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/inputEmailCheck"
             android:layout_toRightOf="@+id/inputEmailCheck"
-            android:text="확인" />
+            android:text="인증" />
 
         <TextView
             android:id="@+id/textPassword"

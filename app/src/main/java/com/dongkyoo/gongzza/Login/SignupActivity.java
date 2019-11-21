@@ -32,19 +32,9 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_signup);
 
-        Birth = (DatePicker)findViewById(R.id.inputBirth);
-        //현재날짜로 초기화
-        Birth.init(Birth.getYear(), Birth.getMonth(), Birth.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String res = String.format("%d년 %d월 %d일", Birth.getYear() +1, Birth.getMonth(), Birth.getDayOfMonth());
-                Toast.makeText(SignupActivity.this,res,Toast.LENGTH_SHORT).show();
-            }
-        });
-
         findViewById(R.id.signupedButton).setOnClickListener(new View.OnClickListener(){
             EditText signupEtName = (EditText)findViewById(R.id.inputName);
-            EditText signupEtEmail = (EditText)findViewById((R.id.inputEmail));
+            EditText signupEtEmail = (EditText)findViewById((R.id.inputEmailCheck));
             EditText signupEtPassword = (EditText)findViewById((R.id.inputPassword));
             EditText signupEtPasswordConfirm = (EditText)findViewById((R.id.inputPasswordConfirm));
 
@@ -80,6 +70,16 @@ public class SignupActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+
+        Birth = (DatePicker)findViewById(R.id.inputBirth);
+        //현재날짜로 초기화
+        Birth.init(Birth.getYear(), Birth.getMonth(), Birth.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
+            @Override
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String res = String.format("%d년 %d월 %d일", Birth.getYear() +1, Birth.getMonth(), Birth.getDayOfMonth());
+                Toast.makeText(SignupActivity.this,res,Toast.LENGTH_SHORT).show();
             }
         });
     }
