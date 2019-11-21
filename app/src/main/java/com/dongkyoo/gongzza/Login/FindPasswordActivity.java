@@ -19,7 +19,7 @@ public class FindPasswordActivity extends AppCompatActivity {
 
         findViewById(R.id.signupedButton).setOnClickListener(new View.OnClickListener(){
             EditText findPasswordEtName = (EditText)findViewById(R.id.inputName);
-            EditText findPasswordEtId = (EditText)findViewById((R.id.inputEmail));
+            EditText findPasswordEtId = (EditText)findViewById((R.id.inputId));
 
             @Override
             public void onClick(View v) {

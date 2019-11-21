@@ -2,6 +2,7 @@ package com.dongkyoo.gongzza.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,6 +33,18 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_signup);
 
+        findViewById(R.id.emailConfirmButton).setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                builder.setTitle("인증 이메일이 발송되었습니다!");
+                builder.setMessage("등록된 이메일로 접속하여 메일을 확인하셔야 가입이 완료됩니다.");
+                builder.setPositiveButton("확인",null);
+
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
         findViewById(R.id.signupedButton).setOnClickListener(new View.OnClickListener(){
             EditText signupEtName = (EditText)findViewById(R.id.inputName);
             EditText signupEtEmail = (EditText)findViewById((R.id.inputEmailCheck));
@@ -39,7 +52,7 @@ public class SignupActivity extends AppCompatActivity {
             EditText signupEtPasswordConfirm = (EditText)findViewById((R.id.inputPasswordConfirm));
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if(signupEtName.getText().toString().length() == 0){
                     Toast.makeText(SignupActivity.this, "이름을 입력하세요",Toast.LENGTH_SHORT).show();
                     signupEtName.requestFocus();
