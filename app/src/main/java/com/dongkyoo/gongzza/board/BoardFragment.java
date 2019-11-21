@@ -2,6 +2,7 @@ package com.dongkyoo.gongzza.board;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.dtos.PostDto;
+import com.dongkyoo.gongzza.network.Networks;
+import com.dongkyoo.gongzza.network.PostApi;
 import com.dongkyoo.gongzza.post.PostActivity;
 import com.dongkyoo.gongzza.vos.Config;
 import com.dongkyoo.gongzza.vos.User;
 
 import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 작성자: 이동규
@@ -26,7 +34,12 @@ import java.util.Arrays;
  */
 public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnClickPost {
 
+    private static final String TAG = "BoardFragment";
     private User me;
+    private BoardRecyclerAdapter adapter = new BoardRecyclerAdapter(
+            Arrays.asList(),
+            this
+    );
 
     private BoardFragment() {
         // Required empty public constructor
@@ -78,12 +91,12 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
 //            }
 //        });
 
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new BoardRecyclerAdapter(
-                Arrays.asList(MockData.getMockPostDto()),
-                this
-        ));
+        recyclerView.setAdapter(adapter);
+
+        loadPost();
     }
 
     @Override
@@ -92,5 +105,26 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
         intent.putExtra(Config.USER, me);
         intent.putExtra(Config.POST, postDto);
         startActivity(intent);
+    }
+
+    private void loadPost() {
+        PostApi postApi = Networks.retrofit.create(PostApi.class);
+        Call<List<PostDto>> call = postApi.selectRecentPostDtoList(me.getSchoolId(), me.getId(), Config.POST_LIMIT);
+        call.enqueue(new Callback<List<PostDto>>() {
+            @Override
+            public void onResponse(Call<List<PostDto>> call, Response<List<PostDto>> response) {
+                if (response.code() == 200) {
+                    Log.i(TAG, "Post 불러오기 성공");
+                    adapter.setPostList(response.body());
+                } else {
+                    Log.e(TAG, "Post 불러오기 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<PostDto>> call, Throwable t) {
+                Log.e(TAG, "Post 불러오기 실패", t);
+            }
+        });
     }
 }

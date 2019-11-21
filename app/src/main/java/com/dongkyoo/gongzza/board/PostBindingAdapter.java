@@ -14,7 +14,7 @@ import java.util.Calendar;
 public class PostBindingAdapter {
     @BindingAdapter("post_startAt")
     public static void startAt(TextView textView, Post post) {
-        SimpleDateFormat format = new SimpleDateFormat("HH시 mm분");
+        SimpleDateFormat format = new SimpleDateFormat("MM월 dd일 HH시 mm분");
         textView.setText(format.format(post.getMeetDateTime()));
     }
 
