@@ -14,14 +14,23 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.dongkyoo.gongzza.R;
+import com.dongkyoo.gongzza.dtos.PostChatDto;
+import com.dongkyoo.gongzza.vos.Config;
+import com.dongkyoo.gongzza.vos.User;
 import com.google.android.material.navigation.NavigationView;
 
 public class ChatActivity extends AppCompatActivity {
+
+    private User me;
+    private PostChatDto postChatDto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        me = getIntent().getParcelableExtra(Config.USER);
+        postChatDto = getIntent().getParcelableExtra(Config.POST);
 
         initView();
     }

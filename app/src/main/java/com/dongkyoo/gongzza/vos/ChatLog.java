@@ -1,5 +1,8 @@
 package com.dongkyoo.gongzza.vos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -12,7 +15,7 @@ import java.util.Date;
  * 채팅 데이터 클래스
  */
 @Entity
-public class ChatLog implements Comparable<ChatLog> {
+public class ChatLog implements Comparable<ChatLog>, Parcelable {
 
     @PrimaryKey
     private int id;
@@ -41,6 +44,16 @@ public class ChatLog implements Comparable<ChatLog> {
         this.senderId = senderId;
         this.content = content;
         this.sentAt = sentAt;
+    }
+
+    @Ignore
+    public ChatLog(Parcel parcel) {
+        this.id = parcel.readInt();
+        this.postId = parcel.readInt();
+        this.senderId = parcel.readString();
+        this.senderName = parcel.readString();
+        this.content = parcel.readString();
+        this.sentAt = (Date) parcel.readSerializable();
     }
 
     public int getId() {
@@ -95,4 +108,31 @@ public class ChatLog implements Comparable<ChatLog> {
     public int compareTo(ChatLog o) {
         return (int) (sentAt.getTime() - o.getSentAt().getTime());
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(postId);
+        dest.writeString(senderId);
+        dest.writeString(senderName);
+        dest.writeString(content);
+        dest.writeSerializable(sentAt);
+    }
+
+    public static final Creator<ChatLog> CREATOR = new Creator<ChatLog>() {
+        @Override
+        public ChatLog createFromParcel(Parcel source) {
+            return new ChatLog(source);
+        }
+
+        @Override
+        public ChatLog[] newArray(int size) {
+            return new ChatLog[size];
+        }
+    };
 }

@@ -1,5 +1,8 @@
 package com.dongkyoo.gongzza.dtos;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.Post;
 
@@ -8,7 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class PostChatDto extends PostDto {
+public class PostChatDto extends PostDto implements Parcelable {
 
     private List<ChatLog> chatLogList;
 
@@ -21,9 +24,15 @@ public class PostChatDto extends PostDto {
     }
 
     public PostChatDto(Post post) {
-        super();
+        super(post);
         chatLogList = new ArrayList<>();
         this.chatLogList = new ArrayList<>();
+    }
+
+    public PostChatDto(Parcel parcel) {
+        super(parcel);
+        chatLogList = new ArrayList<>();
+        parcel.readTypedList(chatLogList, ChatLog.CREATOR);
     }
 
     public List<ChatLog> getChatLogList() {
@@ -43,4 +52,22 @@ public class PostChatDto extends PostDto {
     public void sortChatLogList() {
         Collections.sort(chatLogList);
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeTypedList(chatLogList);
+    }
+
+    public static final Creator<PostChatDto> CREATOR = new Creator<PostChatDto>() {
+        @Override
+        public PostChatDto createFromParcel(Parcel source) {
+            return new PostChatDto(source);
+        }
+
+        @Override
+        public PostChatDto[] newArray(int size) {
+            return new PostChatDto[size];
+        }
+    };
 }

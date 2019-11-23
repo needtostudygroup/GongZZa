@@ -58,7 +58,9 @@ public class ChattingRoomListModel {
                 List<Post> postList = postDao.selectEnrolledPostList();
                 for (Post post : postList) {
                     PostChatDto postChatDto = new PostChatDto(post);
-                    postChatDto.getChatLogList().add(chatDao.loadLastReceivedChat());
+                    ChatLog chatLog = chatDao.loadLastReceivedChat();
+                    if (chatLog != null)
+                        postChatDto.getChatLogList().add(chatLog);
                     postChatDtoList.add(postChatDto);
                 }
                 handler.post(new Runnable() {

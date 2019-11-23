@@ -14,17 +14,21 @@ import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.chat.chattingRoom.ChatActivity;
 import com.dongkyoo.gongzza.databinding.ItemChattingRoomBinding;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
+import com.dongkyoo.gongzza.vos.Config;
+import com.dongkyoo.gongzza.vos.User;
 
 import java.util.List;
 
 public class ChattingRoomListAdapter extends RecyclerView.Adapter<ChattingRoomListAdapter.ViewHolder> {
 
     private List<PostChatDto> postChatDtoList;
+    private User me;
     private Context context;
 
-    public ChattingRoomListAdapter(Context context, List<PostChatDto> postChatDtoList) {
+    public ChattingRoomListAdapter(Context context, List<PostChatDto> postChatDtoList, User me) {
         this.context = context;
         this.postChatDtoList = postChatDtoList;
+        this.me = me;
     }
 
     @NonNull
@@ -41,6 +45,8 @@ public class ChattingRoomListAdapter extends RecyclerView.Adapter<ChattingRoomLi
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra(Config.POST, postChatDtoList.get(position));
+                intent.putExtra(Config.USER, me);
                 context.startActivity(intent);
             }
         });

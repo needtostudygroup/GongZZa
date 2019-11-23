@@ -28,6 +28,13 @@ public class PostDto extends Post implements Parcelable {
         this.hashTagList = postDto.hashTagList;
     }
 
+    public PostDto(Post post) {
+        super(post);
+
+        this.participantList = new ArrayList<>();
+        this.hashTagList = new ArrayList<>();
+    }
+
     public PostDto(Parcel parcel) {
         super(parcel);
 

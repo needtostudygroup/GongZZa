@@ -51,7 +51,7 @@ public class ChattingRoomListFragment extends Fragment {
         initView(view);
 
         ChattingRoomListViewModel viewModel = new ChattingRoomListViewModel(getActivity().getApplication(), me);
-        viewModel.loadRemoteChatLog(viewModel.getLastChatReceivedDatetime());
+//        viewModel.loadRemoteChatLog(viewModel.getLastChatReceivedDatetime());
 
         viewModel.postChatList.observe(this, new Observer<List<PostChatDto>>() {
             @Override
@@ -66,7 +66,7 @@ public class ChattingRoomListFragment extends Fragment {
     private void initView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.chatting_room_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new ChattingRoomListAdapter(getActivity(), new ArrayList<>());
+        adapter = new ChattingRoomListAdapter(getActivity(), new ArrayList<>(), me);
         recyclerView.setAdapter(adapter);
     }
 }

@@ -49,7 +49,7 @@ public class Post implements Parcelable {
     public Post(Post post) {
         this.id = post.id;
         this.userId = post.userId;
-        this.titleImageUrl = post.titleImageUrl;
+        this.title = post.title;
         this.content = post.content;
         this.titleImageUrl = post.titleImageUrl;
         this.totalNumParticipants = post.totalNumParticipants;
