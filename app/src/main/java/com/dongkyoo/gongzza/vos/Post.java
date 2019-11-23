@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
@@ -44,6 +45,7 @@ public class Post implements Parcelable {
     public Post() {
     }
 
+    @Ignore
     public Post(Post post) {
         this.id = post.id;
         this.userId = post.userId;
@@ -55,6 +57,7 @@ public class Post implements Parcelable {
         this.createdAt = post.createdAt;
     }
 
+    @Ignore
     public Post(Parcel parcel) {
         id = parcel.readInt();
         userId = parcel.readString();
@@ -66,6 +69,7 @@ public class Post implements Parcelable {
         createdAt = (Date) parcel.readSerializable();
     }
 
+    @Ignore
     public Post(int id, String userId, String title, String content, Date meetDateTime, Date createdAt, int totalNumParticipants, String titleImageUrl) {
         this.id = id;
         this.userId = userId;

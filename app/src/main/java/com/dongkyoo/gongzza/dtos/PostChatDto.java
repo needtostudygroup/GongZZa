@@ -20,6 +20,7 @@ public class PostChatDto extends PostDto {
 
     public PostChatDto(Post post) {
         super();
+        chatLogList = new ArrayList<>();
         this.chatLogList = new ArrayList<>();
     }
 

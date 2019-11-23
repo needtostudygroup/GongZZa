@@ -2,10 +2,8 @@ package com.dongkyoo.gongzza.vos;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.dongkyoo.gongzza.cache.DateConverter;
 
 import java.util.Date;
 
@@ -37,6 +35,7 @@ public class ChatLog {
     public ChatLog() {
     }
 
+    @Ignore
     public ChatLog(int postId, String senderId, String content, Date sentAt) {
         this.postId = postId;
         this.senderId = senderId;

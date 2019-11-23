@@ -1,10 +1,12 @@
 package com.dongkyoo.gongzza.chat.chattingRoomList;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
@@ -13,11 +15,13 @@ import androidx.room.Room;
 import com.dongkyoo.gongzza.Utils;
 import com.dongkyoo.gongzza.cache.AppDatabase;
 import com.dongkyoo.gongzza.cache.CacheCallback;
+import com.dongkyoo.gongzza.cache.CacheStateDao;
 import com.dongkyoo.gongzza.cache.ChatDao;
 import com.dongkyoo.gongzza.cache.PostDao;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
 import com.dongkyoo.gongzza.network.ChatLogApi;
 import com.dongkyoo.gongzza.network.Networks;
+import com.dongkyoo.gongzza.vos.CacheState;
 import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.Post;
 
@@ -30,9 +34,11 @@ import retrofit2.Callback;
 
 public class ChattingRoomListModel {
 
+    private static final String TAG = "ChattingRoomListModel";
     private ChatLogApi chatLogApi;
     private ChatDao chatDao;
     private PostDao postDao;
+    private CacheStateDao cacheStateDao;
     private boolean isLoadEnrolledPostListRunning;
     private boolean isLoadChatLogListRunning;
 
@@ -42,6 +48,7 @@ public class ChattingRoomListModel {
                 .allowMainThreadQueries().build();
         chatDao = db.chatDao();
         postDao = db.postDao();
+        cacheStateDao = db.cacheState();
     }
 
     void loadEnrolledPostList(CacheCallback<List<PostChatDto>> callback) {
@@ -57,15 +64,40 @@ public class ChattingRoomListModel {
                 List<PostChatDto> postChatDtoList = new ArrayList<>();
                 List<Post> postList = postDao.selectEnrolledPostList();
                 for (Post post : postList) {
-                    postChatDtoList.add(new PostChatDto(post));
+                    PostChatDto postChatDto = new PostChatDto(post);
+                    postChatDto.getChatLogList().add(chatDao.loadLastReceivedChat());
+                    postChatDtoList.add(postChatDto);
                 }
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onReceive(postChatDtoList);
+                        CacheState cacheState = cacheStateDao.selectState();
+                        callback.onReceive(cacheState.getPostLastUpdateDatetime(), postChatDtoList);
                     }
                 });
                 isLoadEnrolledPostListRunning = false;
+            }
+        }).start();
+    }
+
+    void insertLocalPostChatDto(List<PostChatDto> list) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (PostChatDto postChatDto : list) {
+                    try {
+                        postDao.enrollPost(postChatDto);
+                        cacheStateDao.deleteState();
+                        cacheStateDao.insertState(CacheState.createNow());
+                    } catch (SQLiteConstraintException e) {
+                    }
+                    for (ChatLog chatLog : postChatDto.getChatLogList()) {
+                        chatDao.insertChat(chatLog);
+                        cacheStateDao.deleteState();
+                        cacheStateDao.insertState(CacheState.createNow());
+                    }
+                }
+                Log.i(TAG, "PostChatDto 로컬 캐시 완료");
             }
         }).start();
     }
@@ -91,7 +123,8 @@ public class ChattingRoomListModel {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onReceive(chatLogList);
+                        CacheState cacheState = cacheStateDao.selectState();
+                        callback.onReceive(cacheState.getChatLastUpdateDatetime(), chatLogList);
                     }
                 });
                 isLoadChatLogListRunning = false;

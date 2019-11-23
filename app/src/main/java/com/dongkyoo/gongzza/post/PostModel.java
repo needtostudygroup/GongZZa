@@ -5,9 +5,11 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.dongkyoo.gongzza.cache.AppDatabase;
+import com.dongkyoo.gongzza.cache.CacheStateDao;
 import com.dongkyoo.gongzza.cache.PostDao;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.ParticipantApi;
+import com.dongkyoo.gongzza.vos.CacheState;
 import com.dongkyoo.gongzza.vos.Participant;
 import com.dongkyoo.gongzza.vos.Post;
 import com.dongkyoo.gongzza.vos.User;
@@ -20,9 +22,12 @@ public class PostModel {
 
     private ParticipantApi participantApi;
     private PostDao postDao;
+    private CacheStateDao cacheStateDao;
 
     public PostModel(Context context) {
-        postDao = Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DB_NAME).build().postDao();
+        AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DB_NAME).build();
+        postDao = db.postDao();
+        cacheStateDao = db.cacheState();
         participantApi = Networks.retrofit.create(ParticipantApi.class);
     }
 
@@ -32,7 +37,7 @@ public class PostModel {
             @Override
             public void onResponse(Call<Participant> call, Response<Participant> response) {
                 if (response.code() == 200) {
-                    postDao.enrollPost(post);
+                    enrollLocally(post);
                 }
                 callback.onResponse(call, response);
             }
@@ -44,13 +49,35 @@ public class PostModel {
         });
     }
 
+    void enrollLocally(Post post) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                postDao.enrollPost(post);
+                cacheStateDao.deleteState();
+                cacheStateDao.insertState(CacheState.createNow());
+            }
+        }).start();
+    }
+
+    void leaveLocally(Post post) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                postDao.leavePost(post);
+                cacheStateDao.deleteState();
+                cacheStateDao.insertState(CacheState.createNow());
+            }
+        }).start();
+    }
+
     void leave(Post post, String userId, Callback<Boolean> callback) {
         Call<Boolean> call = participantApi.deleteParticipant(post.getId(), userId);
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.code() == 200) {
-                    postDao.leavePost(post);
+                    leaveLocally(post);
                 }
                 callback.onResponse(call, response);
             }

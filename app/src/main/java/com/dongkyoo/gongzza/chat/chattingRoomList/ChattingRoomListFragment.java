@@ -57,9 +57,7 @@ public class ChattingRoomListFragment extends Fragment {
             @Override
             public void onChanged(List<PostChatDto> newPostChatDtos) {
                 Log.i(TAG, "채팅데이터 로딩");
-                List<PostChatDto> postChatDtoList = adapter.getPostChatDtoList();
-                PostChatDtos.merge(newPostChatDtos, postChatDtoList);
-                adapter.setPostChatDtoList(postChatDtoList);
+                adapter.setPostChatDtoList(newPostChatDtos);
             }
         });
         return view;

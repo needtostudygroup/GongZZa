@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ac4dc8f3340dc59521ccfcf3c8429a1d",
+    "identityHash": "176bf0adf107457e7c3f2d2176c1a4bc",
     "entities": [
       {
         "tableName": "ChatLog",
@@ -115,11 +115,43 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "CacheState",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `postLastUpdateDatetime` INTEGER, `ChatLastUpdateDatetime` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postLastUpdateDatetime",
+            "columnName": "postLastUpdateDatetime",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ChatLastUpdateDatetime",
+            "columnName": "ChatLastUpdateDatetime",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ac4dc8f3340dc59521ccfcf3c8429a1d\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"176bf0adf107457e7c3f2d2176c1a4bc\")"
     ]
   }
 }

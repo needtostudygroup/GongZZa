@@ -14,6 +14,7 @@ import com.dongkyoo.gongzza.dtos.PostChatDtos;
 import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
     private MutableLiveData<List<PostChatDto>> _postChatList = new MutableLiveData<>();
 
     public LiveData<List<PostChatDto>> postChatList = _postChatList;
+    private Date lastUpdateDatetime = new Date(0);
     private User me;
 
 
@@ -41,6 +43,7 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
         super(application);
 
         this.me = me;
+        _postChatList.setValue(new ArrayList<>());
         chattingRoomListModel = new ChattingRoomListModel(application);
         loadEnrolledPostList();
     }
@@ -48,7 +51,7 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
     private void loadEnrolledPostList() {
         chattingRoomListModel.loadEnrolledPostList(new CacheCallback<List<PostChatDto>>() {
             @Override
-            public void onReceive(List<PostChatDto> postChatDtos) {
+            public void onReceive(Date requestDatetime, List<PostChatDto> postChatDtos) {
                 _postChatList.setValue(postChatDtos);
                 loadLocalChatLog(getLastChatReceivedDatetime());
             }
@@ -64,10 +67,12 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
         for (PostChatDto postChatDto : postChatDtoList) {
             chattingRoomListModel.loadLocalChatLog(postChatDto.getId(), afterDate, 0, 1, new CacheCallback<List<ChatLog>>() {
                 @Override
-                public void onReceive(List<ChatLog> chatLogList) {
-                    if (chatLogList != null && chatLogList.size() > 0)
-                        postChatDto.getChatLogList().add(chatLogList.get(0));
-                    _postChatList.setValue(postChatDtoList);
+                public void onReceive(Date requestDatetime, List<ChatLog> chatLogList) {
+                    if (lastUpdateDatetime.getTime() < requestDatetime.getTime()) {
+                        if (chatLogList != null && chatLogList.size() > 0)
+                            postChatDto.getChatLogList().add(chatLogList.get(0));
+                        _postChatList.setValue(postChatDtoList);
+                    }
                 }
             });
         }
@@ -82,9 +87,14 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
             @Override
             public void onResponse(Call<List<PostChatDto>> call, Response<List<PostChatDto>> response) {
                 if (response.code() == 200) {
+                    if (response.body() == null)
+                        return;
+
                     Log.i(TAG, "최신 채팅 정보 로딩 성공");
+                    chattingRoomListModel.insertLocalPostChatDto(response.body());
                     List<PostChatDto> postChatDtoList = postChatList.getValue();
                     PostChatDtos.merge(response.body(), postChatDtoList);
+                    lastUpdateDatetime = new Date(System.currentTimeMillis());
                     _postChatList.setValue(postChatDtoList);
                 } else {
                     Log.e(TAG, "최신 채팅 정보 로딩 실패");
