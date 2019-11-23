@@ -22,7 +22,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".chatLog.chattingRoom.ChatActivity" />
+        <activity android:name=".chat.chattingRoom.ChatActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -20,12 +20,4 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ChatDao chatDao();
     public abstract PostDao postDao();
-    public abstract CacheStateDao cacheState();
-
-    @Override
-    public void init(@NonNull DatabaseConfiguration configuration) {
-        super.init(configuration);
-
-        cacheState().insertState(new CacheState(new Date(0), new Date(0)));
-    }
 }

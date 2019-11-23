@@ -30,7 +30,6 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
     private MutableLiveData<List<PostChatDto>> _postChatList = new MutableLiveData<>();
 
     public LiveData<List<PostChatDto>> postChatList = _postChatList;
-    private Date lastUpdateDatetime = new Date(0);
     private User me;
 
 
@@ -51,28 +50,25 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
     private void loadEnrolledPostList() {
         chattingRoomListModel.loadEnrolledPostList(new CacheCallback<List<PostChatDto>>() {
             @Override
-            public void onReceive(Date requestDatetime, List<PostChatDto> postChatDtos) {
+            public void onReceive(List<PostChatDto> postChatDtos) {
                 _postChatList.setValue(postChatDtos);
-                loadLocalChatLog(getLastChatReceivedDatetime());
+                loadLocalChatLog();
             }
         });
     }
 
     /**
      * DB에 저장된 채팅 로그
-     * @param afterDate     해당 날짜 이후의 데이터만 불러옴
      */
-    private void loadLocalChatLog(Date afterDate) {
+    private void loadLocalChatLog() {
         List<PostChatDto> postChatDtoList = postChatList.getValue();
         for (PostChatDto postChatDto : postChatDtoList) {
-            chattingRoomListModel.loadLocalChatLog(postChatDto.getId(), afterDate, 0, 1, new CacheCallback<List<ChatLog>>() {
+            chattingRoomListModel.loadLastReceivedChat(new CacheCallback<ChatLog>() {
                 @Override
-                public void onReceive(Date requestDatetime, List<ChatLog> chatLogList) {
-                    if (lastUpdateDatetime.getTime() < requestDatetime.getTime()) {
-                        if (chatLogList != null && chatLogList.size() > 0)
-                            postChatDto.getChatLogList().add(chatLogList.get(0));
-                        _postChatList.setValue(postChatDtoList);
-                    }
+                public void onReceive(ChatLog chatLog) {
+                    postChatDto.getChatLogList().add(chatLog);
+                    postChatDto.sortChatLogList();
+                    _postChatList.setValue(postChatDtoList);
                 }
             });
         }
@@ -94,7 +90,6 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
                     chattingRoomListModel.insertLocalPostChatDto(response.body());
                     List<PostChatDto> postChatDtoList = postChatList.getValue();
                     PostChatDtos.merge(response.body(), postChatDtoList);
-                    lastUpdateDatetime = new Date(System.currentTimeMillis());
                     _postChatList.setValue(postChatDtoList);
                 } else {
                     Log.e(TAG, "최신 채팅 정보 로딩 실패");

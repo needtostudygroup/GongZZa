@@ -11,6 +11,7 @@ public class PostChatDtos {
                 if (postChatDto.getId() == destPostChatDto.getId()) {
                     isFound = true;
                     destPostChatDto.getChatLogList().addAll(postChatDto.getChatLogList());
+                    destPostChatDto.sortChatLogList();
                     break;
                 }
             }

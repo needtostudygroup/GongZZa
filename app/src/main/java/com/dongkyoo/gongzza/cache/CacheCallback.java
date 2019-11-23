@@ -4,5 +4,5 @@ import java.util.Date;
 
 public interface CacheCallback<T> {
 
-    void onReceive(Date requestDateTime, T t);
+    void onReceive(T t);
 }

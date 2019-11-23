@@ -2,20 +2,15 @@ package com.dongkyoo.gongzza.chat.chattingRoomList;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.room.Room;
 
 import com.dongkyoo.gongzza.Utils;
 import com.dongkyoo.gongzza.cache.AppDatabase;
 import com.dongkyoo.gongzza.cache.CacheCallback;
-import com.dongkyoo.gongzza.cache.CacheStateDao;
 import com.dongkyoo.gongzza.cache.ChatDao;
 import com.dongkyoo.gongzza.cache.PostDao;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
@@ -38,7 +33,6 @@ public class ChattingRoomListModel {
     private ChatLogApi chatLogApi;
     private ChatDao chatDao;
     private PostDao postDao;
-    private CacheStateDao cacheStateDao;
     private boolean isLoadEnrolledPostListRunning;
     private boolean isLoadChatLogListRunning;
 
@@ -48,7 +42,6 @@ public class ChattingRoomListModel {
                 .allowMainThreadQueries().build();
         chatDao = db.chatDao();
         postDao = db.postDao();
-        cacheStateDao = db.cacheState();
     }
 
     void loadEnrolledPostList(CacheCallback<List<PostChatDto>> callback) {
@@ -71,8 +64,7 @@ public class ChattingRoomListModel {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        CacheState cacheState = cacheStateDao.selectState();
-                        callback.onReceive(cacheState.getPostLastUpdateDatetime(), postChatDtoList);
+                        callback.onReceive(postChatDtoList);
                     }
                 });
                 isLoadEnrolledPostListRunning = false;
@@ -87,14 +79,10 @@ public class ChattingRoomListModel {
                 for (PostChatDto postChatDto : list) {
                     try {
                         postDao.enrollPost(postChatDto);
-                        cacheStateDao.deleteState();
-                        cacheStateDao.insertState(CacheState.createNow());
                     } catch (SQLiteConstraintException e) {
                     }
                     for (ChatLog chatLog : postChatDto.getChatLogList()) {
                         chatDao.insertChat(chatLog);
-                        cacheStateDao.deleteState();
-                        cacheStateDao.insertState(CacheState.createNow());
                     }
                 }
                 Log.i(TAG, "PostChatDto 로컬 캐시 완료");
@@ -123,8 +111,7 @@ public class ChattingRoomListModel {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        CacheState cacheState = cacheStateDao.selectState();
-                        callback.onReceive(cacheState.getChatLastUpdateDatetime(), chatLogList);
+                        callback.onReceive(chatLogList);
                     }
                 });
                 isLoadChatLogListRunning = false;
@@ -149,5 +136,22 @@ public class ChattingRoomListModel {
         if (chatLog == null)
             return new Date();
         return chatDao.loadLastReceivedChat().getSentAt();
+    }
+
+    void loadLastReceivedChat(CacheCallback<ChatLog> callback) {
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ChatLog chatLog = chatDao.loadLastReceivedChat();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onReceive(chatLog);
+                    }
+                });
+            }
+        }).start();
     }
 }

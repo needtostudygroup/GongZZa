@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.room.Room;
 
 import com.dongkyoo.gongzza.cache.AppDatabase;
-import com.dongkyoo.gongzza.cache.CacheStateDao;
 import com.dongkyoo.gongzza.cache.PostDao;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.ParticipantApi;
@@ -22,12 +21,10 @@ public class PostModel {
 
     private ParticipantApi participantApi;
     private PostDao postDao;
-    private CacheStateDao cacheStateDao;
 
     public PostModel(Context context) {
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DB_NAME).build();
         postDao = db.postDao();
-        cacheStateDao = db.cacheState();
         participantApi = Networks.retrofit.create(ParticipantApi.class);
     }
 
@@ -54,8 +51,6 @@ public class PostModel {
             @Override
             public void run() {
                 postDao.enrollPost(post);
-                cacheStateDao.deleteState();
-                cacheStateDao.insertState(CacheState.createNow());
             }
         }).start();
     }
@@ -65,8 +60,6 @@ public class PostModel {
             @Override
             public void run() {
                 postDao.leavePost(post);
-                cacheStateDao.deleteState();
-                cacheStateDao.insertState(CacheState.createNow());
             }
         }).start();
     }

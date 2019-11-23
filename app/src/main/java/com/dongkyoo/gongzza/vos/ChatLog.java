@@ -12,7 +12,7 @@ import java.util.Date;
  * 채팅 데이터 클래스
  */
 @Entity
-public class ChatLog {
+public class ChatLog implements Comparable<ChatLog> {
 
     @PrimaryKey
     private int id;
@@ -89,5 +89,10 @@ public class ChatLog {
 
     public void setSenderName(String senderName) {
         this.senderName = senderName;
+    }
+
+    @Override
+    public int compareTo(ChatLog o) {
+        return (int) (sentAt.getTime() - o.getSentAt().getTime());
     }
 }

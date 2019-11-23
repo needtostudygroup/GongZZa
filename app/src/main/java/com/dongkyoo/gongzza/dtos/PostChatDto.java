@@ -4,6 +4,8 @@ import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.Post;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class PostChatDto extends PostDto {
@@ -36,5 +38,9 @@ public class PostChatDto extends PostDto {
         if (chatLogList == null || chatLogList.size() == 0)
             return null;
         return chatLogList.get(chatLogList.size() - 1);
+    }
+
+    public void sortChatLogList() {
+        Collections.sort(chatLogList);
     }
 }
