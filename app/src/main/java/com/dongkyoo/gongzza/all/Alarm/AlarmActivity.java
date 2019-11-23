@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.dongkyoo.gongzza.R;
+
 public class AlarmActivity extends AppCompatActivity {
 
     @Override
@@ -11,4 +13,6 @@ public class AlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
     }
+
+
 }

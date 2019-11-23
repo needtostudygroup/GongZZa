@@ -1,205 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+    <EditText
+        android:id="@+id/editTextClassName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin3"
+        android:layout_marginLeft="@dimen/margin3"
+        android:layout_marginRight="@dimen/margin3"
+        android:hint = "수업명" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="요일" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:text="과목 이름"
-            android:background="#C8C8C8"
-            android:gravity="center"
-            android:textSize="15dp"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4.5"
-            android:text="수업     시작     시간"
-            android:textSize="15dp"
-            android:gravity="center" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4.5"
-            android:text="수업     끝     시간"
-            android:textSize="15dp"
-            android:gravity="center"
-            android:background="#C8C8C8"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            />
+    <EditText
+        android:id="@+id/editTextDayOfTheWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextClassName"
+        android:layout_marginLeft="@dimen/margin3"
+        android:hint="요일" />
 
-    </LinearLayout>
+    <EditText
+        android:id="@+id/editTextStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/editTextDayOfTheWeek"
+        android:layout_toRightOf="@id/editTextDayOfTheWeek"
+        android:layout_marginLeft="@dimen/margin3"
+        android:hint = "시작 시간" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="8"
-        android:orientation="vertical">
+    <EditText
+        android:id="@+id/editTextEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/editTextStartTime"
+        android:layout_toRightOf="@id/editTextStartTime"
+        android:layout_marginLeft="@dimen/margin3"
+        android:hint = "종료 시간" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/buttonAddClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextDayOfTheWeek"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin3"
+        android:text="저장" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="월"
-                android:textSize="20dp"
-                android:background="#C8C8C8"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="화"
-                android:textSize="20dp"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="수"
-                android:textSize="20dp"
-                android:background="#C8C8C8"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="목"
-                android:textSize="20dp"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="금"
-                android:textSize="20dp"
-                android:background="#C8C8C8"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="토"
-                android:textSize="20dp"
-                android:gravity="center"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="일"
-                android:textSize="20dp"
-                android:background="#C8C8C8"
-                android:gravity="center"/>
-        </LinearLayout>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:text="사용자 인터페이스"
-            android:textSize="20dp"
-            android:gravity="center"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4.5"
-            android:orientation="horizontal"
-            android:background="#C8C8C8">
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="09"
-                android:textSize="110dp"
-                android:gravity="center|right"    />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text=":"
-                android:textSize="110dp"
-                android:gravity="center"    />
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="00"
-                android:textSize="110dp"
-                android:gravity="center|left"    />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="4.5"
-            android:orientation="horizontal">
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="10"
-                android:textSize="110dp"
-                android:gravity="center|right"    />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text=":"
-                android:textSize="110dp"
-                android:gravity="center"    />
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="15"
-                android:textSize="110dp"
-                android:gravity="center|left"    />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal"
-            android:background="#C8C8C8">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="저장"
-                android:textSize="30dp"
-                android:gravity="center"    />
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="취소"
-                android:textSize="30dp"
-                android:gravity="center"    />
-
-        </LinearLayout>
-
-    </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

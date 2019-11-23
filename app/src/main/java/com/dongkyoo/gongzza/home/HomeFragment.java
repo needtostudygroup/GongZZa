@@ -7,17 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.dongkyoo.gongzza.R;
+import com.dongkyoo.gongzza.home.add.ClassAdd;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
 
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public HomeFragment() {
         // Required empty public constructor
@@ -41,13 +43,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(view == addButton) {
+                if(view == addButton) {     /*
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     LayoutInflater inflater = (LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View customDialogView = inflater.inflate(R.layout.add_class, null);
                     builder.setView(customDialogView);
                     customDialog = builder.create();
-                    customDialog.show();
+                    customDialog.show();    */
+
+                    ClassAdd customDialog2 = new ClassAdd(HomeFragment.this);
+
+                    customDialog2.callFunction();
                 }
             }
         });
