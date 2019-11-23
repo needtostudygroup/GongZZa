@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 new Fragment[] {
                         new HomeFragment(),
                         BoardFragment.newInstance(me),
-                        new ChattingRoomListFragment(),
+                        ChattingRoomListFragment.newInstance(me),
                         new AllFragment()
                 },
                 getResources().getStringArray(R.array.tab_name_list)

@@ -1,36 +1,39 @@
 package com.dongkyoo.gongzza.dtos;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.dongkyoo.gongzza.vos.Chat;
-import com.dongkyoo.gongzza.vos.HashTag;
-import com.dongkyoo.gongzza.vos.Participant;
+import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.Post;
-import com.dongkyoo.gongzza.vos.User;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class PostChatDto extends PostDto {
 
-    private List<Chat> chatList;
+    private List<ChatLog> chatLogList;
 
     public PostChatDto() {
     }
 
-    public PostChatDto(List<Chat> chatList, PostDto postDto) {
+    public PostChatDto(List<ChatLog> chatLogList, PostDto postDto) {
         super(postDto);
-        this.chatList = chatList;
+        this.chatLogList = chatLogList;
     }
 
-    public List<Chat> getChatList() {
-        return chatList;
+    public PostChatDto(Post post) {
+        super();
+        this.chatLogList = new ArrayList<>();
     }
 
-    public void setChatList(List<Chat> chatList) {
-        this.chatList = chatList;
+    public List<ChatLog> getChatLogList() {
+        return chatLogList;
+    }
+
+    public void setChatLogList(List<ChatLog> chatLogList) {
+        this.chatLogList = chatLogList;
+    }
+
+    public ChatLog getLatestChatLog() {
+        if (chatLogList == null || chatLogList.size() == 0)
+            return null;
+        return chatLogList.get(chatLogList.size() - 1);
     }
 }

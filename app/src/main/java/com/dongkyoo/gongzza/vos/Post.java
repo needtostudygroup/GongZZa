@@ -3,18 +3,42 @@ package com.dongkyoo.gongzza.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.dongkyoo.gongzza.cache.DateConverter;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@TypeConverters(value = {DateConverter.class})
 public class Post implements Parcelable {
 
+    @PrimaryKey
     private int id;
+
+    @ColumnInfo(name = "user_id")
     private String userId;
+
+    @ColumnInfo
     private String title;
+
+    @ColumnInfo
     private String content;
+
+    @ColumnInfo(name = "title_image_url")
     private String titleImageUrl;
+
+    @ColumnInfo(name = "total_num_participants")
     private int totalNumParticipants;
+
+    @ColumnInfo(name = "meet_date_time")
     private Date meetDateTime;
+
+    @ColumnInfo(name = "created_at")
     private Date createdAt;
 
     public Post() {

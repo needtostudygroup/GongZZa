@@ -1,27 +1,47 @@
 package com.dongkyoo.gongzza.vos;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.dongkyoo.gongzza.cache.DateConverter;
+
 import java.util.Date;
 
 /**
  * 작성자 : 이동규
  * 채팅 데이터 클래스
  */
-public class Chat {
+@Entity
+public class ChatLog {
 
+    @PrimaryKey
     private int id;
-    private int postId;
-    private String senderId;
-    private String content;
-    private Date sendedAt;
 
-    public Chat() {
+    @ColumnInfo(name = "post_id")
+    private int postId;
+
+    @ColumnInfo(name = "sender_id")
+    private String senderId;
+
+    @ColumnInfo(name = "sender_name")
+    private String senderName;
+
+    @ColumnInfo
+    private String content;
+
+    @ColumnInfo(name = "sent_at")
+    private Date sentAt;
+
+    public ChatLog() {
     }
 
-    public Chat(int postId, String senderId, String content, Date sendedAt) {
+    public ChatLog(int postId, String senderId, String content, Date sentAt) {
         this.postId = postId;
         this.senderId = senderId;
         this.content = content;
-        this.sendedAt = sendedAt;
+        this.sentAt = sentAt;
     }
 
     public int getId() {
@@ -56,11 +76,19 @@ public class Chat {
         this.content = content;
     }
 
-    public Date getSendedAt() {
-        return sendedAt;
+    public Date getSentAt() {
+        return sentAt;
     }
 
-    public void setSendedAt(Date sendedAt) {
-        this.sendedAt = sendedAt;
+    public void setSentAt(Date sentAt) {
+        this.sentAt = sentAt;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 }

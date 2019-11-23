@@ -29,7 +29,7 @@ public class PostActivity extends AppCompatActivity {
         User me = getIntent().getParcelableExtra(Config.USER);
         PostDto postDto = getIntent().getParcelableExtra(Config.POST);
 
-        PostViewModel postViewModel = new PostViewModel(postDto, me);
+        PostViewModel postViewModel = new PostViewModel(getApplication(), postDto, me);
         binding.setViewModel(postViewModel);
 
         postViewModel.isMember.observe(this, new Observer<Boolean>() {
