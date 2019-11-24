@@ -5,6 +5,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private User me;
     private PostChatDto postChatDto;
+    private ChatAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,5 +83,10 @@ public class ChatActivity extends AppCompatActivity {
                         }).show();
                 }
             });
+
+        RecyclerView recyclerView = findViewById(R.id.chat_recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ChatAdapter(this, this.postChatDto, this.me);
+        recyclerView.setAdapter(adapter);
     }
 }

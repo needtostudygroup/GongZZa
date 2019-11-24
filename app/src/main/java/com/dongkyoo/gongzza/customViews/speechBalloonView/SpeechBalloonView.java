@@ -1,4 +1,4 @@
-package com.dongkyoo.gongzza.customViews.SpeechBalloonView;
+package com.dongkyoo.gongzza.customViews.speechBalloonView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -55,8 +55,8 @@ public class SpeechBalloonView extends RelativeLayout {
 
     private void init(AttributeSet attrs) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ChatView);
-        int type = typedArray.getInt(R.styleable.ChatView_type, 0);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SpeechBalloonView);
+        int type = typedArray.getInt(R.styleable.SpeechBalloonView_type, 0);
         switch (type) {
             case TYPE_ME:
                 inflater.inflate(R.layout.view_speech_balloon_me, this, true);
@@ -72,11 +72,15 @@ public class SpeechBalloonView extends RelativeLayout {
 
         setupView();
 
-        String text = typedArray.getString(R.styleable.ChatView_text);
+        String text = typedArray.getString(R.styleable.SpeechBalloonView_text);
         contentTextView.setText(text);
     }
 
     private void setupView() {
         contentTextView = findViewById(R.id.speech_balloon_content_textView);
+    }
+
+    public void setText(String text) {
+        contentTextView.setText(text);
     }
 }

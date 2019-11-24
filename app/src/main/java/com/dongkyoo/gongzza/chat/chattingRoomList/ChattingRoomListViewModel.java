@@ -66,9 +66,11 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
             chattingRoomListModel.loadLastReceivedChat(new CacheCallback<ChatLog>() {
                 @Override
                 public void onReceive(ChatLog chatLog) {
-                    postChatDto.getChatLogList().add(chatLog);
-                    postChatDto.sortChatLogList();
-                    _postChatList.setValue(postChatDtoList);
+                    if (chatLog != null) {
+                        postChatDto.getChatLogList().add(chatLog);
+                        postChatDto.sortChatLogList();
+                        _postChatList.setValue(postChatDtoList);
+                    }
                 }
             });
         }

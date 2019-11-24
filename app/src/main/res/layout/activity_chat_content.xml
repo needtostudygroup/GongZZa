@@ -13,109 +13,31 @@
         android:background="@color/colorPrimary"
         app:titleTextColor="#FFF"/>
 
-    <RelativeLayout
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin2">
-
-        <TextView
-            android:id="@+id/name1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이동규"
-            android:layout_marginBottom="@dimen/margin0"
-            android:layout_marginRight="@dimen/margin2"
-            android:layout_alignTop="@id/titleImageView1"
-            android:layout_toLeftOf="@id/titleImageView1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginRight="@dimen/margin2"
-            android:layout_marginBottom="@dimen/margin0"
-            android:text="17:02"
-            android:layout_toLeftOf="@id/speech_balloon1"
-            android:layout_alignBottom="@id/speech_balloon1"/>
-
-        <com.dongkyoo.gongzza.customViews.SpeechBalloonView.SpeechBalloonView
-            android:id="@+id/speech_balloon1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:text="안녕 친구야!"
-            app:type="me"
-            android:layout_below="@id/name1"
-            android:layout_toLeftOf="@id/titleImageView1"/>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/titleImageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="30dp"
-            android:layout_marginLeft="@dimen/margin2"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentRight="true">
-
-            <ImageView
-                android:layout_width="@dimen/image_width"
-                android:layout_height="@dimen/image_height"
-                android:src="@mipmap/ic_launcher"/>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/margin2">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/name2"
+        <EditText
+            android:id="@+id/chat_editText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="황정현"
-            android:layout_marginBottom="@dimen/margin0"
-            android:layout_marginLeft="@dimen/margin2"
-            android:layout_alignTop="@id/titleImageView2"
-            android:layout_toRightOf="@id/titleImageView2"/>
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/send_imageButton"/>
 
-        <TextView
+        <ImageButton
+            android:id="@+id/send_imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginRight="@dimen/margin2"
-            android:layout_marginBottom="@dimen/margin0"
-            android:text="17:03"
-            android:layout_toRightOf="@id/speech_balloon2"
-            android:layout_alignBottom="@id/speech_balloon2"/>
-
-        <com.dongkyoo.gongzza.customViews.SpeechBalloonView.SpeechBalloonView
-            android:id="@+id/speech_balloon2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:text="반가워 친구야!"
-            app:type="you"
-            android:layout_below="@id/name2"
-            android:layout_toRightOf="@id/titleImageView2"/>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/titleImageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="30dp"
-            android:layout_marginRight="@dimen/margin2"
-            android:layout_gravity="center_vertical"
-            android:layout_alignParentLeft="true">
-
-            <ImageView
-                android:layout_width="@dimen/image_width"
-                android:layout_height="@dimen/image_height"
-                android:src="@mipmap/ic_launcher"/>
-
-        </com.google.android.material.card.MaterialCardView>
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"/>
 
     </RelativeLayout>
 
