@@ -9,19 +9,25 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class Networks {
 
     public static String SERVER_URL = "http://114.206.137.114:8080";
+    private static OkHttpClient client = new OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.MINUTES)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build();
+
     public static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVER_URL)
-            .addConverterFactory(JacksonConverterFactory.create(
-                    new ObjectMapper().setDateFormat(
-                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS", Locale.KOREA)
-                    )))
+            .client(client)
+            .addConverterFactory(JacksonConverterFactory.create())
             .build();
 
     static {
@@ -32,9 +38,8 @@ public class Networks {
             SERVER_URL = properties.getProperty("serverUrl");
             retrofit = new Retrofit.Builder()
                     .baseUrl(SERVER_URL)
-                    .addConverterFactory(JacksonConverterFactory.create(
-                            new ObjectMapper().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"))
-                    ))
+                    .client(client)
+                    .addConverterFactory(JacksonConverterFactory.create())
                     .build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,10 +54,8 @@ public class Networks {
             SERVER_URL = properties.getProperty("serverUrl");
             retrofit = new Retrofit.Builder()
                     .baseUrl(SERVER_URL)
-                    .addConverterFactory(JacksonConverterFactory.create(
-                            new ObjectMapper().setDateFormat(
-                                    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS", Locale.KOREA)
-                            )))
+                    .client(client)
+                    .addConverterFactory(JacksonConverterFactory.create())
                     .build();
             return retrofit;
         } catch (Exception e) {

@@ -17,6 +17,15 @@ import static org.junit.Assert.assertTrue;
 
 public class UserApiUnitTest {
 
+    @Test
+    public void sendAuthenticationEmailTest() throws Exception {
+        UserApi userApi = Networks.retrofit.create(UserApi.class);
+        Call<AuthMail> call = userApi.sendAuthenticateEmail("qwerty6", "dkenl135@naver.com");
+        Response<AuthMail> response = call.execute();
+        assertEquals(200, response.code());
+        assertNotNull(response.body());
+    }
+
     private AuthMail sendAuthenticationEmail() throws Exception {
         UserApi userApi = Networks.retrofit.create(UserApi.class);
         Call<AuthMail> call = userApi.sendAuthenticateEmail(MockData.getMockUser().getId(), "wind.dong.dream@gmail.com");
@@ -40,7 +49,10 @@ public class UserApiUnitTest {
     @Test
     public void signUpTest() throws Exception {
         UserApi userApi = Networks.retrofit.create(UserApi.class);
-        Call<User> call = userApi.signUp(MockData.getMockUser());
+        User user = MockData.getMockUser();
+        user.setId("qwerty6");
+        user.setEmail("dkenl135@naver.com");
+        Call<User> call = userApi.signUp(user);
         Response<User> response = call.execute();
         assertEquals(200, response.code());
         assertNotNull(response.body());
