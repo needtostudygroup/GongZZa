@@ -152,6 +152,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String content = chatEditText.getText().toString();
                 viewModel.sendChat(content);
+                chatEditText.setText("");
             }
         });
 

@@ -41,9 +41,6 @@ public class ChatModel {
             public void onResponse(Call<ChatLog> call, Response<ChatLog> response) {
                 if (response.code() == 200) {
                     Date d = new Date();
-                    Log.i(TAG, "now = " + d.getTime());
-                    Log.i(TAG, "res = " + response.body().getSentAt().getTime());
-                    Log.i(TAG, "dif = " + (response.body().getSentAt().getTime() - d.getTime()));
                     new Thread(new Runnable() {
                         @Override
                         public void run() {

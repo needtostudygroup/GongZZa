@@ -101,6 +101,12 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
         String senderId = remoteMessage.getData().get("SENDER");
         int id = Integer.parseInt(remoteMessage.getData().get("ID"));
 
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String me = sharedPreferences.getString(Config.USER, "");
+        if (senderId.equals(me)) {
+            return;
+        }
+
         createNotificationChannel();
 
         Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
