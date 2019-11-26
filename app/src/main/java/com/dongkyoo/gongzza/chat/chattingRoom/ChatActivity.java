@@ -10,7 +10,11 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -40,6 +44,9 @@ public class ChatActivity extends AppCompatActivity {
     private PostChatDto postChatDto;
     private ChatAdapter adapter;
     private ChatViewModel viewModel;
+
+    private BroadcastReceiver chatMessageReceiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +81,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
             if (userId != null && password != null) {
-                viewModel = new ChatViewModel(this, postId, userId, password);
+                viewModel = new ChatViewModel(this, postId, userId);
                 viewModel.baseInfoState.observe(this, new Observer<ChatBaseInfo>() {
                     @Override
                     public void onChanged(ChatBaseInfo baseInfo) {
@@ -140,8 +147,9 @@ public class ChatActivity extends AppCompatActivity {
             });
 
         RecyclerView recyclerView = findViewById(R.id.chat_recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(false);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+//        manager.setReverseLayout(true);
+        recyclerView.setLayoutManager(manager);
         adapter = new ChatAdapter(this, this.postChatDto, this.me);
         recyclerView.setAdapter(adapter);
 
@@ -174,5 +182,36 @@ public class ChatActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (chatMessageReceiver == null) {
+            chatMessageReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if (intent.getIntExtra(Config.POST, -1) == postChatDto.getId()) {
+                        String senderId = intent.getStringExtra(Config.USER);
+                        String message = intent.getStringExtra(Config.MESSAGE);
+                        viewModel.receieveChat(senderId, message);
+                    }
+                }
+            };
+        }
+
+        IntentFilter intentFilter = new IntentFilter(getString(R.string.receive_message));
+        registerReceiver(chatMessageReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (chatMessageReceiver != null) {
+            unregisterReceiver(chatMessageReceiver);
+            chatMessageReceiver = null;
+        }
     }
 }

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">공짜</string>
+    <string name="receive_message">com.dongkyoo.gongzza.RECEIVE_MESSAGE</string>
+
     <string name="alarm_preference_title">알람</string>
     <string name="board_title">게시판</string>
     <string name="drawer_open">Open</string>

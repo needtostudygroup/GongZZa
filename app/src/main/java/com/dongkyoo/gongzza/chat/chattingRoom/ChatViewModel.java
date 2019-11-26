@@ -1,7 +1,6 @@
 package com.dongkyoo.gongzza.chat.chattingRoom;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,9 +11,7 @@ import com.dongkyoo.gongzza.cache.CacheCallback;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
 import com.dongkyoo.gongzza.dtos.PostDto;
 import com.dongkyoo.gongzza.dtos.SendingChatDto;
-import com.dongkyoo.gongzza.post.PostModel;
 import com.dongkyoo.gongzza.vos.ChatLog;
-import com.dongkyoo.gongzza.vos.Post;
 import com.dongkyoo.gongzza.vos.User;
 
 import java.util.Date;
@@ -33,6 +30,7 @@ public class ChatViewModel extends ViewModel {
     public LiveData<ChatBaseInfo> baseInfoState = _baseInfoState;
 
     private ChatModel chatModel;
+    private BaseModel baseModel;
     private User me;
     private PostChatDto postChatDto;
 
@@ -41,13 +39,13 @@ public class ChatViewModel extends ViewModel {
         this.postChatDto = postChatDto;
 
         chatModel = new ChatModel(context);
+        baseModel = new BaseModel();
     }
 
-    public ChatViewModel(Context context, int postId, String userId, String password) {
+    public ChatViewModel(Context context, int postId, String userId) {
         chatModel = new ChatModel(context);
-        BaseModel baseModel = new BaseModel();
 
-        baseModel.loadUserByIdPw(userId, password, new Callback<User>() {
+        baseModel.loadUserById(userId, new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if (response.isSuccessful()) {
@@ -90,6 +88,12 @@ public class ChatViewModel extends ViewModel {
                 _baseInfoState.setValue(new ChatBaseInfo(0));
             }
         });
+    }
+
+    public void receieveChat(String senderId, String content) {
+        ChatLog chatLog = new ChatLog(0, postChatDto.getId(), senderId, content, new Date(System.currentTimeMillis()));
+        postChatDto.getChatLogList().add(chatLog);
+        _chatState.setValue(new ChatState(ChatState.CREATE));
     }
 
     public void sendChat(String content) {

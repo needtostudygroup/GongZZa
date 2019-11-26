@@ -21,11 +21,20 @@ public interface UserApi {
     /**
      * 로그인 요청
      * @param id 유저 아이디
-     * @param password 유저 비밀번호
      * @return 로그인 성공 시 해당 유저의 정보가 담긴 객체를 리턴
      *      로그인 실패 시 500 에러
      */
     @GET("/users")
+    Call<User> getUserById(@Query("id") String id);
+
+    /**
+     * 로그인 요청
+     * @param id 유저 아이디
+     * @param password 유저 비밀번호
+     * @return 로그인 성공 시 해당 유저의 정보가 담긴 객체를 리턴
+     *      로그인 실패 시 500 에러
+     */
+    @GET("/users/login")
     Call<User> getUserByIdPw(@Query("id") String id, @Query("password") String password);
 
     /**

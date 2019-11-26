@@ -14,8 +14,8 @@ public class BaseModel {
     private UserApi userApi = Networks.retrofit.create(UserApi.class);
     private PostApi postApi = Networks.retrofit.create(PostApi.class);
 
-    public void loadUserByIdPw(String id, String password, Callback<User> callback) {
-        Call<User> call = userApi.getUserByIdPw(id, password);
+    public void loadUserById(String id, Callback<User> callback) {
+        Call<User> call = userApi.getUserById(id);
         call.enqueue(callback);
     }
 
