@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,10 +41,16 @@ import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
 
+    public static boolean IS_SHOWN = false;
+
     private User me;
-    private PostChatDto postChatDto;
+    private static PostChatDto postChatDto;
     private ChatAdapter adapter;
     private ChatViewModel viewModel;
+
+    public static PostChatDto getPostChatDto() {
+        return postChatDto;
+    }
 
     private BroadcastReceiver chatMessageReceiver;
 
@@ -188,6 +195,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        IS_SHOWN = true;
+
         if (chatMessageReceiver == null) {
             chatMessageReceiver = new BroadcastReceiver() {
                 @Override
@@ -208,6 +217,8 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+        IS_SHOWN = false;
 
         if (chatMessageReceiver != null) {
             unregisterReceiver(chatMessageReceiver);

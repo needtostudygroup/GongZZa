@@ -58,6 +58,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         return postChatDto.getChatLogList().size();
     }
 
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+        recyclerView.scrollToPosition(getItemCount() - 1);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private View itemView;

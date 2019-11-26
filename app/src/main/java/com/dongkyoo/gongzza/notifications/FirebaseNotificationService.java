@@ -103,9 +103,22 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String me = sharedPreferences.getString(Config.USER, "");
-//        if (senderId.equals(me)) {
-//            return;
-//        }
+
+
+        // TODO: 개발용
+        me = MockData.getMockUser().getId();
+
+
+
+
+
+
+
+
+
+        if (senderId.equals(me)) {
+            return;
+        }
 
         if (ChatActivity.IS_SHOWN && ChatActivity.getPostChatDto() != null &&
                 ChatActivity.getPostChatDto().getId() == postId) {
@@ -116,13 +129,6 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
             intent.putExtra(Config.CHAT_ID, id);
             sendBroadcast(intent);
         } else {
-            Intent intent2 = new Intent(getString(R.string.receive_message));
-            intent2.putExtra(Config.MESSAGE, message);
-            intent2.putExtra(Config.POST, postId);
-            intent2.putExtra(Config.USER, senderId);
-            intent2.putExtra(Config.CHAT_ID, id);
-            sendBroadcast(intent2);
-
             createNotificationChannel();
 
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
