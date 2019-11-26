@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.dongkyoo.gongzza.BaseModel;
+import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
 import com.dongkyoo.gongzza.dtos.PostDto;
@@ -56,47 +57,38 @@ public class ChatActivity extends AppCompatActivity {
             String userId = sharedPreferences.getString(Config.USER_ID, null);
             String password = sharedPreferences.getString(Config.PASSWORD, null);
 
+
+
+            //TODO: 개발용
+            userId = MockData.getMockUser().getId();
+            password = MockData.getMockUser().getPassword();
+
+
+
+
+
+
+
+
+
+
+
             if (userId != null && password != null) {
-                BaseModel baseModel = new BaseModel();
-
-                baseModel.loadUserByIdPw(userId, password, new Callback<User>() {
+                viewModel = new ChatViewModel(this, postId, userId, password);
+                viewModel.baseInfoState.observe(this, new Observer<ChatBaseInfo>() {
                     @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        if (response.isSuccessful()) {
-                            me = response.body();
-
-                            baseModel.loadPostById(postId, new Callback<PostDto>() {
-                                @Override
-                                public void onResponse(Call<PostDto> call, Response<PostDto> response) {
-                                    if (response.isSuccessful()) {
-                                        postChatDto = new PostChatDto(response.body());
-                                        viewModel = new ChatViewModel(ChatActivity.this, postChatDto, me);
-                                        initView();
-                                    } else {
-                                        Toast.makeText(ChatActivity.this, "데이터 로딩에 실패했습니다.", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<PostDto> call, Throwable t) {
-                                    Toast.makeText(ChatActivity.this, "데이터 로딩에 실패했습니다.", Toast.LENGTH_LONG).show();
-                                    finish();
-                                }
-                            });
-                        } else {
+                    public void onChanged(ChatBaseInfo baseInfo) {
+                        if (baseInfo.state == 200) {
+                            me = baseInfo.me;
+                            postChatDto = baseInfo.postChatDto;
+                            initView();
+                        }
+                        else {
                             Toast.makeText(ChatActivity.this, "데이터 로딩에 실패했습니다.", Toast.LENGTH_LONG).show();
                             finish();
                         }
                     }
-
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-                        Toast.makeText(ChatActivity.this, "데이터 로딩에 실패했습니다.", Toast.LENGTH_LONG).show();
-                        finish();
-                    }
                 });
-                viewModel = new ChatViewModel(this, postId, me);
-                initView();
             }
         }
     }

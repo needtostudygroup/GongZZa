@@ -1,13 +1,16 @@
 package com.dongkyoo.gongzza.chat.chattingRoom;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.dongkyoo.gongzza.BaseModel;
 import com.dongkyoo.gongzza.cache.CacheCallback;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
+import com.dongkyoo.gongzza.dtos.PostDto;
 import com.dongkyoo.gongzza.dtos.SendingChatDto;
 import com.dongkyoo.gongzza.post.PostModel;
 import com.dongkyoo.gongzza.vos.ChatLog;
@@ -24,11 +27,12 @@ import retrofit2.Response;
 public class ChatViewModel extends ViewModel {
 
     private MutableLiveData<ChatState> _chatState = new MutableLiveData<>();
+    private MutableLiveData<ChatBaseInfo> _baseInfoState = new MutableLiveData<>();
 
     public LiveData<ChatState> chatState = _chatState;
+    public LiveData<ChatBaseInfo> baseInfoState = _baseInfoState;
 
     private ChatModel chatModel;
-    private PostModel postModel;
     private User me;
     private PostChatDto postChatDto;
 
@@ -39,26 +43,51 @@ public class ChatViewModel extends ViewModel {
         chatModel = new ChatModel(context);
     }
 
-    public ChatViewModel(Context context, int postId, User me) {
-        this.me = me;
+    public ChatViewModel(Context context, int postId, String userId, String password) {
         chatModel = new ChatModel(context);
-        postModel = new PostModel(context);
+        BaseModel baseModel = new BaseModel();
 
-        postModel.selectPostById(postId, new CacheCallback<Post>() {
+        baseModel.loadUserByIdPw(userId, password, new Callback<User>() {
             @Override
-            public void onReceive(Post post) {
-                postChatDto = new PostChatDto(post);
-                chatModel.loadRecentChatBeforeDatetime(
-                        postChatDto.getId(),
-                        new Date(),
-                        0,
-                        15, new CacheCallback<List<ChatLog>>() {
-                            @Override
-                            public void onReceive(List<ChatLog> chatLogList) {
-                                if (chatLogList != null)
-                                    postChatDto.getChatLogList().addAll(chatLogList);
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    me = response.body();
+
+                    baseModel.loadPostById(postId, new Callback<PostDto>() {
+                        @Override
+                        public void onResponse(Call<PostDto> call, Response<PostDto> response) {
+                            if (response.isSuccessful()) {
+                                postChatDto = new PostChatDto(response.body());
+                                chatModel.loadRecentChatBeforeDatetime(
+                                        postChatDto.getId(),
+                                        new Date(),
+                                        0,
+                                        15, new CacheCallback<List<ChatLog>>() {
+                                            @Override
+                                            public void onReceive(List<ChatLog> chatLogList) {
+                                                if (chatLogList != null)
+                                                    postChatDto.getChatLogList().addAll(chatLogList);
+                                                _baseInfoState.setValue(new ChatBaseInfo(200, me, postChatDto));
+                                            }
+                                        });
+                            } else {
+                                _baseInfoState.setValue(new ChatBaseInfo(0));
                             }
-                        });
+                        }
+
+                        @Override
+                        public void onFailure(Call<PostDto> call, Throwable t) {
+                            _baseInfoState.setValue(new ChatBaseInfo(0));
+                        }
+                    });
+                } else {
+                    _baseInfoState.setValue(new ChatBaseInfo(0));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                _baseInfoState.setValue(new ChatBaseInfo(0));
             }
         });
     }
