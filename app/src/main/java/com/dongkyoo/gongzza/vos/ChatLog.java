@@ -39,11 +39,17 @@ public class ChatLog implements Comparable<ChatLog>, Parcelable {
     }
 
     @Ignore
-    public ChatLog(int postId, String senderId, String content, Date sentAt) {
+    public ChatLog(int id, int postId, String senderId, String content, Date sentAt) {
+        this.id = id;
         this.postId = postId;
         this.senderId = senderId;
         this.content = content;
         this.sentAt = sentAt;
+    }
+
+    @Ignore
+    public ChatLog(ChatLog chatLog) {
+        this(chatLog.id, chatLog.postId, chatLog.senderId, chatLog.content, chatLog.sentAt);
     }
 
     @Ignore

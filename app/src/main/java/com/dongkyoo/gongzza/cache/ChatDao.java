@@ -12,13 +12,13 @@ import java.util.List;
 @Dao
 public interface ChatDao {
 
-    @Query("SELECT * FROM ChatLog WHERE post_id = :postId AND sent_at > :datetime ORDER BY sent_at DESC" +
+    @Query("SELECT * FROM ChatLog WHERE post_id = :postId AND sent_at <= :beforeDatetime ORDER BY sent_at DESC" +
             " LIMIT :limit OFFSET :offset")
-    List<ChatLog> loadChatByPostId(int postId, Date datetime, int offset, int limit);
+    List<ChatLog> loadRecentChatBeforeDatetime(int postId, Date beforeDatetime, int offset, int limit);
 
     @Insert
     void insertChat(ChatLog chatLog);
 
     @Query("SELECT * FROM ChatLog ORDER BY sent_at DESC LIMIT 1")
-    ChatLog loadLastReceivedChat();
+    ChatLog loadLatestReceivedChatLog();
 }

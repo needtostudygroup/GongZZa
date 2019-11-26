@@ -51,7 +51,7 @@ public class ChattingRoomListFragment extends Fragment {
         initView(view);
 
         ChattingRoomListViewModel viewModel = new ChattingRoomListViewModel(getActivity().getApplication(), me);
-//        viewModel.loadRemoteChatLog(viewModel.getLastChatReceivedDatetime());
+        viewModel.loadRemoteChatLog(viewModel.getLastChatReceivedDatetime());
 
         viewModel.postChatList.observe(this, new Observer<List<PostChatDto>>() {
             @Override

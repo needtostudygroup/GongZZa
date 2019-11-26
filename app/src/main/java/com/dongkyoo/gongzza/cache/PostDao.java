@@ -15,6 +15,9 @@ public interface PostDao {
     @Query("SELECT * FROM Post")
     List<Post> selectEnrolledPostList();
 
+    @Query("SELECT * FROM Post WHERE id = :postId")
+    Post selectPostById(int postId);
+
     @Insert
     void enrollPost(Post post);
 

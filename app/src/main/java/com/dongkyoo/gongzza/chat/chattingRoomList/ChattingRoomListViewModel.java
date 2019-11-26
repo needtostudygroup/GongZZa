@@ -52,28 +52,8 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
             @Override
             public void onReceive(List<PostChatDto> postChatDtos) {
                 _postChatList.setValue(postChatDtos);
-                loadLocalChatLog();
             }
         });
-    }
-
-    /**
-     * DB에 저장된 채팅 로그
-     */
-    private void loadLocalChatLog() {
-        List<PostChatDto> postChatDtoList = postChatList.getValue();
-        for (PostChatDto postChatDto : postChatDtoList) {
-            chattingRoomListModel.loadLastReceivedChat(new CacheCallback<ChatLog>() {
-                @Override
-                public void onReceive(ChatLog chatLog) {
-                    if (chatLog != null) {
-                        postChatDto.getChatLogList().add(chatLog);
-                        postChatDto.sortChatLogList();
-                        _postChatList.setValue(postChatDtoList);
-                    }
-                }
-            });
-        }
     }
 
     /**

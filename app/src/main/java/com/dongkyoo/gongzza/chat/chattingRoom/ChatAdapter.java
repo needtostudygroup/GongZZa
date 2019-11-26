@@ -4,16 +4,14 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dongkyoo.gongzza.BR;
 import com.dongkyoo.gongzza.R;
-import com.dongkyoo.gongzza.databinding.ItemChatMeBinding;
-import com.dongkyoo.gongzza.databinding.ItemChatYouBinding;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
 import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.User;
@@ -70,6 +68,23 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
             this.itemView = itemView;
             binding = DataBindingUtil.bind(itemView);
+
+            ImageButton resendButton = itemView.findViewById(R.id.resend_imageButton);
+            ImageButton cancelButton = itemView.findViewById(R.id.cancel_imageButton);
+
+            resendButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("hi");
+                }
+            });
+
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("hi");
+                }
+            });
         }
 
         public void setChatLog(ChatLog chatLog) {

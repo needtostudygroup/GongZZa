@@ -1,10 +1,13 @@
 package com.dongkyoo.gongzza.post;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.room.Room;
 
 import com.dongkyoo.gongzza.cache.AppDatabase;
+import com.dongkyoo.gongzza.cache.CacheCallback;
 import com.dongkyoo.gongzza.cache.PostDao;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.ParticipantApi;
@@ -80,5 +83,22 @@ public class PostModel {
                 callback.onFailure(call, t);
             }
         });
+    }
+
+    public void selectPostById(int postId, CacheCallback<Post> callback) {
+        Handler handler = new Handler(Looper.getMainLooper());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Post post = postDao.selectPostById(postId);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onReceive(post);
+                    }
+                });
+            }
+        }).start();
     }
 }

@@ -16,7 +16,6 @@ import com.dongkyoo.gongzza.cache.PostDao;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
 import com.dongkyoo.gongzza.network.ChatLogApi;
 import com.dongkyoo.gongzza.network.Networks;
-import com.dongkyoo.gongzza.vos.CacheState;
 import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.Post;
 
@@ -58,9 +57,13 @@ public class ChattingRoomListModel {
                 List<Post> postList = postDao.selectEnrolledPostList();
                 for (Post post : postList) {
                     PostChatDto postChatDto = new PostChatDto(post);
-                    ChatLog chatLog = chatDao.loadLastReceivedChat();
-                    if (chatLog != null)
-                        postChatDto.getChatLogList().add(chatLog);
+                    List<ChatLog> chatLogList = chatDao.loadRecentChatBeforeDatetime(
+                            postChatDto.getId(),
+                            new Date(),
+                            0,
+                            15);
+                    if (chatLogList != null)
+                        postChatDto.getChatLogList().addAll(chatLogList);
                     postChatDtoList.add(postChatDto);
                 }
                 handler.post(new Runnable() {
@@ -109,7 +112,7 @@ public class ChattingRoomListModel {
             @Override
             public void run() {
                 isLoadChatLogListRunning = true;
-                List<ChatLog> chatLogList = chatDao.loadChatByPostId(postId, afterDate, offset, limit);
+                List<ChatLog> chatLogList = chatDao.loadRecentChatBeforeDatetime(postId, afterDate, offset, limit);
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -134,26 +137,9 @@ public class ChattingRoomListModel {
     }
 
     Date getLastChatReceivedDatetime() {
-        ChatLog chatLog = chatDao.loadLastReceivedChat();
+        ChatLog chatLog = chatDao.loadLatestReceivedChatLog();
         if (chatLog == null)
             return new Date();
-        return chatDao.loadLastReceivedChat().getSentAt();
-    }
-
-    void loadLastReceivedChat(CacheCallback<ChatLog> callback) {
-        Handler handler = new Handler(Looper.getMainLooper());
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ChatLog chatLog = chatDao.loadLastReceivedChat();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.onReceive(chatLog);
-                    }
-                });
-            }
-        }).start();
+        return chatLog.getSentAt();
     }
 }
