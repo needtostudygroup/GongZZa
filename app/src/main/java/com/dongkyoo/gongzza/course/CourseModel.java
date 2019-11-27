@@ -8,7 +8,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CourseModel {
 
@@ -25,6 +24,11 @@ public class CourseModel {
 
     void loadAllCourseList(String userId, Callback<List<CourseDto>> callback) {
         Call<List<CourseDto>> call = courseApi.selectCourseDtoListByUserId(userId);
+        call.enqueue(callback);
+    }
+
+    void deleteCourse(int courseId, Callback<Boolean> callback) {
+        Call<Boolean> call = courseApi.deleteCourse(courseId);
         call.enqueue(callback);
     }
 }

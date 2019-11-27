@@ -21,6 +21,8 @@ import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.customViews.timetableView.TimetableView;
 import com.dongkyoo.gongzza.dtos.CourseDto;
+import com.dongkyoo.gongzza.vos.Course;
+import com.dongkyoo.gongzza.vos.CourseInfo;
 import com.dongkyoo.gongzza.vos.User;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -55,12 +57,28 @@ public class CourseFragment extends Fragment {
         context = container.getContext();
 
         timetableView = view.findViewById(R.id.timetableView);
+        timetableView.setOnClickCourseInfoListener(new TimetableView.OnClickCourseInfoListener() {
+            @Override
+            public void onClick(Course course, CourseInfo courseInfo) {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(course.getName())
+                        .setMessage("삭제하시겠습니까?")
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                viewModel.deleteCourse(course.getId());
+                            }
+                        })
+                        .setNegativeButton(R.string.no, null)
+                        .show();
+            }
+        });
 
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.createCourse(MockData.getMockCourseDto());
+//                viewModel.createCourse(MockData.getMockCourseDto());
             }
         });
 

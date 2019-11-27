@@ -4,9 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.telecom.Call;
+import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -14,6 +13,7 @@ import androidx.annotation.Nullable;
 
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.dtos.CourseDto;
+import com.dongkyoo.gongzza.vos.Course;
 import com.dongkyoo.gongzza.vos.CourseInfo;
 
 import java.util.ArrayList;
@@ -42,6 +42,10 @@ public class TimetableView extends View {
 
     private static final int MIN_CELL_HEIGHT = 150;
 
+    private List<RectF> courseInfoRectList;
+    private List<CourseData> courseList;
+    private List<OnClickCourseInfoListener> clickCourseInfoListenerList;
+
     public TimetableView(Context context) {
         super(context);
         this.context = context;
@@ -60,15 +64,26 @@ public class TimetableView extends View {
         init();
     }
 
+    public interface OnClickCourseInfoListener {
+        void onClick(Course course, CourseInfo courseInfo);
+    }
+
     private void init() {
+        clickCourseInfoListenerList = new ArrayList<>();
         courseDtoList = new ArrayList<>();
         colorList = context.getResources().getStringArray(R.array.color_list);
+    }
+
+    public void setOnClickCourseInfoListener(OnClickCourseInfoListener listener) {
+        clickCourseInfoListenerList.add(listener);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int colorIndex = 0;
+        courseInfoRectList = new ArrayList<>();
+        courseList = new ArrayList<>();
 
         Paint p = new Paint();
 
@@ -98,7 +113,6 @@ public class TimetableView extends View {
         canvas.drawLine(mostLeftColumnWidth, topRowHeight, width, topRowHeight, p);
         canvas.drawLine(mostLeftColumnWidth, 0, mostLeftColumnWidth, height, p);
 
-
         p.setColor(Color.WHITE);
         for (CourseDto courseDto : courseDtoList) {
             for (CourseInfo info : courseDto.getCourseInfoList()) {
@@ -118,7 +132,11 @@ public class TimetableView extends View {
                     float endX = startX + cellWidth;
                     float endY = topRowHeight + cellHeight * (endHour - MIN_HOUR) + cellHeight * (endMin / 60f);
 
-                    canvas.drawRect(startX, startY, endX, endY, cellPaint);
+                    RectF rectF = new RectF(startX, startY, endX, endY);
+                    courseInfoRectList.add(rectF);
+                    courseList.add(new CourseData(courseDto, info));
+
+                    canvas.drawRect(rectF, cellPaint);
 
                     List<String> nameList = split(courseDto.getName(), 5);
 
@@ -170,7 +188,18 @@ public class TimetableView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            for (int i = 0; i < courseInfoRectList.size(); i++) {
+                if (courseInfoRectList.get(i).contains(event.getX(), event.getY())) {
+                    for (OnClickCourseInfoListener listener : clickCourseInfoListenerList) {
+                        listener.onClick(courseList.get(i).course, courseList.get(i).courseInfo);
+                    }
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public void addCourseDtoList(List<CourseDto> courseDtoList) {
@@ -184,5 +213,15 @@ public class TimetableView extends View {
     public void setCourseDtoList(List<CourseDto> courseDtoList) {
         this.courseDtoList = courseDtoList;
         invalidate();
+    }
+
+    private static final class CourseData {
+        Course course;
+        CourseInfo courseInfo;
+
+        public CourseData(Course course, CourseInfo courseInfo) {
+            this.course = course;
+            this.courseInfo = courseInfo;
+        }
     }
 }
