@@ -22,6 +22,7 @@ import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.UserApi;
+import com.dongkyoo.gongzza.vos.AuthMail;
 import com.dongkyoo.gongzza.vos.User;
 
 import org.w3c.dom.Text;
@@ -35,18 +36,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import retrofit2.http.Tag;
 
 public class SignupActivity extends AppCompatActivity {
 
     UserApi userApi = Networks.retrofit.create(UserApi.class);
-    Call<User> call = userApi.signUp(MockData.getMockUser());
+    Call<User> signUp = userApi.signUp(MockData.getMockUser());
+    Call<AuthMail> sendAuthenticateEmail = userApi.sendAuthenticateEmail(MockData.getMockUser().getId(), MockData.getMockUser().getEmail());
 
     DatePicker Birth;
     private  String birthString;
     private Date birthDate;
     private  boolean isChanged = false;
     private  boolean isComplete = false;
+    private String TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class SignupActivity extends AppCompatActivity {
 
         //객체성성
         User user = new User();
+        AuthMail authMail = new AuthMail();
 
         Birth = (DatePicker)findViewById(R.id.inputBirth);
         //현재날짜로 초기화
@@ -77,6 +82,28 @@ public class SignupActivity extends AppCompatActivity {
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
+
+                //서버와 통신
+                sendAuthenticateEmail.enqueue(new Callback<AuthMail>() {
+
+                    @Override
+                    public void onResponse(Call<AuthMail> call, Response<AuthMail> response) {
+                        //@POST("/authMails")
+                        //Call<AuthMail> sendAuthenticateEmail(@Query("userId") String userId, @Query("email") String email);
+                        Call<AuthMail> call1 = userApi.sendAuthenticateEmail("abcdef1","f7817455@naver.com");
+                        if (response.code() == 200) {
+                            Toast.makeText(SignupActivity.this, "이메일 인증이 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(SignupActivity.this, "통신은 성공했으나 인증에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<AuthMail> call, Throwable t) {
+                        Toast.makeText(SignupActivity.this, "서버와 통신에 실패하였습니다. 다시 시도해 주세요.",Toast.LENGTH_SHORT).show();
+                        Log.e(TAG, "이메일 전송 실패", t);
+                    }
+                });
             }
         });
 
@@ -135,14 +162,15 @@ public class SignupActivity extends AppCompatActivity {
                 if (isChanged){
                     Toast.makeText(SignupActivity.this,birthString,Toast.LENGTH_SHORT).show();
                     user.setBirthday(birthDate);
+                    isComplete = true;
                 }
                 else
                     Toast.makeText(SignupActivity.this, "생년월일을 입력해 주세요.",Toast.LENGTH_SHORT).show();
 
-                if(user.getId() != null){
+                if(isComplete){
                     //모든 데이터 입력 했을 시
                     //서버에 데이터 전송
-                    call.enqueue(new Callback<User>() {
+                    signUp.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             //@POST("/users")
@@ -159,6 +187,7 @@ public class SignupActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
                             Toast.makeText(SignupActivity.this, "서버와 통신에 실패하였습니다. 다시 시도해 주세요.",Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "가입 실패", t);
                         }
                     });
 
