@@ -155,6 +155,7 @@ public class ChatActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.chat_recyclerView);
         LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager.setStackFromEnd(true);
 //        manager.setReverseLayout(true);
         recyclerView.setLayoutManager(manager);
         adapter = new ChatAdapter(this, this.postChatDto, this.me);
