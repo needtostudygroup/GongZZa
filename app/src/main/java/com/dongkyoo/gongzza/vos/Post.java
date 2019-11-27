@@ -81,6 +81,16 @@ public class Post implements Parcelable {
         this.titleImageUrl = titleImageUrl;
     }
 
+    @Ignore
+    public Post(String userId, String title, String content, Date meetDateTime, int totalNumParticipants, String titleImageUrl) {
+        this.userId = userId;
+        this.title = title;
+        this.content = content;
+        this.meetDateTime = meetDateTime;
+        this.totalNumParticipants = totalNumParticipants;
+        this.titleImageUrl = titleImageUrl;
+    }
+
     public int getId() {
         return id;
     }
