@@ -15,7 +15,7 @@ import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.TokenApi;
 import com.dongkyoo.gongzza.board.BoardFragment;
 import com.dongkyoo.gongzza.chat.chattingRoomList.ChattingRoomListFragment;
-import com.dongkyoo.gongzza.home.HomeFragment;
+import com.dongkyoo.gongzza.course.CourseFragment;
 import com.dongkyoo.gongzza.all.AllFragment;
 import com.dongkyoo.gongzza.vos.Config;
 import com.dongkyoo.gongzza.vos.Token;
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager viewPager = findViewById(R.id.viewPager);
         adapter = new MainTabAdapter(getSupportFragmentManager(),
                 new Fragment[] {
-                        new HomeFragment(),
+                        CourseFragment.newInstance(me),
                         BoardFragment.newInstance(me),
                         ChattingRoomListFragment.newInstance(me),
                         new AllFragment()
