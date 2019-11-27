@@ -1,5 +1,6 @@
 package com.dongkyoo.gongzza.board;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -88,7 +90,7 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WritePostActivity.class);
                 intent.putExtra(Config.USER, me);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
     }
@@ -120,5 +122,17 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
                 Log.e(TAG, "Post 불러오기 실패", t);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                PostDto postDto = data.getParcelableExtra(Config.POST);
+                adapter.addPost(postDto);
+            }
+        }
     }
 }

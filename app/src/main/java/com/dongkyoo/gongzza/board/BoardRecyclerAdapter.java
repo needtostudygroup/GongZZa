@@ -29,6 +29,11 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
         notifyDataSetChanged();
     }
 
+    public void addPost(PostDto postDto) {
+        postList.add(0, postDto);
+        notifyDataSetChanged();
+    }
+
     interface OnClickPost {
         void onClick(PostDto postDto);
     }

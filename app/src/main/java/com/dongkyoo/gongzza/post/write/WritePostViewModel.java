@@ -81,7 +81,7 @@ public class WritePostViewModel extends ViewModel {
             @Override
             public void onResponse(Call<PostDto> call, Response<PostDto> response) {
                 if (response.isSuccessful()) {
-                    _writeState.setValue(new WriteState(200));
+                    _writeState.setValue(new WriteState(200, response.body()));
                 } else {
                     Log.e(TAG, "writePost 실패");
                 }
@@ -97,6 +97,7 @@ public class WritePostViewModel extends ViewModel {
     static class WriteState {
         public int state;
         public String errorMessage;
+        public PostDto postDto;
 
         public WriteState() {
             this.errorMessage = null;
@@ -110,6 +111,11 @@ public class WritePostViewModel extends ViewModel {
         public WriteState(int state, String errorMessage) {
             this.state = state;
             this.errorMessage = errorMessage;
+        }
+
+        public WriteState(int state, PostDto postDto) {
+            this.state = state;
+            this.postDto = postDto;
         }
     }
 }

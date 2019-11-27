@@ -1,8 +1,10 @@
 package com.dongkyoo.gongzza.post.write;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -106,6 +108,9 @@ public class WritePostActivity extends AppCompatActivity {
                 if (writeState.errorMessage != null) {
                     Snackbar.make(findViewById(android.R.id.content), writeState.errorMessage, Snackbar.LENGTH_LONG).show();
                 } else if (writeState.state == 200) {
+                    Intent intent = new Intent();
+                    intent.putExtra(Config.POST, writeState.postDto);
+                    setResult(Activity.RESULT_OK, intent);
                     finish();
                 }
             }
