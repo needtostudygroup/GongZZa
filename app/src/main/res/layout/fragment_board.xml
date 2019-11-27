@@ -25,24 +25,9 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <LinearLayout
-            android:layout_marginTop="@dimen/margin1"
+        <com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="right">
-
-            <com.dongkyoo.gongzza.customViews.hashTagView.HashTagView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginRight="@dimen/margin2"/>
-
-            <com.dongkyoo.gongzza.customViews.hashTagView.HashTagView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginRight="@dimen/margin2"/>
-
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

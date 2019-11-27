@@ -64,10 +64,10 @@ public class HashTag implements Parcelable {
         if (this == o) return true;
         if (!(o instanceof HashTag)) return false;
         HashTag hashTag = (HashTag) o;
-        return color.equals(hashTag.color) &&
-                title.equals(hashTag.title) &&
-                id == hashTag.id &&
-                postId == hashTag.postId;
+        return id == hashTag.id &&
+                postId == hashTag.postId &&
+                Objects.equals(color, hashTag.color) &&
+                Objects.equals(title, hashTag.title);
     }
 
     @Override

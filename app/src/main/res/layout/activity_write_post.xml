@@ -9,53 +9,60 @@
     tools:context=".post.write.WritePostActivity">
 
 
-    <EditText
-        android:id="@+id/title_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_title"/>
-
-    <EditText
-        android:id="@+id/content_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_content"
-        android:layout_marginTop="@dimen/margin2"/>
-
-    <EditText
-        android:id="@+id/num_of_participants_editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:layout_marginTop="@dimen/margin2"
-        android:hint="@string/hint_num_of_participants"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/margin2">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/meet_datetime_textView"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/title_editText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="만나는 시간을 설정하세요"/>
+            android:hint="@string/hint_title"/>
 
-        <Button
-            android:id="@+id/modify_meet_datetime_button"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/content_editText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/modification"/>
+            android:hint="@string/hint_content"
+            android:layout_marginTop="@dimen/margin2"/>
+
+        <EditText
+            android:id="@+id/num_of_participants_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginTop="@dimen/margin2"
+            android:hint="@string/hint_num_of_participants"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin2">
+
+            <TextView
+                android:id="@+id/meet_datetime_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="만나는 시간을 설정하세요"/>
+
+            <Button
+                android:id="@+id/modify_meet_datetime_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/modification"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/hash_tag_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
-
-    <GridView
-        android:id="@+id/hash_tag_gridView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
 
     <Button
         android:id="@+id/submit_button"

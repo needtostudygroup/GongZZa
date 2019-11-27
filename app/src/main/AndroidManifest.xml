@@ -25,7 +25,6 @@
         <activity android:name=".chat.chattingRoom.ChatActivity">
         </activity>
         <activity android:name=".post.write.WritePostActivity"></activity>
-        <activity android:name=".chattingRoom.ChatActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.dongkyoo.gongzza.board;
+package com.dongkyoo.gongzza.customViews.hashTagView;
 
 import androidx.databinding.BindingAdapter;
 
@@ -11,6 +11,6 @@ public class HashTagBindingAdapter {
     public static void hashTag(HashTagView hashTagView, HashTag tag) {
         hashTagView.setText(tag.getTitle());
         hashTagView.setColor(tag.getColor());
-        hashTagView.setEditMode(false);
+        hashTagView.setHashTag(tag);
     }
 }

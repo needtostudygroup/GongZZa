@@ -1,7 +1,5 @@
 package com.dongkyoo.gongzza.board;
 
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dongkyoo.gongzza.R;
+import com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerAdapter;
 import com.dongkyoo.gongzza.databinding.ItemBoardBinding;
 import com.dongkyoo.gongzza.dtos.PostDto;
 
@@ -65,7 +64,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private RecyclerView hashTagRecyclerView;
-        private HashTagListAdapter adapter;
+        private HashTagRecyclerAdapter adapter;
         private View itemView;
         private PostDto postDto;
 
@@ -77,7 +76,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
             hashTagRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),
                     RecyclerView.HORIZONTAL, false));
             hashTagRecyclerView.addItemDecoration(new ItemMargin(16));
-            adapter = new HashTagListAdapter(itemView.getContext());
+            adapter = new HashTagRecyclerAdapter(itemView.getContext());
             hashTagRecyclerView.setAdapter(adapter);
 
             itemView.setOnClickListener(new View.OnClickListener() {

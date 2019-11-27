@@ -14,6 +14,7 @@ import android.widget.TimePicker;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.vos.Config;
@@ -36,7 +37,6 @@ public class WritePostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write_post);
 
         me = getIntent().getParcelableExtra(Config.USER);
-
         viewModel = new WritePostViewModel(this);
 
         EditText titleEditText = findViewById(R.id.title_editText);
