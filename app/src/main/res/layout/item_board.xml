@@ -58,7 +58,7 @@
                 android:textColor="#AAA"
                 android:layout_marginBottom="@dimen/margin2"/>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerView
                 android:id="@+id/hash_tag_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"

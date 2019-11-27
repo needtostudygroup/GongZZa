@@ -26,6 +26,7 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
     private Context context;
     private List<HashTag> hashTagList;
     private List<Boolean> editModeList;
+    private boolean isAppendable = true;
 
     public HashTagRecyclerAdapter(Context context) {
         this.context = context;
@@ -35,8 +36,12 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == hashTagList.size())
-            return TYPE_FOOTER;
+        if (isAppendable) {
+            if (position == hashTagList.size())
+                return TYPE_FOOTER;
+            return TYPE_BODY;
+        }
+
         return TYPE_BODY;
     }
 
@@ -81,7 +86,7 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return hashTagList.size() + 1;
+        return hashTagList.size() + (isAppendable ? 1 : 0);
     }
 
     public void setHashTagList(List<HashTag> hashTagList) {
@@ -132,5 +137,14 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
                 }
             });
         }
+    }
+
+    public boolean isAppendable() {
+        return isAppendable;
+    }
+
+    public void setAppendable(boolean appendable) {
+        isAppendable = appendable;
+        notifyDataSetChanged();
     }
 }

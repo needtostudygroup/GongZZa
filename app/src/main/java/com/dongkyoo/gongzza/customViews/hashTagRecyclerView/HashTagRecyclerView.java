@@ -8,9 +8,15 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dongkyoo.gongzza.vos.HashTag;
+
+import java.util.List;
+
 public class HashTagRecyclerView extends RecyclerView {
 
     private Context context;
+    private List<HashTag> hashTagList;
+    private HashTagRecyclerAdapter adapter;
 
     public HashTagRecyclerView(@NonNull Context context) {
         super(context);
@@ -34,9 +40,19 @@ public class HashTagRecyclerView extends RecyclerView {
     }
 
     private void init() {
-        HashTagRecyclerAdapter adapter = new HashTagRecyclerAdapter(context);
+        adapter = new HashTagRecyclerAdapter(context);
         LinearLayoutManager manager = new LinearLayoutManager(context, HORIZONTAL, false);
         setLayoutManager(manager);
         setAdapter(adapter);
+    }
+
+    public void setHashTagList(List<HashTag> hashTagList) {
+        this.hashTagList = hashTagList;
+
+        adapter.setHashTagList(hashTagList);
+    }
+
+    public void setAppendable(boolean flag) {
+        adapter.setAppendable(flag);
     }
 }

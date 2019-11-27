@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerAdapter;
+import com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerView;
 import com.dongkyoo.gongzza.databinding.ItemBoardBinding;
 import com.dongkyoo.gongzza.dtos.PostDto;
 
@@ -63,8 +64,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private RecyclerView hashTagRecyclerView;
-        private HashTagRecyclerAdapter adapter;
+        private HashTagRecyclerView hashTagRecyclerView;
         private View itemView;
         private PostDto postDto;
 
@@ -73,11 +73,7 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
 
             this.itemView = itemView;
             hashTagRecyclerView = itemView.findViewById(R.id.hash_tag_recyclerView);
-            hashTagRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),
-                    RecyclerView.HORIZONTAL, false));
             hashTagRecyclerView.addItemDecoration(new ItemMargin(16));
-            adapter = new HashTagRecyclerAdapter(itemView.getContext());
-            hashTagRecyclerView.setAdapter(adapter);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -95,7 +91,8 @@ public class BoardRecyclerAdapter extends RecyclerView.Adapter<BoardRecyclerAdap
             ItemBoardBinding binding = DataBindingUtil.bind(itemView);
             binding.setPost(post);
 
-            adapter.setHashTagList(post.getHashTagList());
+            hashTagRecyclerView.setHashTagList(post.getHashTagList());
+            hashTagRecyclerView.setAppendable(false);
         }
     }
 }
