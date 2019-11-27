@@ -9,9 +9,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dongkyoo.gongzza.dtos.PostDto;
+import com.dongkyoo.gongzza.vos.HashTag;
 import com.dongkyoo.gongzza.vos.Post;
 
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +45,8 @@ public class WritePostViewModel extends ViewModel {
         _meetDatetime.setValue(meetDatetime);
     }
 
-    void submit(String title, String content, String numOfParticipantString, String userId) {
+    void submit(String title, String content, String numOfParticipantString, String userId,
+                List<HashTag> hashTagList) {
         if (TextUtils.isEmpty(title)) {
             _writeState.setValue(new WriteState(0, "제목을 입력하세요"));
             return;
@@ -71,8 +74,10 @@ public class WritePostViewModel extends ViewModel {
             return;
         }
 
-        Post p = new Post(userId, title, content, meetDatetime, numOfParticipants, "");
-        model.writePost(new PostDto(p), new Callback<PostDto>() {
+        PostDto p = new PostDto(new Post(new Post(userId, title, content, meetDatetime, numOfParticipants, "")));
+        p.setHashTagList(hashTagList);
+
+        model.writePost(p, new Callback<PostDto>() {
             @Override
             public void onResponse(Call<PostDto> call, Response<PostDto> response) {
                 if (response.isSuccessful()) {

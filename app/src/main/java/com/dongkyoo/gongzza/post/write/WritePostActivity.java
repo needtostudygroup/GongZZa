@@ -17,13 +17,16 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dongkyoo.gongzza.R;
+import com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerView;
 import com.dongkyoo.gongzza.vos.Config;
+import com.dongkyoo.gongzza.vos.HashTag;
 import com.dongkyoo.gongzza.vos.User;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class WritePostActivity extends AppCompatActivity {
 
@@ -43,6 +46,7 @@ public class WritePostActivity extends AppCompatActivity {
         EditText contentEditText = findViewById(R.id.content_editText);
         EditText numOfParticipantsEditText = findViewById(R.id.num_of_participants_editText);
         TextView meetDatetimeTextView = findViewById(R.id.meet_datetime_textView);
+        HashTagRecyclerView hashTagRecyclerView = findViewById(R.id.hash_tag_recyclerView);
 
         Button meetDatetimeButton = findViewById(R.id.modify_meet_datetime_button);
         Button submitButton = findViewById(R.id.submit_button);
@@ -88,13 +92,13 @@ public class WritePostActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                List<HashTag> hashTagList = hashTagRecyclerView.getHashTagList();
                 String title = titleEditText.getText().toString();
                 String content = contentEditText.getText().toString();
                 String numOfParticipants = numOfParticipantsEditText.getText().toString();
-                viewModel.submit(title, content, numOfParticipants, me.getId());
+                viewModel.submit(title, content, numOfParticipants, me.getId(), hashTagList);
             }
         });
-
 
         viewModel.writeState.observe(this, new Observer<WritePostViewModel.WriteState>() {
             @Override

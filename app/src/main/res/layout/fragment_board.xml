@@ -27,7 +27,8 @@
 
         <com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin2"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

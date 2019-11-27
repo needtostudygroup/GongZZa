@@ -79,8 +79,6 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
                     notifyDataSetChanged();
                 }
             });
-        } else if (holder instanceof FooterViewHolder) {
-
         }
     }
 
@@ -91,6 +89,15 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
 
     public void setHashTagList(List<HashTag> hashTagList) {
         this.hashTagList = hashTagList;
+        editModeList = new ArrayList<>();
+        for (HashTag hashTag : hashTagList) {
+            editModeList.add(false);
+        }
+        notifyDataSetChanged();
+    }
+
+    List<HashTag> getHashTagList() {
+        return hashTagList;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -107,6 +114,7 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
         void setHashTag(HashTag hashTag) {
             ItemHashtagListBinding binding = DataBindingUtil.bind(itemView);
             binding.setHashTag(hashTag);
+            binding.executePendingBindings();
 
             hashTagView = binding.hashTagView;
         }
