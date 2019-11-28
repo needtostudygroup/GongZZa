@@ -69,6 +69,9 @@ public class TimetableView extends View {
     }
 
     private void init() {
+        courseInfoRectList = new ArrayList<>();
+        courseList = new ArrayList<>();
+
         clickCourseInfoListenerList = new ArrayList<>();
         courseDtoList = new ArrayList<>();
         colorList = context.getResources().getStringArray(R.array.color_list);

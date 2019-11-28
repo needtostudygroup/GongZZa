@@ -27,8 +27,18 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
     private List<HashTag> hashTagList;
     private List<Boolean> editModeList;
     private boolean isAppendable = true;
+    private List<OnHashTagChangedListener> hashTagChangedListenerList;
+
+    public interface OnHashTagChangedListener {
+        void onChange();
+    }
+
+    public void setOnHashTagChangedListener(OnHashTagChangedListener listener) {
+        hashTagChangedListenerList.add(listener);
+    }
 
     public HashTagRecyclerAdapter(Context context) {
+        hashTagChangedListenerList = new ArrayList<>();
         this.context = context;
         hashTagList = new ArrayList<>();
         editModeList = new ArrayList<>();
@@ -69,6 +79,13 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
                 public void onChange(boolean editMode) {
                     editModeList.set(position, editMode);
                 }
+
+                @Override
+                public void onPinned() {
+                    for (OnHashTagChangedListener listener : hashTagChangedListenerList) {
+                        listener.onChange();
+                    }
+                }
             });
 
             viewHolder.hashTagView.setCloseListenerList(new HashTagView.OnCloseListener() {
@@ -76,6 +93,9 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
                 public void onClose() {
                     editModeList.remove(position);
                     hashTagList.remove(position);
+                    for (OnHashTagChangedListener listener : hashTagChangedListenerList) {
+                        listener.onChange();
+                    }
                     notifyDataSetChanged();
                 }
             });

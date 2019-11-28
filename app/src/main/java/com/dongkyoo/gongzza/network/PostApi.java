@@ -1,6 +1,7 @@
 package com.dongkyoo.gongzza.network;
 
 import com.dongkyoo.gongzza.dtos.PostDto;
+import com.dongkyoo.gongzza.vos.HashTag;
 import com.dongkyoo.gongzza.vos.Post;
 
 import java.util.List;
@@ -41,7 +42,9 @@ public interface PostApi {
     @GET("/posts/schools/{schoolId}/recent")
     Call<List<PostDto>> selectRecentPostDtoList(@Path("schoolId") int schoolId,
                                                 @Query("userId") String userId,
-                                                @Query("limit") int limit);
+                                                @Query("limit") int limit,
+                                                @Query("searchKeyword") String searchKeyword,
+                                                @Query("hashTagList")List<String> hashTagList);
 
     @GET("/posts/users")
     Call<List<PostDto>> selectUserEnrolledPost(@Query("userId") String userId);

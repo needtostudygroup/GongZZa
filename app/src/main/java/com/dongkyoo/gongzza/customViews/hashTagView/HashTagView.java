@@ -122,6 +122,10 @@ public class HashTagView extends MaterialCardView {
         textView.setText(text);
     }
 
+    public String getText() {
+        return textView.getText().toString();
+    }
+
     public void setColor(String color) {
         if (color != null)
             setCardBackgroundColor(Color.parseColor(color));
@@ -147,6 +151,9 @@ public class HashTagView extends MaterialCardView {
                 return;
             }
 
+            for (OnEditModeChangeListener listener : editModeChangeListenerList) {
+                listener.onPinned();
+            }
             textView.setText(autoCompleteTextView.getText());
 
             autoCompleteTextView.setVisibility(GONE);
@@ -187,5 +194,6 @@ public class HashTagView extends MaterialCardView {
 
     public interface OnEditModeChangeListener {
         void onChange(boolean editMode);
+        void onPinned();
     }
 }
