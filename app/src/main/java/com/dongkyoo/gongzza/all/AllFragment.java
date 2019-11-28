@@ -1,13 +1,18 @@
 package com.dongkyoo.gongzza.all;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
 import com.dongkyoo.gongzza.R;
+import com.dongkyoo.gongzza.all.Alarm.AlarmActivity;
+import com.dongkyoo.gongzza.all.BreakTime.BreakTimeActivity;
 
 /**
  * 작성자 : 이동규
@@ -25,6 +30,35 @@ public class AllFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all, container, false);
+        Button button1 = (Button)view.findViewById(R.id.alarm_button);
+        Button button2 = (Button)view.findViewById(R.id.combine_button);
+
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AlarmActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), BreakTimeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                v.getContext().startActivity(intent);
+            }
+        });
+
         return view;
     }
+
+  //  public void onClick( View v ) {
+       // Intent intent = new Intent();
+      //  ComponentName componentName = new ComponentName("com.dongkyoo.gongzza.all.BreakTime",
+    //            "com.dongkyoo.gongzza.all.Alarm.AlarmFragment" );
+  //      intent.setComponent( componentName );
+//        startActivity( intent );
+//    }
 }

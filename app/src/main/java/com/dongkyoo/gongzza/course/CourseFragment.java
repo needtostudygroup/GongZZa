@@ -2,6 +2,7 @@ package com.dongkyoo.gongzza.course;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.customViews.timetableView.TimetableView;
 import com.dongkyoo.gongzza.dtos.CourseDto;
+import com.dongkyoo.gongzza.home.add.AddClassActivity;
 import com.dongkyoo.gongzza.vos.Course;
 import com.dongkyoo.gongzza.vos.CourseInfo;
 import com.dongkyoo.gongzza.vos.User;
@@ -73,6 +75,10 @@ public class CourseFragment extends Fragment {
                         .show();
             }
         });
+
+        Intent intent = new Intent(view.getContext(), AddClassActivity.class);
+        intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+        view.getContext().startActivity(intent);
 
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {

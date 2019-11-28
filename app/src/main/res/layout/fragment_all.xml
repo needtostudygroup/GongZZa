@@ -4,9 +4,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <Button
+        android:id="@+id/alarm_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="allFragment" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="알람"
+        android:textSize="30dp"
+        android:onClick="onClick"/>
+
+    <Button
+        android:id="@+id/combine_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="공강 겹치기"
+        android:textSize="30dp"/>
+
+    <Button
+        android:id="@+id/set_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="설정"
+        android:textSize="30dp"/>
 
 </LinearLayout>
