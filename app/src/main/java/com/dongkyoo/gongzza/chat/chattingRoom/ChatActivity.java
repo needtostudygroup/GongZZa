@@ -178,6 +178,7 @@ public class ChatActivity extends AppCompatActivity {
                 switch (chatState.state) {
                     case ChatState.CREATE:
                         adapter.notifyItemInserted(postChatDto.getChatLogList().size() - 1);
+                        recyclerView.smoothScrollToPosition(postChatDto.getChatLogList().size() - 1);
                         break;
 
                     case ChatState.MODIFY:

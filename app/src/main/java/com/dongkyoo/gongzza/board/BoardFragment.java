@@ -90,6 +90,7 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
             @Override
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() == 0) {
+                    searchKeyword = "";
                     loadPost("", hashTagRecyclerView.getHashTagList());
                 }
                 return false;
