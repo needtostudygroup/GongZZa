@@ -2,6 +2,7 @@ package com.dongkyoo.gongzza.home;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.dongkyoo.gongzza.R;
+import com.dongkyoo.gongzza.home.add.AddClassActivity;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
 
-public class HomeFragment extends Fragment implements View.OnClickListener{
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
     public HomeFragment() {
         // Required empty public constructor
@@ -36,6 +38,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         customDialogBtn = view.findViewById(R.id.load_button);
         customDialogBtn.setOnClickListener(this);
+
+        Button addButton = view.findViewById(R.id.Add_Button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(view == addButton) {
+                    Intent intent = new Intent(view.getContext(), AddClassActivity.class);
+                    intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
+                    view.getContext().startActivity(intent);
+                }
+            }
+        });
+
         return view;
     }
     private  void showToast(String message) {
