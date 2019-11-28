@@ -1,4 +1,4 @@
-package com.dongkyoo.gongzza.home.add;
+package com.dongkyoo.gongzza.course.create;
 
 import android.app.Dialog;
 import android.content.Context;

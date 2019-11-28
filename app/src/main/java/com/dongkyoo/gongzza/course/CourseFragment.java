@@ -1,19 +1,16 @@
 package com.dongkyoo.gongzza.course;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ScrollView;
-import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -22,13 +19,14 @@ import com.dongkyoo.gongzza.MockData;
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.customViews.timetableView.TimetableView;
 import com.dongkyoo.gongzza.dtos.CourseDto;
-import com.dongkyoo.gongzza.home.add.AddClassActivity;
+import com.dongkyoo.gongzza.course.create.CreateCourseActivity;
+import com.dongkyoo.gongzza.main.MainActivity;
+import com.dongkyoo.gongzza.vos.Config;
 import com.dongkyoo.gongzza.vos.Course;
 import com.dongkyoo.gongzza.vos.CourseInfo;
 import com.dongkyoo.gongzza.vos.User;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.widget.Toast.makeText;
@@ -76,24 +74,22 @@ public class CourseFragment extends Fragment {
             }
         });
 
-        Intent intent = new Intent(view.getContext(), AddClassActivity.class);
-        intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-        view.getContext().startActivity(intent);
-
         Button addButton = view.findViewById(R.id.add_button);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                viewModel.createCourse(MockData.getMockCourseDto());
+                Intent intent = new Intent(getActivity(), CreateCourseActivity.class);
+                intent.putExtra(Config.USER, me);
+                startActivityForResult(intent, MainActivity.CODE_INSERT_COURSE);
             }
         });
 
         viewModel = new CourseViewModel();
         viewModel.loadCourseList(me.getId());
 
-        viewModel.state.observe(this, new Observer<CourseViewModel.CourseState>() {
+        viewModel.state.observe(this, new Observer<CourseState>() {
             @Override
-            public void onChanged(CourseViewModel.CourseState courseState) {
+            public void onChanged(CourseState courseState) {
                 if (courseState.errorMessage != null) {
                     Snackbar.make(getActivity().findViewById(android.R.id.content), courseState.errorMessage, Snackbar.LENGTH_LONG).show();
                 } else if (courseState.state == 200) {
@@ -114,5 +110,17 @@ public class CourseFragment extends Fragment {
 
     private void displayCourseList(List<CourseDto> courseDtoList) {
         timetableView.setCourseDtoList(courseDtoList);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == MainActivity.CODE_INSERT_COURSE) {
+            if (resultCode == Activity.RESULT_OK) {
+                CourseDto courseDto = data.getParcelableExtra(Config.COURSE);
+                viewModel.insertCourse(courseDto);
+            }
+        }
     }
 }

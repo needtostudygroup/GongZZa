@@ -1,49 +1,33 @@
 package com.dongkyoo.gongzza.Login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.InputFilter;
-import android.text.Spanned;
+import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dongkyoo.gongzza.MockData;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.UserApi;
 import com.dongkyoo.gongzza.vos.AuthMail;
 import com.dongkyoo.gongzza.vos.User;
 
-import org.w3c.dom.Text;
-
 import java.sql.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
-import retrofit2.http.Tag;
 
 public class SignupActivity extends AppCompatActivity {
 
     UserApi userApi = Networks.retrofit.create(UserApi.class);
-    Call<User> signUp = userApi.signUp(MockData.getMockUser());
-    Call<AuthMail> sendAuthenticateEmail = userApi.sendAuthenticateEmail(MockData.getMockUser().getId(), MockData.getMockUser().getEmail());
 
     DatePicker Birth;
     private  String birthString;
@@ -57,9 +41,17 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_signup);
 
+        Networks.createRetrofit(this);
+
         //객체성성
         User user = new User();
         AuthMail authMail = new AuthMail();
+
+        EditText nameEditText = (EditText)findViewById(R.id.inputName);
+        EditText emailEditText = (EditText)findViewById((R.id.inputEmailCheck));
+        EditText passwordEditText = (EditText)findViewById((R.id.inputPassword));
+        EditText pwConfirmEditText = (EditText)findViewById((R.id.inputPasswordConfirm));
+        EditText idEditText = (EditText)findViewById(R.id.inputId);
 
         Birth = (DatePicker)findViewById(R.id.inputBirth);
         //현재날짜로 초기화
@@ -81,21 +73,24 @@ public class SignupActivity extends AppCompatActivity {
                 builder.setPositiveButton("확인",null);
 
                 AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+
+                String id = idEditText.getText().toString();
+                String email = emailEditText.getText().toString();
+
+                if (TextUtils.isEmpty(id) || TextUtils.isEmpty(email))
+                    return;
 
                 //서버와 통신
-                sendAuthenticateEmail.enqueue(new Callback<AuthMail>() {
+                Call<AuthMail> call = userApi.sendAuthenticateEmail(id, email);
+                call.enqueue(new Callback<AuthMail>() {
 
                     @Override
                     public void onResponse(Call<AuthMail> call, Response<AuthMail> response) {
-                        //@POST("/authMails")
-                        //Call<AuthMail> sendAuthenticateEmail(@Query("userId") String userId, @Query("email") String email);
-                        Call<AuthMail> call1 = userApi.sendAuthenticateEmail("abcdef1","f7817455@naver.com");
-                        if (response.code() == 200) {
-                            Toast.makeText(SignupActivity.this, "이메일 인증이 완료되었습니다.",Toast.LENGTH_SHORT).show();
+                        if (response.isSuccessful()) {
+                            alertDialog.show();
                         }
                         else {
-                            Toast.makeText(SignupActivity.this, "통신은 성공했으나 인증에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignupActivity.this, "이미 인증된 이메일입니다.",Toast.LENGTH_SHORT).show();
                         }
                     }
                     @Override
@@ -108,59 +103,51 @@ public class SignupActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.signupedButton).setOnClickListener(new View.OnClickListener(){
-            EditText signupEtName = (EditText)findViewById(R.id.inputName);
-            EditText signupEtEmail = (EditText)findViewById((R.id.inputEmailCheck));
-            EditText signupEtPassword = (EditText)findViewById((R.id.inputPassword));
-            EditText signupEtPasswordConfirm = (EditText)findViewById((R.id.inputPasswordConfirm));
-            EditText signupEtId = (EditText)findViewById(R.id.inputId);
 
             @Override
             public void onClick(View view) {
-                if(signupEtName.getText().toString().length() == 0){
+                String name = nameEditText.getText().toString();
+                String email = emailEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+                String pwConfirm = pwConfirmEditText.getText().toString();
+                String id = idEditText.getText().toString();
+
+                if(TextUtils.isEmpty(name)) {
                     Toast.makeText(SignupActivity.this, "이름을 입력하세요",Toast.LENGTH_SHORT).show();
-                    signupEtName.requestFocus();
+                    nameEditText.requestFocus();
                     return;
                 }
-                else
-                    user.setName(signupEtName.getText().toString());
 
-                if(signupEtEmail.getText().toString().length() == 0){
+                if(TextUtils.isEmpty(email)) {
                     Toast.makeText(SignupActivity.this, "Email을 입력하세요",Toast.LENGTH_SHORT).show();
-                    signupEtEmail.requestFocus();
+                    emailEditText.requestFocus();
                     return;
                 }
-                else
-                    user.setEmail(signupEtEmail.getText().toString());
 
-                if(signupEtId.getText().toString().length() == 0) {
+                if(TextUtils.isEmpty(id)) {
                     Toast.makeText(SignupActivity.this, "ID를 입력하세요", Toast.LENGTH_SHORT).show();
-                    signupEtId.requestFocus();
+                    idEditText.requestFocus();
                     return;
                 }
-                else
-                    user.setId(signupEtId.getText().toString());
 
-                if(signupEtPassword.getText().toString().length() == 0){
+                if(TextUtils.isEmpty(password)) {
                     Toast.makeText(SignupActivity.this, "Password를 입력하세요",Toast.LENGTH_SHORT).show();
-                    signupEtPassword.requestFocus();
+                    passwordEditText.requestFocus();
                     return;
                 }
-                else if(signupEtPasswordConfirm.getText().toString().length() == 0){
+                else if(TextUtils.isEmpty(pwConfirm)) {
                     Toast.makeText(SignupActivity.this, "Password Confirm을 입력하세요",Toast.LENGTH_SHORT).show();
-                    signupEtPasswordConfirm.requestFocus();
+                    pwConfirmEditText.requestFocus();
                     return;
                 }
-                else if(!signupEtPassword.getText().toString().equals(signupEtPasswordConfirm.getText().toString())){
+                else if(!password.equals(pwConfirm)) {
                     Toast.makeText(SignupActivity.this, "비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
-                    signupEtPasswordConfirm.setText("");
-                    signupEtPasswordConfirm.requestFocus();
+                    pwConfirmEditText.setText("");
+                    pwConfirmEditText.requestFocus();
                     return;
                 }
-                else
-                    user.setPassword(signupEtPasswordConfirm.getText().toString());
 
                 if (isChanged){
-                    Toast.makeText(SignupActivity.this,birthString,Toast.LENGTH_SHORT).show();
                     user.setBirthday(birthDate);
                     isComplete = true;
                 }
@@ -170,7 +157,10 @@ public class SignupActivity extends AppCompatActivity {
                 if(isComplete){
                     //모든 데이터 입력 했을 시
                     //서버에 데이터 전송
-                    signUp.enqueue(new Callback<User>() {
+                    Call<User> call = userApi.signUp(new User(
+                            id, name, password, birthDate, 1, email
+                    ));
+                    call.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
                             //@POST("/users")
@@ -181,7 +171,7 @@ public class SignupActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                             else {
-                                Toast.makeText(SignupActivity.this, "통신은 성공했으나 회원가입에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "이메일 인증이 필요합니다",Toast.LENGTH_SHORT).show();
                             }
                         }
                         @Override

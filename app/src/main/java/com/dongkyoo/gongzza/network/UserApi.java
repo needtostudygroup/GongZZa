@@ -35,7 +35,7 @@ public interface UserApi {
      *      로그인 실패 시 500 에러
      */
     @GET("/users/login")
-    Call<User> getUserByIdPw(@Query("id") String id, @Query("password") String password);
+    Call<User> login(@Query("id") String id, @Query("password") String password);
 
     /**
      * 회원가입 요청

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.dongkyoo.gongzza.dtos.CourseDto;
-import com.dongkyoo.gongzza.vos.Course;
 
 import java.util.List;
 
@@ -29,22 +28,10 @@ public class CourseViewModel extends ViewModel {
         courseModel = new CourseModel();
     }
 
-    void createCourse(CourseDto courseDto) {
-        courseModel.createCourse(courseDto, new Callback<CourseDto>() {
-            @Override
-            public void onResponse(Call<CourseDto> call, Response<CourseDto> response) {
-                if (response.isSuccessful()) {
-                    _state.setValue(new CourseState(200));
-                } else {
-                    _state.setValue(new CourseState(0, "수업 생성 실패"));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CourseDto> call, Throwable t) {
-                _state.setValue(new CourseState(0, "수업 생성 실패"));
-            }
-        });
+    void insertCourse(CourseDto courseDto) {
+        List<CourseDto> courseDtoList = courseList.getValue();
+        courseDtoList.add(courseDto);
+        _courseList.setValue(courseDtoList);
     }
 
     void deleteCourse(int courseId) {
@@ -86,23 +73,5 @@ public class CourseViewModel extends ViewModel {
 
             }
         });
-    }
-
-    public static class CourseState {
-        public int state;
-        public String errorMessage;
-
-        public CourseState() {
-        }
-
-        public CourseState(int state) {
-            this.state = state;
-            this.errorMessage = null;
-        }
-
-        public CourseState(int state, String errorMessage) {
-            this.state = state;
-            this.errorMessage = errorMessage;
-        }
     }
 }

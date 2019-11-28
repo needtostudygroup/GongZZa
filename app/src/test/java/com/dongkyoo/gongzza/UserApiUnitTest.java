@@ -8,7 +8,6 @@ import com.dongkyoo.gongzza.vos.User;
 import org.junit.Test;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 import static org.junit.Assert.assertEquals;
@@ -65,7 +64,7 @@ public class UserApiUnitTest {
     @Test
     public void getUserByIdPwTest() throws Exception {
         UserApi userApi = Networks.retrofit.create(UserApi.class);
-        Call<User> call = userApi.getUserByIdPw(MockData.getMockUser().getId(), "testPassword");
+        Call<User> call = userApi.login(MockData.getMockUser().getId(), "testPassword");
         Response<User> response = call.execute();
         assertEquals(200, response.code());
         assertNotNull(response.body());
@@ -78,7 +77,7 @@ public class UserApiUnitTest {
     @Test
     public void getUserByIdPwFailure() throws Exception {
         UserApi userApi = Networks.retrofit.create(UserApi.class);
-        Call<User> call = userApi.getUserByIdPw(MockData.getMockUser().getId(), "testPasswordasdfasdf");
+        Call<User> call = userApi.login(MockData.getMockUser().getId(), "testPasswordasdfasdf");
         Response<User> response = call.execute();
         assertEquals(500, response.code());
     }

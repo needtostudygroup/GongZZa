@@ -13,22 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".post.PostActivity"></activity>
-        <activity android:name=".Login.FindPasswordActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".post.PostActivity"/>
+        <activity android:name=".Login.FindPasswordActivity"/>
         <activity android:name=".Login.FindAccountActivity" />
-        <activity android:name=".Login.SignupActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Login.SignupActivity"/>
         <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,8 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".home.add.AddClassActivity"></activity>
-        <activity android:name=".all.BreakTime.BreakTimeActivity"></activity>
+        <activity android:name=".course.create.CreateCourseActivity"/>
+        <activity android:name=".all.BreakTime.BreakTimeActivity"/>
         <activity android:name=".all.Alarm.AlarmActivity" />
         <service
             android:name=".notifications.FirebaseNotificationService"
@@ -48,16 +36,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".chat.chattingRoom.ChatActivity">
-        </activity>
+        <activity android:name=".chat.chattingRoom.ChatActivity"/>
         <activity android:name=".post.write.WritePostActivity"></activity>
-        <activity android:name=".main.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".main.MainActivity"/>
     </application>
 
 </manifest>
