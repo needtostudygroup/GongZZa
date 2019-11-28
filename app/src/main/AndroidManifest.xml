@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".home.add.AddClassActivity"></activity>
+        <activity android:name=".all.BreakTime.BreakTimeActivity"></activity>
+        <activity android:name=".all.Alarm.AlarmActivity" />
         <service
             android:name=".notifications.FirebaseNotificationService"
             android:enabled="true"
