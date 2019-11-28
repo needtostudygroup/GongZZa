@@ -96,4 +96,15 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
     Date getLastChatReceivedDatetime() {
         return chattingRoomListModel.getLastChatReceivedDatetime();
     }
+
+    void receiveChat(ChatLog chatLog) {
+        List<PostChatDto> postChatDtoList = postChatList.getValue();
+        for (PostChatDto postChatDto : postChatDtoList) {
+            if (postChatDto.getId() == chatLog.getPostId()) {
+                postChatDto.getChatLogList().add(chatLog);
+                _postChatList.setValue(postChatDtoList);
+                return;
+            }
+        }
+    }
 }

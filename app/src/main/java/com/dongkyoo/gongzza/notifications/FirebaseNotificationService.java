@@ -108,35 +108,33 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
             return;
         }
 
-        if (ChatActivity.IS_SHOWN && ChatActivity.getPostChatDto() != null &&
-                ChatActivity.getPostChatDto().getId() == postId) {
-            Intent intent = new Intent(getString(R.string.receive_message));
-            intent.putExtra(Config.MESSAGE, message);
-            intent.putExtra(Config.POST, postId);
-            intent.putExtra(Config.USER, senderId);
-            intent.putExtra(Config.CHAT_ID, id);
-            sendBroadcast(intent);
-        } else {
-            createNotificationChannel();
+        Intent intent = new Intent(getString(R.string.receive_message));
+        intent.putExtra(Config.MESSAGE, message);
+        intent.putExtra(Config.POST, postId);
+        intent.putExtra(Config.USER, senderId);
+        intent.putExtra(Config.CHAT_ID, id);
+        sendBroadcast(intent);
 
-            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
-            intent.putExtra(Config.POST, postId);
-            intent.putExtra(Config.USER, senderId);
-            intent.putExtra(Config.CHAT_ID, id);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent , 0);
+        createNotificationChannel();
 
-            Notification notification = new NotificationCompat.Builder(getApplicationContext(), DEFAULT_CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setContentIntent(pendingIntent)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .build();
+        intent = new Intent(getApplicationContext(), ChatActivity.class);
+        intent.putExtra(Config.POST, postId);
+        intent.putExtra(Config.USER, senderId);
+        intent.putExtra(Config.CHAT_ID, id);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-            NotificationManagerCompat.from(getApplicationContext()).notify(getUniqueId(), notification);
-        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent , 0);
+
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), DEFAULT_CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setContentIntent(pendingIntent)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .build();
+
+        NotificationManagerCompat.from(getApplicationContext()).notify(getUniqueId(), notification);
     }
 
     private void createNotificationChannel() {
