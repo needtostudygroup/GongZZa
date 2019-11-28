@@ -68,12 +68,7 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
                         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                        Date date = null;
-                        try {
-                            date = format.parse(courseInfoList.get(position).getStartTime());
-                        } catch (Exception e) {
-                            date = new Date();
-                        }
+                        Date date = courseInfoList.get(position).getStartTime();
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(date);
@@ -84,9 +79,9 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 calendar.set(Calendar.MINUTE, minute);
 
-                                String time = format.format(calendar.getTime());
+                                Date time = calendar.getTime();
                                 courseInfoList.get(position).setStartTime(time);
-                                viewHolder.startTimeEditText.setText(courseInfoList.get(position).getStartTime());
+                                viewHolder.startTimeEditText.setText(format.format(courseInfoList.get(position).getStartTime()));
                             }
                         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
                     }
@@ -98,12 +93,7 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
                         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                        Date date = null;
-                        try {
-                            date = format.parse(courseInfoList.get(position).getEndTime());
-                        } catch (Exception e) {
-                            date = new Date();
-                        }
+                        Date date = courseInfoList.get(position).getEndTime();
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(date);
@@ -114,9 +104,9 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 calendar.set(Calendar.MINUTE, minute);
 
-                                String time = format.format(calendar.getTime());
+                                Date time = calendar.getTime();
                                 courseInfoList.get(position).setEndTime(time);
-                                viewHolder.endTimeEditText.setText(courseInfoList.get(position).getEndTime());
+                                viewHolder.endTimeEditText.setText(format.format(courseInfoList.get(position).getEndTime()));
                             }
                         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
                     }

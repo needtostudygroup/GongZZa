@@ -30,7 +30,7 @@
             android:layout_gravity="bottom"
             android:layout_marginRight="@dimen/margin2"
             android:layout_marginBottom="@dimen/margin0"
-            app:chat_sentAt="@{chatLog}"
+            app:chat_absoluteSentAt="@{chatLog}"
             android:layout_toLeftOf="@id/speech_balloon"
             android:layout_alignBottom="@id/speech_balloon"/>
 

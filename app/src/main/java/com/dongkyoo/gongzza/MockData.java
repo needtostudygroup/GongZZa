@@ -79,7 +79,7 @@ public class MockData {
 
     public static CourseInfo getMockCourseInfo() {
         Course course = getMockCourse();
-        return new CourseInfo(0, course.getId(), "12:00", "13:50", Calendar.MONDAY);
+        return new CourseInfo(0, course.getId(), new Date(), new Date(), Calendar.MONDAY);
     }
 
     public static Token getMockToken() {

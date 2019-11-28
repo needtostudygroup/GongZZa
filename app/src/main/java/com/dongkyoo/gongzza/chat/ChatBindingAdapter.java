@@ -16,8 +16,10 @@ public class ChatBindingAdapter {
 
     @BindingAdapter("chat_sentAt")
     public static void sentAt(TextView textView, ChatLog chatLog) {
-        if (chatLog == null)
+        if (chatLog == null) {
+            textView.setText("");
             return;
+        }
 
         long sentAt = chatLog.getSentAt().getTime();
         long now = new Date().getTime();
@@ -31,6 +33,24 @@ public class ChatBindingAdapter {
             textView.setText((diff / (1000 * 60 * 24)) + "시간 전");
         } else {
             SimpleDateFormat format = new SimpleDateFormat("MM월 dd일");
+            textView.setText(format.format(chatLog.getSentAt()));
+        }
+    }
+
+    @BindingAdapter("chat_absoluteSentAt")
+    public static void absoluteSentAt(TextView textView, ChatLog chatLog) {
+        if (chatLog == null)
+            return;
+
+        long sentAt = chatLog.getSentAt().getTime();
+        long now = new Date().getTime();
+        long diff = now - sentAt;
+
+        if (diff < 1000 * 60 * 60 * 24) {
+            SimpleDateFormat format = new SimpleDateFormat("HH: mm");
+            textView.setText(format.format(chatLog.getSentAt()));
+        } else {
+            SimpleDateFormat format = new SimpleDateFormat("MM: dd");
             textView.setText(format.format(chatLog.getSentAt()));
         }
     }

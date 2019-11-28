@@ -3,6 +3,7 @@ package com.dongkyoo.gongzza.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -15,14 +16,16 @@ public class CourseInfo implements Parcelable {
 
     private int id;
     private int courseId;
-    private String startTime;
-    private String endTime;
+    private Date startTime;
+    private Date endTime;
     private int day;
 
     public CourseInfo() {
+        startTime = new Date();
+        endTime = new Date();
     }
 
-    public CourseInfo(int id, int courseId, String startTime, String endTime, int day) {
+    public CourseInfo(int id, int courseId, Date startTime, Date endTime, int day) {
         this.id = id;
         this.courseId = courseId;
         this.startTime = startTime;
@@ -33,8 +36,8 @@ public class CourseInfo implements Parcelable {
     public CourseInfo(Parcel parcel) {
         id = parcel.readInt();
         courseId = parcel.readInt();
-        startTime = parcel.readString();
-        endTime = parcel.readString();
+        startTime = (Date) parcel.readSerializable();
+        endTime = (Date) parcel.readSerializable();
         day = parcel.readInt();
     }
 
@@ -54,19 +57,19 @@ public class CourseInfo implements Parcelable {
         this.courseId = courseId;
     }
 
-    public String getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
 
@@ -115,8 +118,8 @@ public class CourseInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeInt(courseId);
-        dest.writeString(startTime);
-        dest.writeString(endTime);
+        dest.writeSerializable(startTime);
+        dest.writeSerializable(endTime);
         dest.writeInt(day);
     }
 

@@ -123,11 +123,15 @@ public class TimetableView extends View {
                 Paint cellPaint = new Paint();
                 cellPaint.setColor(Color.parseColor(colorList[colorIndex++]));
                 if (day >= Calendar.MONDAY && day <= Calendar.FRIDAY) {
-                    int startHour = Integer.parseInt(info.getStartTime().split(":")[0]);
-                    int startMin = Integer.parseInt(info.getStartTime().split(":")[1]);
+                    Calendar c = Calendar.getInstance();
 
-                    int endHour = Integer.parseInt(info.getEndTime().split(":")[0]);
-                    int endMin = Integer.parseInt(info.getEndTime().split(":")[1]);
+                    c.setTime(info.getStartTime());
+                    int startHour = c.get(Calendar.HOUR_OF_DAY);
+                    int startMin = c.get(Calendar.MINUTE);
+
+                    c.setTime(info.getEndTime());
+                    int endHour = c.get(Calendar.HOUR_OF_DAY);
+                    int endMin = c.get(Calendar.MINUTE);
 
                     float startX = mostLeftColumnWidth + cellWidth * (day - Calendar.MONDAY);
                     float startY = topRowHeight + cellHeight * (startHour - MIN_HOUR) + cellHeight * (startMin / 60f);
