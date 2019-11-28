@@ -191,7 +191,7 @@ public class TimetableView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+        if (event.getAction() == MotionEvent.ACTION_UP && event.getEventTime() - event.getDownTime() < 300) {
             for (int i = 0; i < courseInfoRectList.size(); i++) {
                 if (courseInfoRectList.get(i).contains(event.getX(), event.getY())) {
                     for (OnClickCourseInfoListener listener : clickCourseInfoListenerList) {
@@ -202,15 +202,25 @@ public class TimetableView extends View {
             }
         }
 
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            for (int i = 0; i < courseInfoRectList.size(); i++) {
+                if (courseInfoRectList.get(i).contains(event.getX(), event.getY())) {
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
     public void addCourseDtoList(List<CourseDto> courseDtoList) {
-
+        courseDtoList.addAll(courseDtoList);
+        invalidate();
     }
 
     public void addCourseDto(CourseDto courseDto) {
         courseDtoList.add(courseDto);
+        invalidate();
     }
 
     public void setCourseDtoList(List<CourseDto> courseDtoList) {
