@@ -143,14 +143,20 @@ public class TimetableView extends View {
 
                     List<String> nameList = split(courseDto.getName(), 5);
 
+                    p.setFakeBoldText(true);
                     float nextY = 0;
                     for (int i = 0; i < nameList.size(); i++) {
                         nextY = startY + p.getTextSize() * (i + 1);
-                        canvas.drawText(nameList.get(i), startX, nextY, p);
+                        canvas.drawText(nameList.get(i), startX + 5, nextY, p);
                     }
 
-                    nextY = nextY + p.getTextSize() + 20;
-                    canvas.drawText(courseDto.getProfessor(), startX, nextY, p);
+                    p.setFakeBoldText(false);
+                    nameList = split(courseDto.getProfessor(), 5);
+                    nextY += 10;
+                    for (int i = 0; i < nameList.size(); i++) {
+                        nextY += p.getTextSize();
+                        canvas.drawText(nameList.get(i), startX + 5, nextY, p);
+                    }
                 }
             }
         }

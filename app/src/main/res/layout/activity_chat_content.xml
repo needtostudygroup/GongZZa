@@ -9,7 +9,6 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="카페가실분!"
         android:background="@color/colorPrimary"
         app:titleTextColor="#FFF"/>
 

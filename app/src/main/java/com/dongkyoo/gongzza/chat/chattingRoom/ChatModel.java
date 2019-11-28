@@ -12,7 +12,9 @@ import com.dongkyoo.gongzza.cache.CacheCallback;
 import com.dongkyoo.gongzza.cache.ChatDao;
 import com.dongkyoo.gongzza.network.ChatLogApi;
 import com.dongkyoo.gongzza.network.Networks;
+import com.dongkyoo.gongzza.network.ParticipantApi;
 import com.dongkyoo.gongzza.vos.ChatLog;
+import com.dongkyoo.gongzza.vos.Participant;
 
 import java.util.Date;
 import java.util.List;
@@ -27,9 +29,11 @@ public class ChatModel {
 
     private ChatLogApi chatLogApi;
     private ChatDao chatDao;
+    private ParticipantApi participantApi;
 
     public ChatModel(Context context) {
         chatLogApi = Networks.retrofit.create(ChatLogApi.class);
+        participantApi = Networks.retrofit.create(ParticipantApi.class);
         AppDatabase db = Room.databaseBuilder(context, AppDatabase.class, AppDatabase.DB_NAME).build();
         chatDao = db.chatDao();
     }
@@ -77,5 +81,10 @@ public class ChatModel {
                 });
             }
         }).start();
+    }
+
+    void loadParticipantList(int postId, Callback<List<Participant>> callback) {
+        Call<List<Participant>> call = participantApi.selectParticipantListByPostId(postId);
+        call.enqueue(callback);
     }
 }

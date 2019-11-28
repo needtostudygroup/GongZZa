@@ -1,6 +1,7 @@
 package com.dongkyoo.gongzza.chat.chattingRoom;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,6 +13,7 @@ import com.dongkyoo.gongzza.dtos.PostChatDto;
 import com.dongkyoo.gongzza.dtos.PostDto;
 import com.dongkyoo.gongzza.dtos.SendingChatDto;
 import com.dongkyoo.gongzza.vos.ChatLog;
+import com.dongkyoo.gongzza.vos.Participant;
 import com.dongkyoo.gongzza.vos.User;
 
 import java.util.Date;
@@ -23,11 +25,15 @@ import retrofit2.Response;
 
 public class ChatViewModel extends ViewModel {
 
+    private static final String TAG = "ChatViewModel";
+
     private MutableLiveData<ChatState> _chatState = new MutableLiveData<>();
     private MutableLiveData<ChatBaseInfo> _baseInfoState = new MutableLiveData<>();
+    private MutableLiveData<List<Participant>> _participantList = new MutableLiveData<>();
 
     public LiveData<ChatState> chatState = _chatState;
     public LiveData<ChatBaseInfo> baseInfoState = _baseInfoState;
+    public LiveData<List<Participant>> participantList = _participantList;
 
     private ChatModel chatModel;
     private BaseModel baseModel;
@@ -40,6 +46,7 @@ public class ChatViewModel extends ViewModel {
 
         chatModel = new ChatModel(context);
         baseModel = new BaseModel();
+        loadParticipantList(postChatDto.getId());
     }
 
     public ChatViewModel(Context context, int postId, String userId) {
@@ -90,7 +97,7 @@ public class ChatViewModel extends ViewModel {
         });
     }
 
-    public void receieveChat(String senderId, String content) {
+    public void receiveChat(String senderId, String content) {
         ChatLog chatLog = new ChatLog(0, postChatDto.getId(), senderId, content, new Date(System.currentTimeMillis()));
         postChatDto.getChatLogList().add(chatLog);
         _chatState.setValue(new ChatState(ChatState.CREATE));
@@ -127,6 +134,24 @@ public class ChatViewModel extends ViewModel {
                 sendingChatDto.setErrorMessage("실패");
                 postChatDto.getChatLogList().set(index, sendingChatDto);
                 _chatState.setValue(new ChatState(ChatState.MODIFY, index));
+            }
+        });
+    }
+
+    public void loadParticipantList(int postId) {
+        chatModel.loadParticipantList(postId, new Callback<List<Participant>>() {
+            @Override
+            public void onResponse(Call<List<Participant>> call, Response<List<Participant>> response) {
+                if (response.isSuccessful()) {
+                    _participantList.setValue(response.body());
+                } else {
+                    Log.e(TAG, "참여자 목록 로딩 실패");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Participant>> call, Throwable t) {
+                Log.e(TAG, "참여자 목록 로딩 실패", t);
             }
         });
     }

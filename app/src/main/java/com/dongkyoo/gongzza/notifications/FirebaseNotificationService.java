@@ -104,18 +104,6 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String me = sharedPreferences.getString(Config.USER, "");
 
-
-        // TODO: 개발용
-        me = MockData.getMockUser().getId();
-
-
-
-
-
-
-
-
-
         if (senderId.equals(me)) {
             return;
         }
