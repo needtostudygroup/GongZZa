@@ -31,6 +31,7 @@ public class ChattingRoomListFragment extends Fragment {
     private static final String TAG = "ChattingRoomListFrag";
     private User me;
     private ChattingRoomListAdapter adapter;
+    private ChattingRoomListViewModel viewModel;
 
     private ChattingRoomListFragment() {
         // Required empty public constructor
@@ -50,7 +51,7 @@ public class ChattingRoomListFragment extends Fragment {
 
         initView(view);
 
-        ChattingRoomListViewModel viewModel = new ChattingRoomListViewModel(getActivity().getApplication(), me);
+        viewModel = new ChattingRoomListViewModel(getActivity().getApplication(), me);
         viewModel.loadRemoteChatLog(viewModel.getLastChatReceivedDatetime());
 
         viewModel.postChatList.observe(this, new Observer<List<PostChatDto>>() {
@@ -61,6 +62,13 @@ public class ChattingRoomListFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        viewModel.loadEnrolledPostList();
     }
 
     private void initView(View view) {

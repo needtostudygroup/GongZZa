@@ -1,4 +1,4 @@
-package com.dongkyoo.gongzza.Login;
+package com.dongkyoo.gongzza.login;
 
 import android.app.AlertDialog;
 import android.content.Intent;

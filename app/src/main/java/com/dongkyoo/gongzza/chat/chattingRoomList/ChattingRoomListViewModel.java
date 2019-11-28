@@ -44,10 +44,9 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
         this.me = me;
         _postChatList.setValue(new ArrayList<>());
         chattingRoomListModel = new ChattingRoomListModel(application);
-        loadEnrolledPostList();
     }
 
-    private void loadEnrolledPostList() {
+    public void loadEnrolledPostList() {
         chattingRoomListModel.loadEnrolledPostList(new CacheCallback<List<PostChatDto>>() {
             @Override
             public void onReceive(List<PostChatDto> postChatDtos) {

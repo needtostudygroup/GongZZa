@@ -49,6 +49,7 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
             this
     );
     private String searchKeyword;
+    private HashTagRecyclerView hashTagRecyclerView;
 
     private BoardFragment() {
         // Required empty public constructor
@@ -70,7 +71,7 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
     }
 
     private void initView(View view) {
-        HashTagRecyclerView hashTagRecyclerView = view.findViewById(R.id.hashTagRecyclerView);
+        hashTagRecyclerView = view.findViewById(R.id.hashTagRecyclerView);
         hashTagRecyclerView.setOnHashTagChangedListener(new HashTagRecyclerAdapter.OnHashTagChangedListener() {
             @Override
             public void onChange() {
@@ -101,8 +102,6 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 
-        loadPost("", hashTagRecyclerView.getHashTagList());
-
         FloatingActionButton writePostButton = view.findViewById(R.id.write_post_button);
         writePostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +111,13 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
                 startActivityForResult(intent, 0);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        loadPost("", hashTagRecyclerView.getHashTagList());
     }
 
     @Override
