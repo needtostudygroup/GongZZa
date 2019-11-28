@@ -36,20 +36,6 @@ public class ChattingRoomListFragment extends Fragment {
     private ChattingRoomListAdapter adapter;
     private ChattingRoomListViewModel viewModel;
 
-    private BroadcastReceiver chatReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String senderId = intent.getStringExtra(Config.USER);
-            String message = intent.getStringExtra(Config.MESSAGE);
-            int postId = intent.getIntExtra(Config.POST, -1);
-            int chatId = intent.getIntExtra(Config.CHAT_ID, -1);
-
-            viewModel.receiveChat(new ChatLog(
-                    chatId, postId, senderId, message, new Date()
-            ));
-        }
-    };
-
     private ChattingRoomListFragment() {
         // Required empty public constructor
     }
@@ -93,14 +79,11 @@ public class ChattingRoomListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new ChattingRoomListAdapter(getActivity(), new ArrayList<>(), me);
         recyclerView.setAdapter(adapter);
-
-//        getActivity().registerReceiver(chatReceiver, new IntentFilter(getString(R.string.receive_message)));
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-//        getActivity().unregisterReceiver(chatReceiver);
+    public void receiveChat(ChatLog chatLog) {
+        if (viewModel != null) {
+            viewModel.receiveChat(chatLog);
+        }
     }
 }

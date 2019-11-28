@@ -1,5 +1,7 @@
 package com.dongkyoo.gongzza.dtos;
 
+import com.dongkyoo.gongzza.vos.ChatLog;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -11,7 +13,11 @@ public class PostChatDtos {
             for (PostChatDto destPostChatDto : dest) {
                 if (postChatDto.getId() == destPostChatDto.getId()) {
                     isFound = true;
-                    destPostChatDto.getChatLogList().addAll(postChatDto.getChatLogList());
+                    for (ChatLog c : postChatDto.getChatLogList()) {
+                        if (!destPostChatDto.getChatLogList().contains(c)) {
+                            destPostChatDto.getChatLogList().add(c);
+                        }
+                    }
                     destPostChatDto.sortChatLogList();
                     break;
                 }

@@ -1,6 +1,9 @@
 package com.dongkyoo.gongzza.main;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +24,7 @@ import com.dongkyoo.gongzza.chat.chattingRoomList.ChattingRoomListFragment;
 import com.dongkyoo.gongzza.course.CourseFragment;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.TokenApi;
+import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.Config;
 import com.dongkyoo.gongzza.vos.Token;
 import com.dongkyoo.gongzza.vos.User;
@@ -38,7 +42,25 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private MainTabAdapter adapter;
     private User me;
+
     private CourseFragment courseFragment;
+    private ChattingRoomListFragment chattingRoomListFragment;
+
+    private BroadcastReceiver chatReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String senderId = intent.getStringExtra(Config.USER);
+            String message = intent.getStringExtra(Config.MESSAGE);
+            int postId = intent.getIntExtra(Config.POST, -1);
+            int chatId = intent.getIntExtra(Config.CHAT_ID, -1);
+
+            if (chattingRoomListFragment != null) {
+                chattingRoomListFragment.receiveChat(new ChatLog(
+                        chatId, postId, senderId, message, new Date()
+                ));
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         registerToken();
 
         courseFragment = CourseFragment.newInstance(me);
+        chattingRoomListFragment = ChattingRoomListFragment.newInstance(me);
 
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         ViewPager viewPager = findViewById(R.id.viewPager);
@@ -60,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 new Fragment[] {
                         courseFragment,
                         BoardFragment.newInstance(me),
-                        ChattingRoomListFragment.newInstance(me),
+                        chattingRoomListFragment,
                         new AllFragment()
                 },
                 getResources().getStringArray(R.array.tab_name_list)
@@ -70,12 +93,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager, true);
     }
 
-    public void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment).commit();
-    }
-  
     /**
      * FCM(Firebase Cloud Message) 토큰 등록해주는 메소드, 푸시알림을 받으려면 토큰을 등록해줘야함
      */
@@ -114,5 +131,19 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == CODE_INSERT_COURSE) {
             courseFragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        registerReceiver(chatReceiver, new IntentFilter(getString(R.string.receive_message)));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        unregisterReceiver(chatReceiver);
     }
 }

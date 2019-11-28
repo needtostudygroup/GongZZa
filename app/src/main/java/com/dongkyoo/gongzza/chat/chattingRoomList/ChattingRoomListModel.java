@@ -87,7 +87,10 @@ public class ChattingRoomListModel {
                     } catch (SQLiteConstraintException e) {
                     }
                     for (ChatLog chatLog : postChatDto.getChatLogList()) {
-                        chatDao.insertChat(chatLog);
+                        try {
+                            chatDao.insertChat(chatLog);
+                        } catch (Exception e) {
+                        }
                     }
                 }
                 Log.i(TAG, "PostChatDto 로컬 캐시 완료");
