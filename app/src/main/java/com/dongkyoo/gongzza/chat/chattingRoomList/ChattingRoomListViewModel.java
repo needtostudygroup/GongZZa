@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.dongkyoo.gongzza.cache.CacheCallback;
+import com.dongkyoo.gongzza.chat.chattingRoom.ChatModel;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
 import com.dongkyoo.gongzza.dtos.PostChatDtos;
 import com.dongkyoo.gongzza.vos.ChatLog;
@@ -29,6 +30,7 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
     private static final String TAG = "ChattingRoomListVM";
 
     private ChattingRoomListModel chattingRoomListModel;
+    private ChatModel chatModel;
     private MutableLiveData<List<PostChatDto>> _postChatList = new MutableLiveData<>();
 
     public LiveData<List<PostChatDto>> postChatList = _postChatList;
@@ -46,6 +48,7 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
         this.me = me;
         _postChatList.setValue(new ArrayList<>());
         chattingRoomListModel = new ChattingRoomListModel(application);
+        chatModel = new ChatModel(application);
     }
 
     public void loadEnrolledPostList() {
@@ -102,6 +105,7 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
         for (PostChatDto postChatDto : postChatDtoList) {
             if (postChatDto.getId() == chatLog.getPostId()) {
                 postChatDto.getChatLogList().add(chatLog);
+                chatModel.insertChatLog(chatLog);
                 _postChatList.setValue(postChatDtoList);
                 return;
             }

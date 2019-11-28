@@ -97,8 +97,9 @@ public class ChatViewModel extends ViewModel {
         });
     }
 
-    public void receiveChat(String senderId, String content) {
-        ChatLog chatLog = new ChatLog(0, postChatDto.getId(), senderId, content, new Date(System.currentTimeMillis()));
+    public void receiveChat(int chatId, String senderId, String content) {
+        ChatLog chatLog = new ChatLog(chatId, postChatDto.getId(), senderId, content, new Date(System.currentTimeMillis()));
+        chatModel.insertChatLog(chatLog);
         postChatDto.getChatLogList().add(chatLog);
         _chatState.setValue(new ChatState(ChatState.CREATE));
     }

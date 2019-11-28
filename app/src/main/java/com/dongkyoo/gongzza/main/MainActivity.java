@@ -49,10 +49,6 @@ public class MainActivity extends AppCompatActivity {
         Networks.createRetrofit(this);
 
         me = getIntent().getParcelableExtra(Config.USER);
-        if (me == null) {
-            Log.e(TAG, "유저 정보 없음! 디버깅 모드임?");
-            me = MockData.getMockUser();
-        }
 
         registerToken();
 

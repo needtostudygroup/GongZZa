@@ -94,13 +94,13 @@ public class ChattingRoomListFragment extends Fragment {
         adapter = new ChattingRoomListAdapter(getActivity(), new ArrayList<>(), me);
         recyclerView.setAdapter(adapter);
 
-        getActivity().registerReceiver(chatReceiver, new IntentFilter(getString(R.string.receive_message)));
+//        getActivity().registerReceiver(chatReceiver, new IntentFilter(getString(R.string.receive_message)));
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
-        getActivity().unregisterReceiver(chatReceiver);
+//        getActivity().unregisterReceiver(chatReceiver);
     }
 }

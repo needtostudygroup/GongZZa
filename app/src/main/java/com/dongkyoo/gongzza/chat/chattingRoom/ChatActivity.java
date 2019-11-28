@@ -208,7 +208,8 @@ public class ChatActivity extends AppCompatActivity {
                     if (intent.getIntExtra(Config.POST, -1) == postChatDto.getId()) {
                         String senderId = intent.getStringExtra(Config.USER);
                         String message = intent.getStringExtra(Config.MESSAGE);
-                        viewModel.receiveChat(senderId, message);
+                        int id = intent.getIntExtra(Config.CHAT_ID, 0);
+                        viewModel.receiveChat(id, senderId, message);
                     }
                 }
             };

@@ -38,19 +38,22 @@ public class ChatModel {
         chatDao = db.chatDao();
     }
 
+    public void insertChatLog(ChatLog chatLog) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                chatDao.insertChat(chatLog);
+            }
+        }).start();
+    }
+
     void sendChat(ChatLog chatLog, Callback<ChatLog> callback) {
         Call<ChatLog> call = chatLogApi.sendChat(chatLog);
         call.enqueue(new Callback<ChatLog>() {
             @Override
             public void onResponse(Call<ChatLog> call, Response<ChatLog> response) {
                 if (response.code() == 200) {
-                    Date d = new Date();
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            chatDao.insertChat(response.body());
-                        }
-                    }).start();
+                    insertChatLog(response.body());
                     Log.e(TAG, "채팅 전송 성공 " + response.body());
                 } else {
                     Log.e(TAG, "채팅 전송 실패");

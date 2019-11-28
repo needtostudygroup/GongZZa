@@ -3,12 +3,14 @@ package com.dongkyoo.gongzza.vos;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 작성자 : 이동규
@@ -141,4 +143,23 @@ public class ChatLog implements Comparable<ChatLog>, Parcelable {
             return new ChatLog[size];
         }
     };
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof ChatLog)) return false;
+        ChatLog chatLog = (ChatLog) o;
+        return (id > 0 && id == chatLog.id) ||
+                (postId == chatLog.postId &&
+                Objects.equals(senderId, chatLog.senderId) &&
+                Objects.equals(senderName, chatLog.senderName) &&
+                Objects.equals(content, chatLog.content) &&
+                Objects.equals(sentAt, chatLog.sentAt));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, postId, senderId, senderName, content, sentAt);
+    }
 }
