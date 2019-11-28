@@ -102,7 +102,7 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
         int id = Integer.parseInt(remoteMessage.getData().get("ID"));
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String me = sharedPreferences.getString(Config.USER, "");
+        String me = sharedPreferences.getString(Config.USER_ID, "");
 
         if (senderId.equals(me)) {
             return;

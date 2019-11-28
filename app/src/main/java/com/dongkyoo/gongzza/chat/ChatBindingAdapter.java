@@ -6,12 +6,11 @@ import android.widget.TextView;
 
 import androidx.databinding.BindingAdapter;
 
-import com.dongkyoo.gongzza.dtos.PostDto;
 import com.dongkyoo.gongzza.dtos.SendingChatDto;
 import com.dongkyoo.gongzza.vos.ChatLog;
-import com.dongkyoo.gongzza.vos.Post;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class ChatBindingAdapter {
 
@@ -20,8 +19,20 @@ public class ChatBindingAdapter {
         if (chatLog == null)
             return;
 
-        SimpleDateFormat format = new SimpleDateFormat("MM월 dd일 HH시 mm분");
-        textView.setText(format.format(chatLog.getSentAt()));
+        long sentAt = chatLog.getSentAt().getTime();
+        long now = new Date().getTime();
+        long diff = now - sentAt;
+
+        if (diff < 1000 * 60) {
+            textView.setText("방금 전");
+        } else if (diff < 1000 * 60 * 60) {
+            textView.setText((diff / (1000 * 60)) + "분 전");
+        } else if (diff < 1000 * 60 * 60 * 24) {
+            textView.setText((diff / (1000 * 60 * 24)) + "시간 전");
+        } else {
+            SimpleDateFormat format = new SimpleDateFormat("MM월 dd일");
+            textView.setText(format.format(chatLog.getSentAt()));
+        }
     }
 
     @BindingAdapter("chat_isError")

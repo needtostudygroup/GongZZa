@@ -15,6 +15,8 @@ import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +52,9 @@ public class ChattingRoomListViewModel extends AndroidViewModel {
         chattingRoomListModel.loadEnrolledPostList(new CacheCallback<List<PostChatDto>>() {
             @Override
             public void onReceive(List<PostChatDto> postChatDtos) {
+                if (postChatDtos == null)
+                    return;
+
                 _postChatList.setValue(postChatDtos);
             }
         });

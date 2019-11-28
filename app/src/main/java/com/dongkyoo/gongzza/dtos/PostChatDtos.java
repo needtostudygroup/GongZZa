@@ -1,5 +1,6 @@
 package com.dongkyoo.gongzza.dtos;
 
+import java.util.Collections;
 import java.util.List;
 
 public class PostChatDtos {
@@ -20,5 +21,7 @@ public class PostChatDtos {
                 dest.add(postChatDto);
             }
         }
+
+        Collections.sort(dest);
     }
 }

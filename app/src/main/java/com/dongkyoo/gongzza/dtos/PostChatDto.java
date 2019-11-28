@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PostChatDto extends PostDto implements Parcelable {
+public class PostChatDto extends PostDto implements Parcelable, Comparable<PostChatDto> {
 
     private List<ChatLog> chatLogList;
 
@@ -64,4 +64,16 @@ public class PostChatDto extends PostDto implements Parcelable {
             return new PostChatDto[size];
         }
     };
+
+    @Override
+    public int compareTo(PostChatDto o) {
+        if (getLatestChatLog() == null) {
+            if (o.getLatestChatLog() == null)
+                return -Integer.MAX_VALUE;
+            return (int) -o.getLatestChatLog().getSentAt().getTime();
+        }
+        if (o.getLatestChatLog() == null)
+            return (int) getLatestChatLog().getSentAt().getTime();
+        return (int) (o.getLatestChatLog().getSentAt().getTime() - getLatestChatLog().getSentAt().getTime());
+    }
 }
