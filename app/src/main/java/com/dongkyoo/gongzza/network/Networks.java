@@ -27,13 +27,7 @@ public class Networks {
     public static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(SERVER_URL)
             .client(client)
-            .addConverterFactory(
-                    JacksonConverterFactory.create(
-//                            new ObjectMapper().setDateFormat(
-//                                    new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS")
-//                            )
-                    )
-            )
+            .addConverterFactory(JacksonConverterFactory.create())
             .build();
 
     static {
@@ -45,13 +39,7 @@ public class Networks {
             retrofit = new Retrofit.Builder()
                     .baseUrl(SERVER_URL)
                     .client(client)
-                    .addConverterFactory(
-                            JacksonConverterFactory.create(
-//                                    new ObjectMapper().setDateFormat(
-//                                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS")
-//                                    )
-                            )
-                    )
+                    .addConverterFactory(JacksonConverterFactory.create())
                     .build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,13 +55,7 @@ public class Networks {
             retrofit = new Retrofit.Builder()
                     .baseUrl(SERVER_URL)
                     .client(client)
-                    .addConverterFactory(
-                            JacksonConverterFactory.create(
-//                                    new ObjectMapper().setDateFormat(
-//                                            new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssSSS")
-//                                    )
-                            )
-                    )
+                    .addConverterFactory(JacksonConverterFactory.create())
                     .build();
             return retrofit;
         } catch (Exception e) {

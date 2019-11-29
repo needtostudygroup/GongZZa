@@ -99,6 +99,16 @@ public class ChatViewModel extends ViewModel {
 
     public void receiveChat(int chatId, String senderId, String content) {
         ChatLog chatLog = new ChatLog(chatId, postChatDto.getId(), senderId, content, new Date(System.currentTimeMillis()));
+        List<Participant> participantList = this.participantList.getValue();
+        if (participantList != null) {
+            for (Participant participant : participantList) {
+                if (participant.getUser().getId().equals(senderId)) {
+                    chatLog.setUser(participant.getUser());
+                    break;
+                }
+            }
+        }
+
         chatModel.insertChatLog(chatLog);
         postChatDto.getChatLogList().add(chatLog);
         _chatState.setValue(new ChatState(ChatState.CREATE));

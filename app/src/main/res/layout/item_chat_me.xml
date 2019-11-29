@@ -17,7 +17,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{chatLog.senderName}"
+            android:text="@{chatLog.user.name}"
             android:layout_marginBottom="@dimen/margin0"
             android:layout_marginRight="@dimen/margin2"
             android:layout_alignTop="@id/titleImageView"

@@ -14,7 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
 import com.dongkyoo.gongzza.vos.ChatLog;
+import com.dongkyoo.gongzza.vos.Participant;
 import com.dongkyoo.gongzza.vos.User;
+
+import java.util.List;
+import java.util.Set;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
@@ -24,6 +28,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     private User me;
     private PostChatDto postChatDto;
     private Context context;
+    private List<Participant> participantList;
 
     public ChatAdapter(Context context, PostChatDto postChatDto, User me) {
         this.postChatDto = postChatDto;
@@ -56,6 +61,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         return postChatDto.getChatLogList().size();
+    }
+
+    public void setParticipantList(List<Participant> participantList) {
+        this.participantList = participantList;
+        for (ChatLog chat : postChatDto.getChatLogList()) {
+            for (Participant participant : participantList) {
+                if (participant.getUser().getId().equals(chat.getSenderId())) {
+                    chat.setUser(participant.getUser());
+                    break;
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     @Override

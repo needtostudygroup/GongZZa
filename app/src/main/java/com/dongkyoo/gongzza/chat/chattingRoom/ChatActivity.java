@@ -41,16 +41,10 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    public static boolean IS_SHOWN = false;
-
     private User me;
-    private static PostChatDto postChatDto;
+    private PostChatDto postChatDto;
     private ChatAdapter adapter;
     private ChatViewModel viewModel;
-
-    public static PostChatDto getPostChatDto() {
-        return postChatDto;
-    }
 
     private DrawerLayout drawerLayout;
     private BroadcastReceiver chatMessageReceiver;
@@ -110,6 +104,7 @@ public class ChatActivity extends AppCompatActivity {
                 for (Participant participant : participants) {
                     participantList.add(participant.getUser().getName());
                 }
+                adapter.setParticipantList(participants);
                 participantListView.setAdapter(new ArrayAdapter<String>(ChatActivity.this, android.R.layout.simple_list_item_1, participantList));
             }
         });
@@ -199,8 +194,6 @@ public class ChatActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        IS_SHOWN = true;
-
         if (chatMessageReceiver == null) {
             chatMessageReceiver = new BroadcastReceiver() {
                 @Override
@@ -222,8 +215,6 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
-        IS_SHOWN = false;
 
         if (chatMessageReceiver != null) {
             unregisterReceiver(chatMessageReceiver);

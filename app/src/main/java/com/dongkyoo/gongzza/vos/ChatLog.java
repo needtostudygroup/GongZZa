@@ -33,6 +33,9 @@ public class ChatLog implements Comparable<ChatLog>, Parcelable {
     @ColumnInfo(name = "sender_name")
     private String senderName;
 
+    @Ignore
+    private User user;
+
     @ColumnInfo
     private String content;
 
@@ -163,5 +166,13 @@ public class ChatLog implements Comparable<ChatLog>, Parcelable {
     @Override
     public int hashCode() {
         return Objects.hash(id, postId, senderId, senderName, content, sentAt);
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
