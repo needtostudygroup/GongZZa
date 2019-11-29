@@ -24,10 +24,12 @@ import com.dongkyoo.gongzza.chat.chattingRoomList.ChattingRoomListFragment;
 import com.dongkyoo.gongzza.course.CourseFragment;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.TokenApi;
+import com.dongkyoo.gongzza.network.UserApi;
 import com.dongkyoo.gongzza.vos.ChatLog;
 import com.dongkyoo.gongzza.vos.Config;
 import com.dongkyoo.gongzza.vos.Token;
 import com.dongkyoo.gongzza.vos.User;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Date;
@@ -71,7 +73,14 @@ public class MainActivity extends AppCompatActivity {
         Networks.createRetrofit(this);
 
         me = getIntent().getParcelableExtra(Config.USER);
+        if (me != null) {
+            init();
+        } else {
+            autoLogin();
+        }
+    }
 
+    private void init() {
         registerToken();
 
         courseFragment = CourseFragment.newInstance(me);
@@ -122,6 +131,49 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    private void autoLogin() {
+        String pw = getIntent().getStringExtra(Config.PASSWORD);
+
+        if (pw == null) {
+            return;
+        }
+        UserApi userApi = Networks.retrofit.create(UserApi.class);
+        String id = getIntent().getStringExtra(Config.USER);
+        Call<User> call = userApi.login(id, pw);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    me = response.body();
+
+                    init();
+                } else {
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(Config.USER_ID, null);
+                    editor.putString(Config.PASSWORD, null);
+                    editor.apply();
+
+                    Snackbar.make(findViewById(android.R.id.content), "로그인 실패", Snackbar.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(Config.USER_ID, null);
+                editor.putString(Config.PASSWORD, null);
+                editor.apply();
+
+                Snackbar.make(findViewById(android.R.id.content), "로그인 실패", Snackbar.LENGTH_LONG).show();
+                t.printStackTrace();
+                finish();
+            }
+        });
     }
 
     @Override

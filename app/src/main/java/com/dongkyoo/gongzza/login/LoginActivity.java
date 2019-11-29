@@ -40,29 +40,12 @@ public class LoginActivity extends AppCompatActivity {
         String pw = sharedPreferences.getString(Config.PASSWORD, null);
 
         if (id != null && pw != null) {
-            Call<User> call = userApi.login(id, pw);
-            call.enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful()) {
-                        sharedPreferences.edit().putString(Config.USER_ID, response.body().getId()).apply();
-                        sharedPreferences.edit().putString(Config.PASSWORD, pw).apply();
-
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra(Config.USER, response.body());
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Snackbar.make(findViewById(android.R.id.content), "로그인 실패", Snackbar.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Snackbar.make(findViewById(android.R.id.content), "로그인 실패", Snackbar.LENGTH_LONG).show();
-                    t.printStackTrace();
-                }
-            });
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.putExtra(Config.USER, id);
+            intent.putExtra(Config.PASSWORD, pw);
+            startActivity(intent);
+            finish();
         }
 
 
