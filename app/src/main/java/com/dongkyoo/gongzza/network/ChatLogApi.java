@@ -18,13 +18,13 @@ import retrofit2.http.Query;
  */
 public interface ChatLogApi {
 
-    @GET("/chats/posts/{postId}")
+    @GET("/gongzza/chats/posts/{postId}")
     Call<List<ChatLog>> selectChatLogByPostAfterDatetime(@Path("postId") int postId, @Query("datetime") String datetime);
 
-    @GET("/chats/users")
+    @GET("/gongzza/chats/users")
     Call<List<PostChatDto>> selectPostChatListByUserAfterDatetime(@Query("userId") String userId,
                                                                   @Query("datetime") String datetime);
 
-    @POST("/chats")
+    @POST("/gongzza/chats")
     Call<ChatLog> sendChat(@Body ChatLog chatLog);
 }

@@ -17,7 +17,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class Networks {
 
-    public static String SERVER_URL = "http://114.206.137.114:8080";
+    public static String SERVER_URL = "http://n09app.cafe24.com/gongzza/";
     private static OkHttpClient client = new OkHttpClient.Builder()
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(30, TimeUnit.SECONDS)

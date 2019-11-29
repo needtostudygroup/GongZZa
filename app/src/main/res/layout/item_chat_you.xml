@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginRight="@dimen/margin2"
+            android:layout_marginStart="@dimen/margin2"
             android:layout_marginBottom="@dimen/margin0"
             app:chat_absoluteSentAt="@{chatLog}"
             android:layout_toRightOf="@id/speech_balloon"

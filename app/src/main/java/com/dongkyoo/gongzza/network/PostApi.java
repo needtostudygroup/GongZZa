@@ -26,10 +26,10 @@ public interface PostApi {
      * @param postDto   작성할 게시글
      * @return          성공 시 작성된 게시글 객체를 리턴
      */
-    @POST("/posts")
+    @POST("/gongzza/posts")
     Call<PostDto> insertPost(@Body PostDto postDto);
 
-    @GET("/posts/{id}")
+    @GET("/gongzza/posts/{id}")
     Call<PostDto> selectPostDtoById(@Path("id") int postId);
 
     /**
@@ -39,14 +39,14 @@ public interface PostApi {
      * @param limit         최신글 갯수
      * @return              최신글 리스트
      */
-    @GET("/posts/schools/{schoolId}/recent")
+    @GET("/gongzza/posts/schools/{schoolId}/recent")
     Call<List<PostDto>> selectRecentPostDtoList(@Path("schoolId") int schoolId,
                                                 @Query("userId") String userId,
                                                 @Query("limit") int limit,
                                                 @Query("searchKeyword") String searchKeyword,
                                                 @Query("hashTagList")List<String> hashTagList);
 
-    @GET("/posts/users")
+    @GET("/gongzza/posts/users")
     Call<List<PostDto>> selectUserEnrolledPost(@Query("userId") String userId);
 
     /**
@@ -55,7 +55,7 @@ public interface PostApi {
      * @param post      수정할 게시글 정보
      * @return          성공 시 true, 실패 시 false
      */
-    @PUT("/posts/{id}")
+    @PUT("/gongzza/posts/{id}")
     Call<Boolean> updatePost(@Path("id") int postId, @Body Post post);
 
     /**
@@ -63,6 +63,6 @@ public interface PostApi {
      * @param postId    삭제할 게시글 아이디
      * @return          성공 시 true, 실패 시 false
      */
-    @DELETE("/posts/{id}")
+    @DELETE("/gongzza/posts/{id}")
     Call<Boolean> deletePost(@Path("id") int postId);
 }
