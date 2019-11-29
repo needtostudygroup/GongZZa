@@ -55,7 +55,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/textEmailCheck"
             android:layout_alignLeft="@+id/textEmailCheck"
-            android:hint="학교 이메일로 가입하시오"
+            android:hint="학교 이메일을 입력하세요"
             android:inputType="textEmailAddress"
             android:layout_centerHorizontal="true" />
 

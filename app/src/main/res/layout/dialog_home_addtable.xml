@@ -15,7 +15,7 @@
         android:gravity="center"
         android:textSize="20dp"
         android:inputType="textPersonName"
-        android:hint="URL을 입력하시오"
+        android:hint="URL을 입력하세요"
         android:textColorHint="#CCCCCC"
         android:selectAllOnFocus="true"/>
 

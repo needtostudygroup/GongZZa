@@ -13,47 +13,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Login.FindPasswordActivity">
+        <activity android:name=".post.PostActivity"/>
+        <activity android:name=".login.FindPasswordActivity"/>
+        <activity android:name=".login.FindAccountActivity" />
+        <activity android:name=".login.SignupActivity"/>
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.FindAccountActivity" />
-        <activity android:name=".Login.SignupActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".home.add.AddClassActivity"></activity>
-        <activity android:name=".all.BreakTime.BreakTimeActivity"></activity>
+        <activity android:name=".course.create.CreateCourseActivity"/>
+        <activity android:name=".all.BreakTime.BreakTimeActivity"/>
         <activity android:name=".all.Alarm.AlarmActivity" />
         <service
             android:name=".notifications.FirebaseNotificationService"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <activity android:name=".chat.chattingRoom.ChatActivity" />
-        <activity android:name=".main.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".chat.chattingRoom.ChatActivity"/>
+        <activity android:name=".post.write.WritePostActivity"></activity>
+        <activity android:name=".main.MainActivity"/>
     </application>
 
 </manifest>
