@@ -90,7 +90,7 @@ public class SignupActivity extends AppCompatActivity {
                     public void onResponse(Call<AuthMail> call, Response<AuthMail> response) {
                         //@POST("/authMails")
                         //Call<AuthMail> sendAuthenticateEmail(@Query("userId") String userId, @Query("email") String email);
-                        Call<AuthMail> call1 = userApi.sendAuthenticateEmail("abcdef1","f7817455@naver.com");
+                        Call<AuthMail> certification = userApi.sendAuthenticateEmail(user.getId(),user.getEmail());
                         if (response.code() == 200) {
                             Toast.makeText(SignupActivity.this, "이메일 인증이 완료되었습니다.",Toast.LENGTH_SHORT).show();
                         }

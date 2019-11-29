@@ -15,7 +15,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/emailInput"
+        android:id="@+id/Idinput"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
@@ -26,7 +26,7 @@
         android:id="@+id/passwordInput"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/emailInput"
+        android:layout_below="@+id/Idinput"
         android:layout_centerHorizontal="true"
         android:inputType="textPassword"
         android:hint="Password" />
