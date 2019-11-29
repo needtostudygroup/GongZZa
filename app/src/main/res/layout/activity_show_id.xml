@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/find_Id_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:title="아이디 찾기" >
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/textFindId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/inputFindID"
+        android:layout_marginTop="250dp"
+        android:text="아이디를 찾았습니다!\n회원님의 아이디는 "
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/inputFindID"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/textFindId"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textFind1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inputFindID"
+        android:layout_alignLeft="@+id/inputFindID"
+        android:textSize="30dp"
+        android:text="입니다."/>
+
+    <TextView
+        android:id="@+id/textFind2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/textFind1"
+        android:layout_alignLeft="@+id/inputFindID"
+        android:textSize="15dp"
+        android:text="확인을 누르면 로그인 화면으로 돌아갑니다."/>
+    <Button
+        android:id="@+id/PWChageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textFind2"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="확인"
+        android:textSize="25dp" />
+
+</RelativeLayout>

@@ -15,18 +15,19 @@
     </androidx.appcompat.widget.Toolbar>
 
     <EditText
-        android:id="@+id/Idinput"
+        android:id="@+id/id_editText"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
+        android:inputType="textVisiblePassword"
         android:layout_marginTop="250dp"
         android:hint="I D" />
 
     <EditText
-        android:id="@+id/passwordInput"
+        android:id="@+id/password_editText"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/Idinput"
+        android:layout_below="@+id/id_editText"
         android:layout_centerHorizontal="true"
         android:inputType="textPassword"
         android:hint="Password" />
@@ -38,7 +39,7 @@
         android:text="로그인"
         android:id="@+id/loginButton"
         android:layout_marginRight="@dimen/margin2"
-        android:layout_below="@+id/passwordInput"
+        android:layout_below="@+id/password_editText"
         android:layout_toStartOf="@+id/signupButton" />
 
     <Button
@@ -48,7 +49,7 @@
         android:text="회원 가입"
         android:layout_marginRight="@dimen/margin2"
         android:layout_alignTop="@+id/loginButton"
-        android:layout_alignEnd="@+id/passwordInput" />
+        android:layout_alignEnd="@+id/password_editText" />
 
     <Button
         android:layout_width="wrap_content"
