@@ -30,7 +30,7 @@ public class SignupActivity extends AppCompatActivity {
     UserApi userApi = Networks.retrofit.create(UserApi.class);
 
     DatePicker Birth;
-    private  String birthString;
+    private String birthString;
     private Date birthDate;
     private  boolean isChanged = false;
     private  boolean isComplete = false;
@@ -74,7 +74,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 AlertDialog alertDialog = builder.create();
 
-                String id = idEditText.getText().toString();
+                String id = idEditText.getText().toString().trim();
                 String email = emailEditText.getText().toString();
 
                 if (TextUtils.isEmpty(id) || TextUtils.isEmpty(email))

@@ -13,12 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".login.ShowIDActivity"></activity>
-        <activity android:name=".login.PasswordChageActivity" />
-        <activity android:name=".post.PostActivity" />
-        <activity android:name=".login.FindPasswordActivity" />
-        <activity android:name=".login.FindAccountActivity" />
-        <activity android:name=".login.SignupActivity" />
         <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".login.ShowIDActivity" />
+        <activity android:name=".login.PasswordChageActivity" />
+        <activity android:name=".post.PostActivity" />
+        <activity android:name=".login.FindPasswordActivity" />
+        <activity android:name=".login.FindAccountActivity" />
+        <activity android:name=".login.SignupActivity" />
         <activity android:name=".course.create.CreateCourseActivity" />
         <activity android:name=".all.BreakTime.BreakTimeActivity" />
         <activity android:name=".all.Alarm.AlarmActivity" />
