@@ -21,8 +21,6 @@ public class CourseInfo implements Parcelable {
     private int day;
 
     public CourseInfo() {
-        startTime = new Date();
-        endTime = new Date();
     }
 
     public CourseInfo(int id, int courseId, Date startTime, Date endTime, int day) {

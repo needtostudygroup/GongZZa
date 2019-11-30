@@ -70,6 +70,10 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     if (hasFocus) {
                         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                         Date date = courseInfoList.get(position).getStartTime();
+                        if (date == null) {
+                            date = new Date();
+                            courseInfoList.get(position).setStartTime(date);
+                        }
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(date);
@@ -93,6 +97,10 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                     Date date = courseInfoList.get(position).getStartTime();
+                    if (date == null) {
+                        date = new Date();
+                        courseInfoList.get(position).setStartTime(date);
+                    }
 
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(date);
@@ -118,6 +126,10 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     if (hasFocus) {
                         SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                         Date date = courseInfoList.get(position).getEndTime();
+                        if (date == null) {
+                            date = new Date();
+                            courseInfoList.get(position).setEndTime(date);
+                        }
 
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(date);
@@ -142,6 +154,10 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                     Date date = courseInfoList.get(position).getEndTime();
+                    if (date == null) {
+                        date = new Date();
+                        courseInfoList.get(position).setEndTime(date);
+                    }
 
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTime(date);
