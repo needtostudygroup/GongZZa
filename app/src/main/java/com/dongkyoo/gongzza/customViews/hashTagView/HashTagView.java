@@ -37,7 +37,8 @@ public class HashTagView extends MaterialCardView {
     private HashTag hashTag;
     private List<OnCloseListener> closeListenerList = new ArrayList<>();
     private List<OnEditModeChangeListener> editModeChangeListenerList = new ArrayList<>();
-
+    private boolean removable;
+    private boolean isEditMode;
 
     public HashTagView(@NonNull Context context) {
         super(context);
@@ -131,11 +132,28 @@ public class HashTagView extends MaterialCardView {
             setCardBackgroundColor(Color.parseColor(color));
     }
 
+    public boolean isRemovable() {
+        return removable;
+    }
+
+    public void setRemovable(boolean removable) {
+        this.removable = removable;
+
+        if (!isEditMode) {
+            if (removable) {
+                cancelImageView.setVisibility(VISIBLE);
+            } else {
+                cancelImageView.setVisibility(GONE);
+            }
+        }
+    }
+
     /**
      * 수정모드 변경
      * @param flag true: 수정 가능, false: 수정 불가
      */
     public void setEditMode(boolean flag) {
+        isEditMode = flag;
         for (OnEditModeChangeListener listener : editModeChangeListenerList) {
             listener.onChange(flag);
         }
@@ -158,7 +176,9 @@ public class HashTagView extends MaterialCardView {
 
             autoCompleteTextView.setVisibility(GONE);
             textView.setVisibility(VISIBLE);
-            cancelImageView.setVisibility(GONE);
+            if (!isRemovable()) {
+                cancelImageView.setVisibility(GONE);
+            }
         }
     }
 

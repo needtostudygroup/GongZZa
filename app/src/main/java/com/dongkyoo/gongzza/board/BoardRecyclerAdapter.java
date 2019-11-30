@@ -1,18 +1,14 @@
 package com.dongkyoo.gongzza.board;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dongkyoo.gongzza.R;
-import com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerAdapter;
-import com.dongkyoo.gongzza.customViews.hashTagRecyclerView.HashTagRecyclerView;
 import com.dongkyoo.gongzza.databinding.ItemBoardBinding;
 import com.dongkyoo.gongzza.dtos.PostDto;
 

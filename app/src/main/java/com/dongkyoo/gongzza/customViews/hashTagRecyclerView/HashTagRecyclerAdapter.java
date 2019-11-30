@@ -28,6 +28,7 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
     private List<Boolean> editModeList;
     private boolean isAppendable = true;
     private List<OnHashTagChangedListener> hashTagChangedListenerList;
+    private boolean isRemovable;
 
     public interface OnHashTagChangedListener {
         void onChange();
@@ -99,6 +100,8 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
                     notifyDataSetChanged();
                 }
             });
+
+            viewHolder.hashTagView.setRemovable(isRemovable);
         }
     }
 
@@ -173,6 +176,15 @@ public class HashTagRecyclerAdapter extends RecyclerView.Adapter {
 
     public void setAppendable(boolean appendable) {
         isAppendable = appendable;
+        notifyDataSetChanged();
+    }
+
+    public boolean isRemovable() {
+        return isRemovable;
+    }
+
+    public void setRemovable(boolean removable) {
+        isRemovable = removable;
         notifyDataSetChanged();
     }
 }

@@ -12,7 +12,6 @@ import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.board.ItemMargin;
 import com.dongkyoo.gongzza.vos.HashTag;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HashTagRecyclerView extends RecyclerView {
@@ -65,5 +64,9 @@ public class HashTagRecyclerView extends RecyclerView {
 
     public void setOnHashTagChangedListener(HashTagRecyclerAdapter.OnHashTagChangedListener listener) {
         adapter.setOnHashTagChangedListener(listener);
+    }
+
+    public void setRemovable(boolean removable) {
+        adapter.setRemovable(removable);
     }
 }

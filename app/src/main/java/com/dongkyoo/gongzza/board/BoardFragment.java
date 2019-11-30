@@ -72,6 +72,7 @@ public class BoardFragment extends Fragment implements BoardRecyclerAdapter.OnCl
 
     private void initView(View view) {
         hashTagRecyclerView = view.findViewById(R.id.hashTagRecyclerView);
+        hashTagRecyclerView.setRemovable(true);
         hashTagRecyclerView.setOnHashTagChangedListener(new HashTagRecyclerAdapter.OnHashTagChangedListener() {
             @Override
             public void onChange() {

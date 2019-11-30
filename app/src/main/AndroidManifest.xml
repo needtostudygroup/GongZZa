@@ -20,7 +20,7 @@
         <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,7 +37,7 @@
         </service>
 
         <activity android:name=".chat.chattingRoom.ChatActivity"/>
-        <activity android:name=".post.write.WritePostActivity"></activity>
+        <activity android:name=".post.write.WritePostActivity"/>
         <activity android:name=".main.MainActivity"/>
     </application>
 
