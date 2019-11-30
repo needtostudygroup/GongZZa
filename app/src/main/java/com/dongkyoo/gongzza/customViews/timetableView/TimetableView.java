@@ -41,6 +41,7 @@ public class TimetableView extends View {
     private static final int SMALL_TEXT_SIZE = 40;
 
     private static final int MIN_CELL_HEIGHT = 150;
+    private static final int CELL_MARGIN = 5;
 
     private List<RectF> courseInfoRectList;
     private List<CourseData> courseList;
@@ -145,17 +146,18 @@ public class TimetableView extends View {
 
                     canvas.drawRect(rectF, cellPaint);
 
-                    List<String> nameList = split(courseDto.getName(), 5);
-
                     p.setFakeBoldText(true);
                     float nextY = 0;
+
+                    List<String> nameList = split(courseDto.getName(), cellWidth - CELL_MARGIN, p);
                     for (int i = 0; i < nameList.size(); i++) {
                         nextY = startY + p.getTextSize() * (i + 1);
+
                         canvas.drawText(nameList.get(i), startX + 5, nextY, p);
                     }
 
                     p.setFakeBoldText(false);
-                    nameList = split(courseDto.getProfessor(), 5);
+                    nameList = split(courseDto.getProfessor(), cellWidth - CELL_MARGIN, p);
                     nextY += 10;
                     for (int i = 0; i < nameList.size(); i++) {
                         nextY += p.getTextSize();
@@ -166,16 +168,18 @@ public class TimetableView extends View {
         }
     }
 
-    private List<String> split(String str, int count) {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < str.length() ;i += count) {
-            StringBuffer sb = new StringBuffer();
-            for (int j = 0; j < count && i + j < str.length(); j++) {
-                sb.append(str.charAt(i + j));
+    private List<String> split(String str, float width, Paint p) {
+        List<String> ret = new ArrayList<>();
+        int t = 0;
+        while (t < str.length()) {
+            String s = null;
+            for (int i = t, j = i; j < str.length() && p.measureText(str, i, j + 1) < width; j++, t++) {
+                s = str.substring(i, j + 1);
             }
-            list.add(sb.toString());
+            ret.add(s);
         }
-        return list;
+
+        return ret;
     }
 
     @Override
