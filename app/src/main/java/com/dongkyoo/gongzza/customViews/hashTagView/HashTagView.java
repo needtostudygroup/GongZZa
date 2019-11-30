@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class HashTagView extends MaterialCardView {
     private List<OnEditModeChangeListener> editModeChangeListenerList = new ArrayList<>();
     private boolean removable;
     private boolean isEditMode;
+    private InputMethodManager inputMethodManager;
 
     public HashTagView(@NonNull Context context) {
         super(context);
@@ -59,6 +61,8 @@ public class HashTagView extends MaterialCardView {
     }
 
     private void init() {
+        inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.view_hash_tag, this, true);
 
@@ -72,10 +76,19 @@ public class HashTagView extends MaterialCardView {
         autoCompleteTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT) {
                     setEditMode(false);
                 }
                 return false;
+            }
+        });
+
+        autoCompleteTextView.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    setEditMode(false);
+                }
             }
         });
 
@@ -86,18 +99,18 @@ public class HashTagView extends MaterialCardView {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 if (s.toString().contains(" ")) {
                     setEditMode(false);
                 }
 
                 if (hashTag != null) {
-                    hashTag.setTitle(s.toString());
+                    hashTag.setTitle(s.toString().trim());
                 }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
 
@@ -164,6 +177,8 @@ public class HashTagView extends MaterialCardView {
             textView.setVisibility(GONE);
             cancelImageView.setVisibility(VISIBLE);
         } else {
+            inputMethodManager.hideSoftInputFromWindow(getWindowToken(), 0);
+
             if (autoCompleteTextView.getText().toString().trim().length() == 0) {
                 close();
                 return;
