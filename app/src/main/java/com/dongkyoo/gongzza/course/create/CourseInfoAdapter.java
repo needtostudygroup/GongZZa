@@ -63,6 +63,7 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof ViewHolder) {
             ViewHolder viewHolder = (ViewHolder) holder;
+            viewHolder.startTimeEditText.setKeyListener(null);
             viewHolder.startTimeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -87,7 +88,30 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     }
                 }
             });
+            viewHolder.startTimeEditText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                    Date date = courseInfoList.get(position).getStartTime();
 
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+
+                    new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker tp, int hourOfDay, int minute) {
+                            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            calendar.set(Calendar.MINUTE, minute);
+
+                            Date time = calendar.getTime();
+                            courseInfoList.get(position).setStartTime(time);
+                            viewHolder.startTimeEditText.setText(format.format(courseInfoList.get(position).getStartTime()));
+                        }
+                    }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
+                }
+            });
+
+            viewHolder.endTimeEditText.setKeyListener(null);
             viewHolder.endTimeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -110,6 +134,29 @@ public class CourseInfoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                             }
                         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
                     }
+                }
+            });
+
+            viewHolder.endTimeEditText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                    Date date = courseInfoList.get(position).getEndTime();
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+
+                    new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker tp, int hourOfDay, int minute) {
+                            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            calendar.set(Calendar.MINUTE, minute);
+
+                            Date time = calendar.getTime();
+                            courseInfoList.get(position).setEndTime(time);
+                            viewHolder.endTimeEditText.setText(format.format(courseInfoList.get(position).getEndTime()));
+                        }
+                    }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true).show();
                 }
             });
 
