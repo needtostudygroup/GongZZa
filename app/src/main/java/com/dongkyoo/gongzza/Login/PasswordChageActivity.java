@@ -1,23 +1,18 @@
 package com.dongkyoo.gongzza.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.dongkyoo.gongzza.R;
-import com.dongkyoo.gongzza.main.MainActivity;
 import com.dongkyoo.gongzza.network.UserApi;
 import com.dongkyoo.gongzza.vos.Config;
-import com.dongkyoo.gongzza.vos.User;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.sql.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;

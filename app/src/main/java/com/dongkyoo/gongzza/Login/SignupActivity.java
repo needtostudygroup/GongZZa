@@ -74,7 +74,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 AlertDialog alertDialog = builder.create();
 
-                String id = idEditText.getText().toString().trim();
+                String id = idEditText.getText().toString();
                 String email = emailEditText.getText().toString();
 
                 if (TextUtils.isEmpty(id) || TextUtils.isEmpty(email))
@@ -106,11 +106,11 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                String name = nameEditText.getText().toString();
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                String pwConfirm = pwConfirmEditText.getText().toString();
-                String id = idEditText.getText().toString();
+                String name = nameEditText.getText().toString().trim();
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+                String pwConfirm = pwConfirmEditText.getText().toString().trim();
+                String id = idEditText.getText().toString().trim();
 
                 if(TextUtils.isEmpty(name)) {
                     Toast.makeText(SignupActivity.this, "이름을 입력하세요",Toast.LENGTH_SHORT).show();

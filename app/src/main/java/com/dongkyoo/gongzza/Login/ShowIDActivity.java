@@ -1,11 +1,10 @@
 package com.dongkyoo.gongzza.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.EditText;
 
-import com.dongkyoo.gongzza.MockData;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.dongkyoo.gongzza.R;
 import com.dongkyoo.gongzza.vos.Config;
 

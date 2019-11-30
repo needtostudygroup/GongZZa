@@ -1,27 +1,19 @@
 package com.dongkyoo.gongzza.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
-
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.dongkyoo.gongzza.MockData;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.dongkyoo.gongzza.R;
-import com.dongkyoo.gongzza.customViews.hashTagView.HashTagView;
-import com.dongkyoo.gongzza.main.MainActivity;
 import com.dongkyoo.gongzza.network.Networks;
 import com.dongkyoo.gongzza.network.UserApi;
 import com.dongkyoo.gongzza.vos.Config;
-import com.dongkyoo.gongzza.vos.User;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Date;
@@ -29,8 +21,6 @@ import java.sql.Date;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 public class FindAccountActivity extends AppCompatActivity {
 
