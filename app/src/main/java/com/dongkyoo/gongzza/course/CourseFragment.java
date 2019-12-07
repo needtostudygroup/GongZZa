@@ -102,6 +102,7 @@ public class CourseFragment extends Fragment {
             @Override
             public void onChanged(List<CourseDto> courseDtoList) {
                 displayCourseList(courseDtoList);
+                displayCourseList(courseDtoList);
             }
         });
 
@@ -109,7 +110,9 @@ public class CourseFragment extends Fragment {
     }
 
     private void displayCourseList(List<CourseDto> courseDtoList) {
-        timetableView.setCourseDtoList(courseDtoList);
+        timetableView.addUserTimetableList(new TimetableView.UserTimetable(
+                this.me, courseDtoList
+        ));
     }
 
     @Override
