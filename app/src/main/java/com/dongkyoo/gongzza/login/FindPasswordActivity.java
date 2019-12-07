@@ -71,12 +71,14 @@ public class FindPasswordActivity extends AppCompatActivity {
                 call.enqueue(new Callback<Integer>() {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        //전달할 데이터가 2개라 Bundle사용
                         Bundle extras = new Bundle();
                         if (response.isSuccessful()) {
                             Call<User> userCall = userApi.getUserById(id);
                             userCall.enqueue(new Callback<User>() {
                                 @Override
                                 public void onResponse(Call<User> call, Response<User> response) {
+                                    //ID 흭득
                                     extras.putString(Config.USER_ID, response.body().getId());
                                 }
 
@@ -85,8 +87,10 @@ public class FindPasswordActivity extends AppCompatActivity {
                                     Snackbar.make(findViewById(android.R.id.content), "서버와 통신에 실패하였습니다. 다시 시도해 주세요", Snackbar.LENGTH_LONG).show();
                                 }
                             });
-                            Intent intent = new Intent(getApplicationContext(), PasswordChageActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), PasswordChangeActivity.class);
+                            //권한 흭득
                             extras.putInt(Config.AUTHORITY,response.code());
+                            //Bundle로 해서 흭득한 데이터 넘겨줌
                             intent.putExtras(extras);
                             startActivity(intent);
                             finish();

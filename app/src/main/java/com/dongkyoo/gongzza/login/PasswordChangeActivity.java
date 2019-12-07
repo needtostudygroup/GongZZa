@@ -18,7 +18,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PasswordChageActivity extends AppCompatActivity {
+public class PasswordChangeActivity extends AppCompatActivity {
 
     private UserApi userApi;
 
@@ -30,43 +30,34 @@ public class PasswordChageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
 
+        //흭득한 데이터 저장
         String id = extras.getString(Config.USER_ID);
         int authority = extras.getInt(Config.AUTHORITY);
 
-        EditText passwordChageText = findViewById(R.id.inputPassword);
-        EditText passwordChageConfirmText = findViewById(R.id.inputPasswordConfirm);
-
-        String password = passwordChageText.getText().toString();
-        String pwConfirm = passwordChageConfirmText.getText().toString();
-
-        if(!password.equals(pwConfirm)) {
-            Toast.makeText(PasswordChageActivity.this, "비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
-            passwordChageConfirmText.setText("");
-            passwordChageConfirmText.requestFocus();
-            return;
-        }
+        EditText passwordChangeText = findViewById(R.id.inputPassword);
+        EditText passwordChangeConfirmText = findViewById(R.id.inputPasswordConfirm);
 
         findViewById(R.id.findPWButton).setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                String password = passwordChageText.getText().toString();
-                String pwConfirm = passwordChageConfirmText.getText().toString();
+                String password = passwordChangeText.getText().toString();
+                String pwConfirm = passwordChangeConfirmText.getText().toString();
 
                 if(TextUtils.isEmpty(password)){
-                    Toast.makeText(PasswordChageActivity.this, "새비밀번호를 입력하세요",Toast.LENGTH_SHORT).show();
-                    passwordChageText.requestFocus();
+                    Toast.makeText(PasswordChangeActivity.this, "새비밀번호를 입력하세요",Toast.LENGTH_SHORT).show();
+                    passwordChangeText.requestFocus();
                     return;
                 }
                 else if(TextUtils.isEmpty(pwConfirm)){
-                    Toast.makeText(PasswordChageActivity.this, "비밀번호 확인을 입력하세요",Toast.LENGTH_SHORT).show();
-                    passwordChageConfirmText.requestFocus();
+                    Toast.makeText(PasswordChangeActivity.this, "비밀번호 확인을 입력하세요",Toast.LENGTH_SHORT).show();
+                    passwordChangeConfirmText.requestFocus();
                     return;
                 }
                 if(!password.equals(pwConfirm)) {
-                    Toast.makeText(PasswordChageActivity.this, "비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
-                    passwordChageConfirmText.setText("");
-                    passwordChageConfirmText.requestFocus();
+                    Toast.makeText(PasswordChangeActivity.this, "비밀번호가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
+                    passwordChangeConfirmText.setText("");
+                    passwordChangeConfirmText.requestFocus();
                     return;
                 }
 
