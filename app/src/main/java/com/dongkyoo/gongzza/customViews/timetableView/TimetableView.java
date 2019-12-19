@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -58,6 +60,9 @@ public class TimetableView extends View {
 
     private Bitmap checkedCheckbox;
     private Bitmap uncheckedCheckbox;
+
+    private int userNameListRectTop;
+    private int userNameListRectLeft;
 
     public TimetableView(Context context) {
         super(context);
@@ -138,54 +143,57 @@ public class TimetableView extends View {
 
         p.setColor(Color.WHITE);
         for (UserTimetable timetable: userTimetableList) {
-            for (CourseDto courseDto : timetable.courseDtoList) {
-                for (CourseInfo info : courseDto.getCourseInfoList()) {
-                    int day = info.getDay();
-                    Paint cellPaint = new Paint();
-                    if (timetable.isRandomColorMode) {
-                        cellPaint.setColor(Color.parseColor(colorList[colorIndex++]));
-                    } else {
-                        cellPaint.setColor(Color.parseColor(timetable.color));
-                    }
-                    if (day >= Calendar.MONDAY && day <= Calendar.FRIDAY) {
-                        Calendar c = Calendar.getInstance();
-
-                        c.setTime(info.getStartTime());
-                        int startHour = c.get(Calendar.HOUR_OF_DAY);
-                        int startMin = c.get(Calendar.MINUTE);
-
-                        c.setTime(info.getEndTime());
-                        int endHour = c.get(Calendar.HOUR_OF_DAY);
-                        int endMin = c.get(Calendar.MINUTE);
-
-                        float startX = mostLeftColumnWidth + cellWidth * (day - Calendar.MONDAY);
-                        float startY = topRowHeight + cellHeight * (startHour - MIN_HOUR) + cellHeight * (startMin / 60f);
-
-                        float endX = startX + cellWidth;
-                        float endY = topRowHeight + cellHeight * (endHour - MIN_HOUR) + cellHeight * (endMin / 60f);
-
-                        RectF rectF = new RectF(startX, startY, endX, endY);
-                        courseInfoRectList.add(rectF);
-                        courseList.add(new CourseData(courseDto, info));
-
-                        canvas.drawRect(rectF, cellPaint);
-
-                        p.setFakeBoldText(true);
-                        float nextY = 0;
-
-                        List<String> nameList = split(courseDto.getName(), cellWidth - CELL_MARGIN, p);
-                        for (int i = 0; i < nameList.size(); i++) {
-                            nextY = startY + p.getTextSize() * (i + 1);
-
-                            canvas.drawText(nameList.get(i), startX + 5, nextY, p);
+            if (timetable.isChecked) {
+                p.setColor(Color.WHITE);
+                for (CourseDto courseDto : timetable.courseDtoList) {
+                    for (CourseInfo info : courseDto.getCourseInfoList()) {
+                        int day = info.getDay();
+                        Paint cellPaint = new Paint();
+                        if (timetable.isRandomColorMode) {
+                            cellPaint.setColor(Color.parseColor(colorList[colorIndex++]));
+                        } else {
+                            cellPaint.setColor(Color.parseColor(timetable.color));
                         }
+                        if (day >= Calendar.MONDAY && day <= Calendar.FRIDAY) {
+                            Calendar c = Calendar.getInstance();
 
-                        p.setFakeBoldText(false);
-                        nameList = split(courseDto.getProfessor(), cellWidth - CELL_MARGIN, p);
-                        nextY += 10;
-                        for (int i = 0; i < nameList.size(); i++) {
-                            nextY += p.getTextSize();
-                            canvas.drawText(nameList.get(i), startX + 5, nextY, p);
+                            c.setTime(info.getStartTime());
+                            int startHour = c.get(Calendar.HOUR_OF_DAY);
+                            int startMin = c.get(Calendar.MINUTE);
+
+                            c.setTime(info.getEndTime());
+                            int endHour = c.get(Calendar.HOUR_OF_DAY);
+                            int endMin = c.get(Calendar.MINUTE);
+
+                            float startX = mostLeftColumnWidth + cellWidth * (day - Calendar.MONDAY);
+                            float startY = topRowHeight + cellHeight * (startHour - MIN_HOUR) + cellHeight * (startMin / 60f);
+
+                            float endX = startX + cellWidth;
+                            float endY = topRowHeight + cellHeight * (endHour - MIN_HOUR) + cellHeight * (endMin / 60f);
+
+                            RectF rectF = new RectF(startX, startY, endX, endY);
+                            courseInfoRectList.add(rectF);
+                            courseList.add(new CourseData(courseDto, info));
+
+                            canvas.drawRect(rectF, cellPaint);
+
+                            p.setFakeBoldText(true);
+                            float nextY = 0;
+
+                            List<String> nameList = split(courseDto.getName(), cellWidth - CELL_MARGIN, p);
+                            for (int i = 0; i < nameList.size(); i++) {
+                                nextY = startY + p.getTextSize() * (i + 1);
+
+                                canvas.drawText(nameList.get(i), startX + 5, nextY, p);
+                            }
+
+                            p.setFakeBoldText(false);
+                            nameList = split(courseDto.getProfessor(), cellWidth - CELL_MARGIN, p);
+                            nextY += 10;
+                            for (int i = 0; i < nameList.size(); i++) {
+                                nextY += p.getTextSize();
+                                canvas.drawText(nameList.get(i), startX + 5, nextY, p);
+                            }
                         }
                     }
                 }
@@ -197,12 +205,18 @@ public class TimetableView extends View {
                 p.setColor(Color.parseColor(timetable.color));
             }
 
+            if (timetable.color != null) {
+                p.setColorFilter(new PorterDuffColorFilter(Color.parseColor(timetable.color), PorterDuff.Mode.SRC_IN));
+            }
             if (timetable.isChecked) {
                 canvas.drawBitmap(checkedCheckbox, checkboxRect, timetable.checkboxRect, p);
             } else {
                 canvas.drawBitmap(uncheckedCheckbox, checkboxRect, timetable.checkboxRect, p);
             }
-            canvas.drawText(timetable.user.getName(), timetable.checkboxRect.right + 30, timetable.checkboxRect.top + p.getTextSize(), p);
+            p.setColorFilter(null);
+
+            p.setColor(Color.BLACK);
+            canvas.drawText(timetable.user.getName(), timetable.checkboxRect.right + 30, timetable.checkboxRect.top + p.getTextSize() + 5, p);
         }
     }
 
@@ -230,14 +244,18 @@ public class TimetableView extends View {
         topRowHeight = BIG_TEXT_SIZE + 30;
 
         cellWidth = (tableWidth - mostLeftColumnWidth) / weekDays.length;
-        cellHeight = (tableHeight - topRowHeight) / (MAX_HOUR - MIN_HOUR);
         if (cellHeight < MIN_CELL_HEIGHT) {
             cellHeight = MIN_CELL_HEIGHT;
         }
 
         tableHeight = cellHeight * (MAX_HOUR - MIN_HOUR + 1) + topRowHeight + 30;
+        if (userNameListRectTop == 0) {
+            userNameListRectTop = tableHeight + 30;
+            userNameListRectLeft = 30;
+        }
+
         userListLayoutHeight = 50;
-        height = tableHeight + userListLayoutHeight + 30;
+        height = tableHeight + userListLayoutHeight + 30 + 50/*userNameListHeight*/;
         setMeasuredDimension(tableWidth, height);
     }
 
@@ -297,9 +315,15 @@ public class TimetableView extends View {
     public void addUserTimetableList(UserTimetable userTimetable) {
         this.userTimetableList.add(userTimetable);
         Paint p = new Paint();
-        p.setTextSize(20);
-        userTimetable.checkboxRect = new Rect(0, tableHeight, checkedCheckbox.getWidth(), tableHeight + checkedCheckbox.getHeight());
-        width += p.measureText(userTimetable.user.getName());
+        p.setTextSize(SMALL_TEXT_SIZE);
+        if (userNameListRectLeft + p.measureText(userTimetable.user.getName()) > tableWidth) {
+            userNameListRectTop += checkedCheckbox.getHeight() + 15;
+            userNameListRectLeft = 30;
+        }
+
+        userTimetable.checkboxRect = new Rect(userNameListRectLeft, userNameListRectTop, userNameListRectLeft + checkedCheckbox.getWidth(), userNameListRectTop + checkedCheckbox.getHeight());
+        userNameListRectLeft += userTimetable.checkboxRect.width() + p.measureText(userTimetable.user.getName()) + 60;
+
         invalidate();
     }
 

@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         courseFragment,
                         BoardFragment.newInstance(me),
                         chattingRoomListFragment,
-                        new AllFragment()
+                        AllFragment.newInstance(me)
                 },
                 getResources().getStringArray(R.array.tab_name_list)
         );
