@@ -30,7 +30,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dongkyoo.gongzza.R;
+import com.dongkyoo.gongzza.cache.CacheCallback;
 import com.dongkyoo.gongzza.dtos.PostChatDto;
+import com.dongkyoo.gongzza.post.PostViewModel;
 import com.dongkyoo.gongzza.vos.Config;
 import com.dongkyoo.gongzza.vos.Participant;
 import com.dongkyoo.gongzza.vos.User;
@@ -42,7 +44,7 @@ import java.util.List;
 public class ChatActivity extends AppCompatActivity {
 
     private User me;
-    private PostChatDto postChatDto;
+    public static PostChatDto postChatDto;
     private ChatAdapter adapter;
     private ChatViewModel viewModel;
 
@@ -55,10 +57,21 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        int postId = getIntent().getIntExtra(Config.POST, -1);
+        init(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        init(intent);
+    }
+
+    private void init(Intent intent) {
+        int postId = intent.getIntExtra(Config.POST, -1);
         if (postId == -1) {
-            me = getIntent().getParcelableExtra(Config.USER);
-            postChatDto = getIntent().getParcelableExtra(Config.POST);
+            me = intent.getParcelableExtra(Config.USER);
+            postChatDto = intent.getParcelableExtra(Config.POST);
             viewModel = new ChatViewModel(this, postChatDto, me);
             initView();
         } else {
@@ -138,13 +151,19 @@ public class ChatActivity extends AppCompatActivity {
                         .setPositiveButton("예", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                PostViewModel postViewModel = new PostViewModel(getApplication(), postChatDto, me);
+                                postViewModel.leave(new CacheCallback<Boolean>() {
+                                    @Override
+                                    public void onReceive(Boolean aBoolean) {
+                                        finish();
+                                    }
+                                });
                             }
                         })
                         .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                dialog.dismiss();
                             }
                         }).show();
                 }
@@ -220,6 +239,8 @@ public class ChatActivity extends AppCompatActivity {
             unregisterReceiver(chatMessageReceiver);
             chatMessageReceiver = null;
         }
+
+        postChatDto = null;
     }
 
     @Override

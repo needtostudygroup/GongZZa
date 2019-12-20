@@ -2,12 +2,8 @@ package com.dongkyoo.gongzza.network;
 
 import android.content.Context;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 

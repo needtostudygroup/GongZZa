@@ -36,7 +36,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".chat.chattingRoom.ChatActivity"/>
+        <activity android:name=".chat.chattingRoom.ChatActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".post.write.WritePostActivity"/>
         <activity android:name=".main.MainActivity"/>
     </application>

@@ -40,16 +40,21 @@ public class ChatViewModel extends ViewModel {
     private User me;
     private PostChatDto postChatDto;
 
+    public ChatViewModel() {
+        baseModel = new BaseModel();
+    }
+
     public ChatViewModel(Context context, PostChatDto postChatDto, User me) {
+        this();
         this.me = me;
         this.postChatDto = postChatDto;
 
         chatModel = new ChatModel(context);
-        baseModel = new BaseModel();
         loadParticipantList(postChatDto.getId());
     }
 
     public ChatViewModel(Context context, int postId, String userId) {
+        this();
         chatModel = new ChatModel(context);
 
         baseModel.loadUserById(userId, new Callback<User>() {

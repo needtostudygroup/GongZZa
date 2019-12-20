@@ -1,6 +1,7 @@
 package com.dongkyoo.gongzza.post;
 
 import android.app.Application;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
@@ -10,6 +11,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
 
 import com.dongkyoo.gongzza.cache.AppDatabase;
+import com.dongkyoo.gongzza.cache.CacheCallback;
+import com.dongkyoo.gongzza.cache.PostDao;
+import com.dongkyoo.gongzza.chat.chattingRoomList.ChattingRoomListModel;
 import com.dongkyoo.gongzza.dtos.PostDto;
 import com.dongkyoo.gongzza.vos.Participant;
 import com.dongkyoo.gongzza.vos.User;
@@ -31,13 +35,18 @@ public class PostViewModel extends AndroidViewModel {
     private User user;
     private PostModel postModel;
 
-    PostViewModel(Application application, PostDto post, User user) {
+    private PostDao postDao;
+
+    public PostViewModel(Application application, PostDto post, User user) {
         super(application);
         this.postModel = new PostModel(application);
         this.user = user;
 
         _post.setValue(post);
         _isMember.setValue(post.isMember(user));
+
+        AppDatabase db = Room.databaseBuilder(application, AppDatabase.class, AppDatabase.DB_NAME).build();
+        postDao = db.postDao();
     }
 
     void enroll() {
@@ -61,7 +70,7 @@ public class PostViewModel extends AndroidViewModel {
         });
     }
 
-    void leave() {
+    public void leave(CacheCallback<Boolean> callback) {
         postModel.leave(post.getValue(), user.getId(), new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -74,7 +83,21 @@ public class PostViewModel extends AndroidViewModel {
                         _post.setValue(postDto);
                         _isMember.setValue(false);
 
+                        Handler handler = new Handler();
 
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                postDao.leavePost(post.getValue());
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (callback != null)
+                                            callback.onReceive(true);
+                                    }
+                                }, 200);
+                            }
+                        }).start();
                     } else {
                         Log.e(TAG, "Post 탈퇴 실패");
                     }

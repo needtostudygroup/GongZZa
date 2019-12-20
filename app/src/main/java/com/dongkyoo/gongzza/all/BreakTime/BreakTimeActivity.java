@@ -100,6 +100,7 @@ public class BreakTimeActivity extends AppCompatActivity {
                                                                 user, response.body(), colorArray[index++]
                                                         ));
                                                         index %= colorArray.length;
+                                                        editText.setText("");
                                                     } else {
                                                         Snackbar.make(findViewById(android.R.id.content), "시간표 로딩 실패", Snackbar.LENGTH_LONG).show();
                                                     }

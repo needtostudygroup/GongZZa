@@ -116,25 +116,29 @@ public class FirebaseNotificationService extends FirebaseMessagingService {
         sendBroadcast(intent);
 
 
-        createNotificationChannel();
+        if (ChatActivity.postChatDto == null || ChatActivity.postChatDto.getId() != postId) {
+            createNotificationChannel();
 
-        intent = new Intent(getApplicationContext(), ChatActivity.class);
-        intent.putExtra(Config.POST, postId);
-        intent.putExtra(Config.USER, senderId);
-        intent.putExtra(Config.CHAT_ID, id);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent = new Intent(getApplicationContext(), ChatActivity.class);
+            intent.putExtra(Config.POST, postId);
+            intent.putExtra(Config.USER, senderId);
+            intent.putExtra(Config.CHAT_ID, id);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent , 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent , 0);
 
-        Notification notification = new NotificationCompat.Builder(getApplicationContext(), DEFAULT_CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(pendingIntent)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .build();
+            Notification notification = new NotificationCompat.Builder(getApplicationContext(), DEFAULT_CHANNEL_ID)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setContentIntent(pendingIntent)
+                    .setFullScreenIntent(pendingIntent, true)
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true)
+                    .build();
 
-        NotificationManagerCompat.from(getApplicationContext()).notify(getUniqueId(), notification);
+            NotificationManagerCompat.from(getApplicationContext()).notify(getUniqueId(), notification);
+        }
     }
 
     private void createNotificationChannel() {

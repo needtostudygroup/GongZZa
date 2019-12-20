@@ -313,17 +313,26 @@ public class TimetableView extends View {
     }
 
     public void addUserTimetableList(UserTimetable userTimetable) {
-        this.userTimetableList.add(userTimetable);
-        Paint p = new Paint();
-        p.setTextSize(SMALL_TEXT_SIZE);
-        if (userNameListRectLeft + p.measureText(userTimetable.user.getName()) > tableWidth) {
-            userNameListRectTop += checkedCheckbox.getHeight() + 15;
-            userNameListRectLeft = 30;
+        boolean isExist = false;
+        for (UserTimetable t : userTimetableList) {
+            if (t.user.getId().equals(userTimetable.getUser().getId())) {
+                isExist = true;
+                break;
+            }
         }
 
-        userTimetable.checkboxRect = new Rect(userNameListRectLeft, userNameListRectTop, userNameListRectLeft + checkedCheckbox.getWidth(), userNameListRectTop + checkedCheckbox.getHeight());
-        userNameListRectLeft += userTimetable.checkboxRect.width() + p.measureText(userTimetable.user.getName()) + 60;
+        if (!isExist) {
+            this.userTimetableList.add(userTimetable);
+            Paint p = new Paint();
+            p.setTextSize(SMALL_TEXT_SIZE);
+            if (userNameListRectLeft + p.measureText(userTimetable.user.getName()) > tableWidth) {
+                userNameListRectTop += checkedCheckbox.getHeight() + 15;
+                userNameListRectLeft = 30;
+            }
 
+            userTimetable.checkboxRect = new Rect(userNameListRectLeft, userNameListRectTop, userNameListRectLeft + checkedCheckbox.getWidth(), userNameListRectTop + checkedCheckbox.getHeight());
+            userNameListRectLeft += userTimetable.checkboxRect.width() + p.measureText(userTimetable.user.getName()) + 60;
+        }
         invalidate();
     }
 

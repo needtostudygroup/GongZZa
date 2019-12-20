@@ -70,7 +70,7 @@ public class PostActivity extends AppCompatActivity {
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                postViewModel.leave();
+                                postViewModel.leave(null);
                             }
                         })
                         .setNegativeButton(R.string.no, null);
