@@ -9,7 +9,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class Networks {
 
     public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.38:1234")
+            .baseUrl("http://n09app.cafe24.com")
             .addConverterFactory(JacksonConverterFactory.create())
             .build();
 }
