@@ -36,7 +36,6 @@ public class FindPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_find_password);
 
-        Networks.createRetrofit(this);
         userApi = Networks.retrofit.create(UserApi.class);
         EditText nameEditText = (EditText)findViewById(R.id.inputName);
         EditText idEditText = (EditText)findViewById((R.id.inputId));

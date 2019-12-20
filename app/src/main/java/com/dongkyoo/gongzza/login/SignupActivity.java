@@ -41,8 +41,6 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_signup);
 
-        Networks.createRetrofit(this);
-
         //객체성성
         User user = new User();
         AuthMail authMail = new AuthMail();

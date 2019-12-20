@@ -36,7 +36,6 @@ public class FindAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_find_account);
 
-        Networks.createRetrofit(this);
         userApi = Networks.retrofit.create(UserApi.class);
 
         EditText nameEditText = findViewById(R.id.inputName);

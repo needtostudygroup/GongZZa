@@ -69,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //화면 전환 프래그먼트 선언 및 초기 화면 설정
-        Networks.createRetrofit(this);
-
         me = getIntent().getParcelableExtra(Config.USER);
         if (me != null) {
             init();
