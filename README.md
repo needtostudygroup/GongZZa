@@ -1,4 +1,8 @@
 # 공짜
+## 실행방법
+assets/server.properties 파일에 `serverUrl=http://192.168.0.9:1234/gongzza/` 을 작성 후 실행
+`192.168.0.9:1234` 는 본인 서버 호스트 및 포트번호임  
+서버 url = `https://github.com/needtostudygroup/GongZZa_Server`
 
 ## 코드 규칙
 - 클래스, 인터페이스명
