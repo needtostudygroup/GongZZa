@@ -11,6 +11,7 @@ public class Config {
     public static final String POST = "POST";
     public static final String CHAT_ID = "CHAT_ID";
     public static final String MESSAGE = "MESSAGE";
+    public static final String AUTHORITY = "AUTHORITY";
     public static final int POST_LIMIT = 15;
 
 }
