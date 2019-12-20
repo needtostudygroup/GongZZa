@@ -30,7 +30,7 @@ public class SignupActivity extends AppCompatActivity {
     UserApi userApi = Networks.retrofit.create(UserApi.class);
 
     DatePicker Birth;
-    private  String birthString;
+    private String birthString;
     private Date birthDate;
     private  boolean isChanged = false;
     private  boolean isComplete = false;
@@ -67,38 +67,45 @@ public class SignupActivity extends AppCompatActivity {
         findViewById(R.id.emailConfirmButton).setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
-                builder.setTitle("인증 이메일이 발송되었습니다!");
-                builder.setMessage("등록된 이메일로 접속하여 메일을 확인하셔야 가입이 완료됩니다.");
-                builder.setPositiveButton("확인",null);
-
-                AlertDialog alertDialog = builder.create();
 
                 String id = idEditText.getText().toString();
                 String email = emailEditText.getText().toString();
 
-                if (TextUtils.isEmpty(id) || TextUtils.isEmpty(email))
+                //ID 입력시에만 인증이 되도록 check
+                if (TextUtils.isEmpty(id) || TextUtils.isEmpty(email)) {
+                    Toast.makeText(SignupActivity.this, "ID를 입력해주세요.",Toast.LENGTH_SHORT).show();
+                    idEditText.requestFocus();
                     return;
+                }
+                else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+                    builder.setTitle("인증 이메일이 발송되었습니다!");
+                    builder.setMessage("등록된 이메일로 접속하여 메일을 확인하셔야 가입이 완료됩니다.");
+                    builder.setPositiveButton("확인",null);
 
-                //서버와 통신
-                Call<AuthMail> call = userApi.sendAuthenticateEmail(id, email);
-                call.enqueue(new Callback<AuthMail>() {
+                    AlertDialog alertDialog = builder.create();
 
-                    @Override
-                    public void onResponse(Call<AuthMail> call, Response<AuthMail> response) {
-                        if (response.isSuccessful()) {
-                            alertDialog.show();
+                    //서버와 통신
+                    Call<AuthMail> call = userApi.sendAuthenticateEmail(id, email);
+                    call.enqueue(new Callback<AuthMail>() {
+
+                        @Override
+                        public void onResponse(Call<AuthMail> call, Response<AuthMail> response) {
+                            if (response.isSuccessful()) {
+                                alertDialog.show();
+                            }
+                            else {
+                                Toast.makeText(SignupActivity.this, "이미 인증된 이메일입니다.",Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else {
-                            Toast.makeText(SignupActivity.this, "이미 인증된 이메일입니다.",Toast.LENGTH_SHORT).show();
+                        @Override
+                        public void onFailure(Call<AuthMail> call, Throwable t) {
+                            Toast.makeText(SignupActivity.this, "서버와 통신에 실패하였습니다. 다시 시도해 주세요.",Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "이메일 전송 실패", t);
                         }
-                    }
-                    @Override
-                    public void onFailure(Call<AuthMail> call, Throwable t) {
-                        Toast.makeText(SignupActivity.this, "서버와 통신에 실패하였습니다. 다시 시도해 주세요.",Toast.LENGTH_SHORT).show();
-                        Log.e(TAG, "이메일 전송 실패", t);
-                    }
-                });
+                    });
+                }
+
             }
         });
 
@@ -106,11 +113,11 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                String name = nameEditText.getText().toString();
-                String email = emailEditText.getText().toString();
-                String password = passwordEditText.getText().toString();
-                String pwConfirm = pwConfirmEditText.getText().toString();
-                String id = idEditText.getText().toString();
+                String name = nameEditText.getText().toString().trim();
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+                String pwConfirm = pwConfirmEditText.getText().toString().trim();
+                String id = idEditText.getText().toString().trim();
 
                 if(TextUtils.isEmpty(name)) {
                     Toast.makeText(SignupActivity.this, "이름을 입력하세요",Toast.LENGTH_SHORT).show();
@@ -163,8 +170,6 @@ public class SignupActivity extends AppCompatActivity {
                     call.enqueue(new Callback<User>() {
                         @Override
                         public void onResponse(Call<User> call, Response<User> response) {
-                            //@POST("/users")
-                            //Call<User> signUp(@Body User user);
                             if (response.code() == 200) {
                                 Toast.makeText(SignupActivity.this, "회원가입이 완료되었습니다.",Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

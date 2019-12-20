@@ -53,7 +53,7 @@ public interface UserApi {
      *                  없다면 null 리턴
      */
     @GET("/gongzza/users/find/id")
-    Call<String> findId(@Query("name") String name, @Query("birthday") Date birthday);
+    Call<User> findId(@Query("name") String name, @Query("birthday") String birthday);
 
     /**
      * 비밀번호 찾기 권한 획득
@@ -65,7 +65,7 @@ public interface UserApi {
      */
     @GET("/gongzza/users/find/pw")
     Call<Integer> getFindPasswordAuthority(@Query("id") String id, @Query("name") String name,
-                                           @Query("birthday") Date birthday);
+                                           @Query("birthday") String birthday);
 
     /**
      * 비밀번호 재설정
