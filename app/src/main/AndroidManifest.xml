@@ -2,23 +2,47 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dongkyoo.gongzza">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".chat.chattingRoom.ChatActivity"></activity>
-        <activity android:name=".main.MainActivity">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".login.SignupActivity"></activity>
+        <activity android:name=".login.FindPasswordActivity" />
+        <activity android:name=".login.FindAccountActivity" />
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".login.ShowIDActivity" />
+        <activity android:name=".login.PasswordChangeActivity" />
+        <activity android:name=".post.PostActivity" />
+        <activity android:name=".course.create.CreateCourseActivity" />
+        <activity android:name=".all.BreakTime.BreakTimeActivity" />
+        <activity android:name=".all.Alarm.AlarmActivity" />
+
+        <service
+            android:name=".notifications.FirebaseNotificationService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".chat.chattingRoom.ChatActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".post.write.WritePostActivity"/>
+        <activity android:name=".main.MainActivity"/>
     </application>
 
 </manifest>
